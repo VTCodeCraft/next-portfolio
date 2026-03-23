@@ -1,104 +1,85 @@
 import React from "react";
 import { CgWorkAlt } from "react-icons/cg";
-import { FaReact } from "react-icons/fa";
 import { LuGraduationCap } from "react-icons/lu";
+import { FaReact } from "react-icons/fa";
 
 export const links = [
-  {
-    name: "Home",
-    hash: "#home",
-  },
-  {
-    name: "About",
-    hash: "#about",
-  },
-  {
-    name: "Projects",
-    hash: "#projects",
-  },
-  {
-    name: "Skills",
-    hash: "#skills",
-  },
-  {
-    name: "Experience",
-    hash: "#experience",
-  },
-  {
-    name: "Contact",
-    hash: "#contact",
-  },
+  { name: "Home", hash: "#home" },
+  { name: "About", hash: "#about" },
+  { name: "Projects", hash: "#projects" },
+  { name: "Skills", hash: "#skills" },
+  { name: "Experience", hash: "#experience" },
+  { name: "Contact", hash: "#contact" },
 ] as const;
 
 export const experiencesData = [
   {
-    title: "Graduated bootcamp",
-    location: "Miami, FL",
+    title: "B.Tech in Information Technology",
+    location: "New Delhi, India",
     description:
-      "I graduated after 6 months of studying. I immediately found a job as a front-end developer.",
+      "Currently pursuing B.Tech from Bharati Vidyapeeth’s College of Engineering (GGSIPU) with a CGPA of 8.82.",
     icon: React.createElement(LuGraduationCap),
-    date: "2019",
+    date: "2023 - 2027",
   },
   {
-    title: "Front-End Developer",
-    location: "Orlando, FL",
+    title: "Software Developer Intern",
+    location: "New Delhi (Hybrid)",
     description:
-      "I worked as a front-end developer for 2 years in 1 job and 1 year in another job. I also upskilled to the full stack.",
+      "Worked at FoundersCart Pvt. Ltd. where I built monday.com integrations, secure authentication flows, CRM data pipelines, and a Chrome softphone extension. Developed full-stack features using React, Node.js, Express, MongoDB, and MySQL.",
     icon: React.createElement(CgWorkAlt),
-    date: "2019 - 2021",
+    date: "Jun 2025 - Jul 2025",
   },
   {
     title: "Full-Stack Developer",
-    location: "Houston, TX",
+    location: "India",
     description:
-      "I'm now a full-stack developer working as a freelancer. My stack includes React, Next.js, TypeScript, Tailwind, Prisma and MongoDB. I'm open to full-time opportunities.",
+      "Building full-stack applications including scheduling platforms, AI-powered chat apps, and accessibility tools. Focused on scalable backend systems and clean UI/UX.",
     icon: React.createElement(FaReact),
-    date: "2021 - present",
+    date: "2024 - Present",
   },
 ] as const;
 
 export const projectsData = [
   {
-    title: "CorpComment",
+    title: "EzMeet",
     description:
-      "I worked as a full-stack developer on this startup project for 2 years. Users can give public feedback to companies.",
-    tags: ["React", "Next.js", "MongoDB", "Tailwind", "Prisma"],
-    // imageUrl: corpcommentImg,
+      "A full-stack scheduling platform with timezone-aware availability, booking links, and Google Calendar integration for conflict-free scheduling.",
+    tags: ["Next.js", "Node.js", "PostgreSQL", "TypeORM", "Tailwind"],
   },
   {
-    title: "rmtDev",
+    title: "AI Chat Bot",
     description:
-      "Job board for remote developer jobs. I was the front-end developer. It has features like filtering, sorting and pagination.",
-    tags: ["React", "TypeScript", "Next.js", "Tailwind", "Redux"],
-    // imageUrl: rmtdevImg,
+      "Real-time chat application with Google Gemini AI integration, Socket.io for live communication, and Redis for caching and session management.",
+    tags: ["MERN", "Socket.io", "Redis", "Gemini AI"],
   },
   {
-    title: "Word Analytics",
+    title: "Portfolio Website",
     description:
-      "A public web app for quick analytics on text. It shows word count, character count and social media post limits.",
-    tags: ["React", "Next.js", "SQL", "Tailwind", "Framer"],
-    // imageUrl: wordanalyticsImg,
+      "Personal portfolio website built with React and Vite showcasing projects and skills with a modern UI.",
+    tags: ["React", "Vite", "Tailwind"],
   },
 ] as const;
 
 export const skillsData = [
-  "HTML",
-  "CSS",
+  "Java",
   "JavaScript",
   "TypeScript",
+  "Python",
+  "C/C++",
   "React",
   "Next.js",
   "Node.js",
-  "Git",
-  "Tailwind",
-  "Prisma",
-  "MongoDB",
-  "Redux",
-  "GraphQL",
-  "Apollo",
   "Express",
+  "FastAPI",
+  "MongoDB",
+  "MySQL",
   "PostgreSQL",
-  "Python",
-  "Django",
-  "Framer Motion",
+  "Redis",
+  "Supabase",
+  "Tailwind",
+  "REST APIs",
+  "JWT",
+  "Socket.io",
+  "Git",
+  "Docker",
 ] as const;
