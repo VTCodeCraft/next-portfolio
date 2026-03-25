@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiDownload, HiOutlineMail } from "react-icons/hi";
 import { BsArrowRight, BsTwitter } from "react-icons/bs";
+import { SiLeetcode } from "react-icons/si";
 
 export default function Intro() {
          function setActiveSection(arg0: string) {
@@ -101,12 +102,13 @@ export default function Intro() {
                                                       </Link>
 
                                                       <Link
-                                                               href="mailto:work.vishesh12.05@gmail.com"
+                                                               href="https://leetcode.com/u/VTCodeCraft/"
                                                                target="_blank"
+                                                               rel="noopener noreferrer"
                                                                className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
                                                       >
-                                                               <HiOutlineMail />
-                                                               Email
+                                                               <SiLeetcode />
+                                                               LeetCode
                                                       </Link>
                                              </motion.div>
 
@@ -137,9 +139,9 @@ export default function Intro() {
                                              >
 
                                                       <Link
-                                                               href="#contact"
+                                                               href="mailto:work.vishesh12.05@gmail.com" target="_blank"
                                                                className="group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-none hover:scale-105 transition"
-                                                      >
+                                                      >        <HiOutlineMail />
                                                                Contact me here
                                                                <BsArrowRight className="opacity-70 group-hover:translate-x-1 transition" />
                                                       </Link>
