@@ -147,8 +147,8 @@ export default function Intro() {
                                                       </Link>
 
                                                       <a
-                                                               href="/Vishesh_Tripathi_Resume.pdf"
-                                                               download="Vishesh-Tripathi-Resume.pdf"
+                                                               href="/Vishesh Tripathi Resume.pdf"
+                                                               download
                                                                target="_blank"
                                                                rel="noopener noreferrer"
                                                                className="group bg-white px-7 py-3 flex items-center gap-2 rounded-full border border-gray-200 hover:scale-105 transition"
