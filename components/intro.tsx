@@ -84,21 +84,21 @@ export default function Intro() {
                                                       </Link>
 
                                                       <Link
-                                                               href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
-                                                               target="_blank"
-                                                               className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
-                                                      >
-                                                               <FaLinkedin />
-                                                               LinkedIn
-                                                      </Link>
-
-                                                      <Link
                                                                href="https://x.com/VTCodeCraft_"
                                                                target="_blank"
                                                                className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
                                                       >
                                                                <BsTwitter />
                                                                X
+                                                      </Link>
+
+                                                      <Link
+                                                               href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
+                                                               target="_blank"
+                                                               className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
+                                                      >
+                                                               <FaLinkedin />
+                                                               LinkedIn
                                                       </Link>
 
                                                       <Link
