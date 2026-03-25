@@ -1,38 +1,42 @@
 "use client";
 
-import React from 'react'
+import React from "react";
 import { motion } from "framer-motion";
 import { links } from "@/lib/data";
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function Header() {
-         return (
-                  <header className="z-999 relative">
-                           <motion.div className="fixed top-0 left-1/2 -translate-x-1/2 h-18 w-full rounded-none border border-white border-opacity-40 bg-white bg-opacity-80 shadow-lg shadow-black/3 backdrop-blur-sm sm:top-6 sm:h-13 sm:w-xl sm:rounded-full"
-                                    initial={{ y: -100, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                           ></motion.div>
+  return (
+    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50">
+      
+      {/* GLASS BACKGROUND */}
+      <motion.div
+        className="absolute inset-0 rounded-full bg-white/70 backdrop-blur-xl border border-white/40 shadow-md"
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+      />
 
-                           <nav className="flex fixed top-[0.15rem] left-1/2 h-12 -translate-x-1/2 py-2 sm:top-[1.7rem] sm:h-[initial] sm:py-0">
-                                    <ul className="flex h-full w-full items-center justify-center gap-y-1 text-sm font-medium text-gray-500 sm:gap-5">
-                                             {links.map((link) => (
-                                                      <motion.li className="h-3/4 flex items-center justify-center" 
-                                                      key={link.hash}
-                                                      initial={{ y: -100, opacity: 0 }}
-                                                      animate={{ y: 0, opacity: 1 }}
-                                                      >
-                                                               <Link
-                                                                        className="flex w-full items-center justify-center px-3 py-3 transition hover:text-gray-900"
-                                                                        href={link.hash}
-                                                               >
-                                                                        {link.name}
-                                                               </Link>
+      {/* NAV */}
+      <nav className="relative px-8 py-3">
+        <ul className="flex items-center justify-center gap-6 text-sm font-medium text-gray-600">
+          
+          {links.map((link) => (
+            <motion.li
+              key={link.hash}
+              initial={{ y: -50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+            >
+              <Link
+                href={link.hash}
+                className="px-3 py-1.5 rounded-full transition hover:text-black hover:bg-white/60"
+              >
+                {link.name}
+              </Link>
+            </motion.li>
+          ))}
 
-                                                      </motion.li>
-                                             ))}
-                                    </ul>
-
-                           </nav>
-                  </header>
-         )
+        </ul>
+      </nav>
+    </header>
+  );
 }
