@@ -26,10 +26,8 @@ export default function RootLayout({
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-175 h-100 bg-[#dbd7fb] blur-[120px] rounded-full -z-10" />
         <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-175 h-100 bg-[#fbe2e3] blur-[120px] rounded-full -z-10" />
 
-        {/* HEADER — full width, centered pill */}
-        <div className="fixed top-6 left-0 right-0 z-50 flex justify-center">
-          <Header />
-        </div>
+        {/* HEADER — centered using flex (correct way) */}
+        <Header />
 
         {/* CONTENT */}
         <main className="flex justify-center w-full px-4 sm:px-6 pt-32 pb-20">

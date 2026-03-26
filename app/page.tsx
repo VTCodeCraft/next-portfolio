@@ -1,31 +1,31 @@
 import Intro from "@/components/intro";
+import ProfileSidebar from "@/components/profile-sidebar";
 import SectionDivider from "@/components/section-divider";
 import Sidebar from "@/components/sidebar";
 import Skills from "@/components/skills";
-import ProfileSidebar from "@/components/profile-sidebar";
 
 export default function Home() {
   return (
-    <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 lg:flex-row lg:items-stretch lg:gap-10 xl:gap-14">
-
-      {/* LEFT COLUMN — Nav links only */}
-      <aside className="w-full lg:w-44 lg:shrink-0 lg:sticky lg:top-32 lg:self-start">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:items-start lg:gap-16 xl:grid-cols-[13rem_minmax(0,1fr)] xl:gap-20">
+      {/* LEFT SIDEBAR */}
+      <aside className="w-full lg:self-start">
         <Sidebar />
       </aside>
 
-      {/* PROFILE IMAGE — its own column between sidebar and content */}
-      {/* On mobile: shown inline above main content */}
-      <div className="hidden lg:flex lg:items-center lg:justify-start lg:shrink-0 lg:sticky lg:top-28 lg:self-start lg:pt-2">
-        <ProfileSidebar />
-      </div>
+      {/* RIGHT CONTENT AREA */}
+      <main className="min-w-0">
+        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-[13rem_minmax(0,1fr)] lg:items-start lg:gap-14 xl:grid-cols-[15rem_minmax(0,1fr)] xl:gap-16">
+          <div className="hidden lg:block lg:sticky lg:top-32 lg:self-start">
+            <ProfileSidebar />
+          </div>
 
-      {/* MAIN CONTENT */}
-      <main className="flex min-w-0 w-full flex-1 flex-col items-center space-y-24 sm:space-y-28 lg:items-stretch lg:space-y-32">
-        <Intro />
-        <SectionDivider />
-        <Skills />
+          <div className="min-w-0 space-y-24 sm:space-y-28 lg:space-y-32">
+            <Intro />
+            <SectionDivider />
+            {/* <Skills /> */}
+          </div>
+        </div>
       </main>
-
     </div>
   );
 }

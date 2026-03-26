@@ -13,14 +13,30 @@ export default function Intro() {
     <section id="introduction" className="w-full flex justify-center">
       
       {/* CENTERED CONTAINER */}
-      <div className="max-w-5xl w-full flex flex-col md:flex-row items-center justify-center gap-16">
+      <div className="max-w-5xl w-full flex flex-col items-center justify-center gap-12 lg:flex-row lg:gap-16">
 
         {/* CONTENT */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left max-w-xl">
+        <div className="flex max-w-xl flex-col items-center text-center lg:items-start lg:text-left">
+          <motion.div
+            className="mb-6 lg:hidden"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Image
+              src="/profile.jpg"
+              alt="Vishesh Tripathi"
+              width={120}
+              height={120}
+              quality={95}
+              priority
+              className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-xl"
+            />
+          </motion.div>
 
           {/* NAME */}
           <motion.h1
-            className="text-4xl sm:text-6xl font-bold tracking-tight"
+            className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -30,7 +46,7 @@ export default function Intro() {
 
           {/* ROLE */}
           <motion.p
-            className="text-xl sm:text-2xl text-neutral-500 mt-2"
+            className="mt-2 text-lg text-neutral-500 sm:text-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -40,7 +56,7 @@ export default function Intro() {
 
           {/* SOCIALS */}
           <motion.div
-            className="flex flex-wrap gap-4 mt-6 justify-center md:justify-start"
+            className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start lg:gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -48,7 +64,7 @@ export default function Intro() {
             <Link
               href="https://github.com/VTCodeCraft"
               target="_blank"
-              className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
+              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
             >
               <FaGithub />
               GitHub
@@ -57,7 +73,7 @@ export default function Intro() {
             <Link
               href="https://x.com/VTCodeCraft_"
               target="_blank"
-              className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
+              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
             >
               <BsTwitter />
               X
@@ -66,7 +82,7 @@ export default function Intro() {
             <Link
               href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
               target="_blank"
-              className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
+              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
             >
               <FaLinkedin />
               LinkedIn
@@ -76,7 +92,7 @@ export default function Intro() {
               href="https://leetcode.com/u/VTCodeCraft/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-5 py-2 rounded-full bg-white shadow-md hover:scale-105 transition"
+              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
             >
               <SiLeetcode />
               LeetCode
@@ -85,13 +101,13 @@ export default function Intro() {
 
           {/* DESCRIPTION */}
           <motion.p
-            className="mt-8 text-lg text-neutral-700 leading-relaxed"
+            className="mt-8 text-base leading-relaxed text-neutral-700 sm:text-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
           >
-            <span className="font-bold">Hello, I'm Vishesh.</span>{" "}
-            I'm a <span className="font-bold">full-stack developer</span> focused on{" "}
+            <span className="font-bold">Hello, I&apos;m Vishesh.</span>{" "}
+            I&apos;m a <span className="font-bold">full-stack developer</span> focused on{" "}
             building <span className="italic">scalable real-world applications</span>{" "}
             and solving problems using{" "}
             <span className="font-bold">DSA in Java</span>. I specialize in{" "}
@@ -101,7 +117,7 @@ export default function Intro() {
 
           {/* BUTTONS */}
           <motion.div
-            className="flex flex-row items-center gap-4 mt-6 justify-center md:justify-start"
+            className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -109,7 +125,7 @@ export default function Intro() {
             <Link
               href="mailto:work.vishesh12.05@gmail.com"
               target="_blank"
-              className="group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full hover:scale-105 transition"
+              className="group flex items-center gap-2 rounded-full bg-gray-900 px-5 py-3 text-white transition hover:scale-105 sm:px-7"
             >
               <HiOutlineMail />
               Contact me here
@@ -121,7 +137,7 @@ export default function Intro() {
               download="Vishesh-Tripathi-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-white px-7 py-3 flex items-center gap-2 rounded-full border border-gray-200 hover:scale-105 transition"
+              className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-3 transition hover:scale-105 sm:px-7"
             >
               Download CV
               <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />
