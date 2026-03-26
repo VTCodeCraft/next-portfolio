@@ -4,12 +4,9 @@ import { LuGraduationCap } from "react-icons/lu";
 import { FaReact } from "react-icons/fa";
 
 export const links = [
-  { name: "Home", hash: "#home" },
-  { name: "About", hash: "#about" },
-  { name: "Projects", hash: "#projects" },
-  { name: "Skills", hash: "#skills" },
-  { name: "Experience", hash: "#experience" },
-  { name: "Contact", hash: "#contact" },
+  { name: "Home", href: "/" },
+  { name: "Projects", href: "/projects" },
+  { name: "Blog", href: "/blog" },
 ] as const;
 
 export const experiencesData = [
@@ -28,14 +25,6 @@ export const experiencesData = [
       "Worked at FoundersCart Pvt. Ltd. where I built monday.com integrations, secure authentication flows, CRM data pipelines, and a Chrome softphone extension. Developed full-stack features using React, Node.js, Express, MongoDB, and MySQL.",
     icon: React.createElement(CgWorkAlt),
     date: "Jun 2025 - Jul 2025",
-  },
-  {
-    title: "Full-Stack Developer",
-    location: "India",
-    description:
-      "Building full-stack applications including scheduling platforms, AI-powered chat apps, and accessibility tools. Focused on scalable backend systems and clean UI/UX.",
-    icon: React.createElement(FaReact),
-    date: "2024 - Present",
   },
 ] as const;
 
