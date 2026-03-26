@@ -10,11 +10,11 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="fixed top-6 inset-x-0 z-50 flex justify-center">
-      
+    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
+
       {/* NAV CONTAINER */}
       <div className="relative w-fit">
-        
+
         {/* BACKGROUND */}
         <motion.div
           className="absolute inset-0 rounded-full bg-white/60 backdrop-blur-md border border-white/30 shadow-sm"
@@ -25,7 +25,7 @@ export default function Header() {
         {/* NAV */}
         <nav className="relative px-4 sm:px-5 py-2">
           <ul className="flex items-center justify-center gap-2 sm:gap-4 text-[12px] sm:text-[13px] font-medium whitespace-nowrap">
-            
+
             {links.map((link) => (
               <motion.li
                 key={link.href}

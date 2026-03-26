@@ -6,23 +6,25 @@ import ProfileSidebar from "@/components/profile-sidebar";
 
 export default function Home() {
   return (
-    <div className="flex max-w-6xl mx-auto px-6 gap-16">
-      
-      {/* LEFT SIDE (NAV) */}
-      <div className="hidden lg:flex flex-col gap-16 w-60">
-        <Sidebar />
-      </div>
+    <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-8 lg:flex-row lg:items-stretch lg:gap-10 xl:gap-14">
 
-      <div className="flex flex-col gap-16 w-50 position- top-20">
+      {/* LEFT COLUMN — Nav links only */}
+      <aside className="w-full lg:w-44 lg:shrink-0 lg:sticky lg:top-32 lg:self-start">
+        <Sidebar />
+      </aside>
+
+      {/* PROFILE IMAGE — its own column between sidebar and content */}
+      {/* On mobile: shown inline above main content */}
+      <div className="hidden lg:flex lg:items-center lg:justify-start lg:shrink-0 lg:sticky lg:top-28 lg:self-start lg:pt-2">
         <ProfileSidebar />
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="flex-1 space-y-32">
+      <main className="flex min-w-0 w-full flex-1 flex-col items-center space-y-24 sm:space-y-28 lg:items-stretch lg:space-y-32">
         <Intro />
         <SectionDivider />
         <Skills />
-      </div>
+      </main>
 
     </div>
   );

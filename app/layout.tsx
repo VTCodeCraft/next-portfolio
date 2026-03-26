@@ -9,8 +9,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Vishesh Tripathi - Portfolio",
-  description:
-    "Vishesh Tripathi is a full-stack developer portfolio.",
+  description: "Vishesh Tripathi is a full-stack developer portfolio.",
 };
 
 export default function RootLayout({
@@ -25,13 +24,13 @@ export default function RootLayout({
       >
         {/* BACKGROUND BLOBS */}
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-175 h-100 bg-[#dbd7fb] blur-[120px] rounded-full -z-10" />
-        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-175 h-[400px] bg-[#fbe2e3] blur-[120px] rounded-full -z-10" />
+        <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-175 h-100 bg-[#fbe2e3] blur-[120px] rounded-full -z-10" />
 
-        {/* HEADER */}
+        {/* HEADER — full width, centered pill */}
         <Header />
 
         {/* CONTENT */}
-        <main className="flex justify-center w-full px-6 pt-32 pb-20">
+        <main className="flex justify-center w-full px-4 sm:px-6 pt-32 pb-20">
           <div className="w-full max-w-6xl">{children}</div>
         </main>
       </body>
