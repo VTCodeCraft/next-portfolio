@@ -52,7 +52,7 @@ export default function Sidebar() {
         ) : null}
       </div>
 
-      <aside className="hidden fixed left-10 top-1/2 -translate-y-1/2 text-gray-500 lg:flex lg:flex-col lg:gap-8">
+      <aside className="hidden text-gray-500 lg:flex lg:flex-col lg:gap-8">
         {sections.map((item) => (
           <a
             key={item.href}

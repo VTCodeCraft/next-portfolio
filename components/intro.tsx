@@ -10,10 +10,10 @@ import { SiLeetcode } from "react-icons/si";
 
 export default function Intro() {
   return (
-    <section id="introduction" className="w-full flex justify-center">
+    <section id="introduction" className="flex w-full justify-center lg:justify-start">
       
       {/* CENTERED CONTAINER */}
-      <div className="max-w-5xl w-full flex flex-col items-center justify-center gap-12 lg:flex-row lg:gap-16">
+      <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-12 lg:items-start lg:justify-start lg:gap-16">
 
         {/* CONTENT */}
         <div className="flex max-w-xl flex-col items-center text-center lg:items-start lg:text-left">
