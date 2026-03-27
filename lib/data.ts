@@ -12,7 +12,7 @@ export const links = [
 export const sections = [
   { name: "Introduction", hash: "#introduction" },
   { name: "Skills", hash: "#skills" },
-  { name: "Experience", hash: "#experience" },
+  { name: "My Journey", hash: "#my-journey" },
   { name: "Contact", hash: "#contact" },
 ] as const;
 
