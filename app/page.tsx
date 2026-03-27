@@ -23,6 +23,7 @@ export default function Home() {
           <Intro />
           <SectionDivider />
           <Skills />
+          <SectionDivider />
         </div>
       </main>
     </div>
