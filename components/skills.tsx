@@ -6,11 +6,11 @@ import { skillsData } from '@/lib/data'
 
 export default function Skills() {
   return (
-    <section id="skills" className="flex w-full flex-col items-center justify-center text-center lg:items-start lg:justify-start lg:text-left">
+    <section id="skills" className="mb-28 max-w-[45rem] scroll-mt-28 text-center sm:mb-40">
          <SectionHeading>Technical Skills</SectionHeading>
-         <ul className=" flex frex-wrap justify-center gap-2 text-lg text-gray-800 mx-auto text-center lg:mx-0 lg:text-left">
+         <ul className="flex flex-wrap justify-center gap-4 text-lg text-gray-800">
                  {skillsData.map((skill , index) => (
-                  <li className="bg-gray-200 text-gray-800 py-1 px-3 rounded-full" key={index}>{skill}
+                  <li className='bg-white border border-black/[0.1] rounded-xl px-5 py-3'  key={index}>{skill}
                   </li>
          ))}
          </ul>
