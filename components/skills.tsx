@@ -1,66 +1,109 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import SectionHeading from "./section-heading";
-import { skillsData } from "@/lib/data";
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { useActiveSectionContext } from "@/context/active-section-context";
-import { motion } from "framer-motion";
+import { skillsData } from "@/lib/data";
+import SectionHeading from "./section-heading";
 
-const COLS = 6;
-const ROWS = 4;
-const TOTAL = COLS * ROWS;
+/* ------------------ SEEDED RANDOM ------------------ */
+function createSeededRandom(seed: number) {
+  let value = seed;
 
-function getRow(i: number) {
-  return Math.floor(i / COLS);
-}
-function getCol(i: number) {
-  return i % COLS;
-}
-
-function isAdjacent(a: number, b: number) {
-  const dr = Math.abs(getRow(a) - getRow(b));
-  const dc = Math.abs(getCol(a) - getCol(b));
-  return (dr === 1 && dc === 0) || (dr === 0 && dc === 1);
+  return () => {
+    value = (value * 1664525 + 1013904223) % 4294967296;
+    return value / 4294967296;
+  };
 }
 
-// ✅ solvable shuffle (important)
-function shuffleTiles(arr: (string | null)[]) {
-  const a = [...arr];
-  let empty = a.indexOf(null);
-
-  for (let i = 0; i < 200; i++) {
-    const moves = [-COLS, COLS, -1, 1];
-    const valid = moves
-      .map((m) => empty + m)
-      .filter((n) => n >= 0 && n < TOTAL);
-
-    const next = valid[Math.floor(Math.random() * valid.length)];
-    [a[empty], a[next]] = [a[next], a[empty]];
-    empty = next;
-  }
-
-  return a;
-}
-
+/* ------------------ COMPONENT ------------------ */
 export default function Skills() {
+  const [cols, setCols] = useState(6); // default desktop
+  const rows = Math.floor(24 / cols);
+  const TOTAL = cols * rows;
+
+  const [tiles, setTiles] = useState<Array<string | null>>([]);
+  const dragStart = useRef<{ x: number; y: number } | null>(null);
+
   const [ref, inView] = useInView({ threshold: 0.5 });
   const { setActiveSection } = useActiveSectionContext();
 
+  /* ------------------ RESPONSIVE ------------------ */
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setCols(4); // mobile
+      } else {
+        setCols(6); // desktop
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  /* ------------------ GRID HELPERS ------------------ */
+  function getRow(i: number) {
+    return Math.floor(i / cols);
+  }
+
+  function getCol(i: number) {
+    return i % cols;
+  }
+
+  function isAdjacent(a: number, b: number) {
+    const dr = Math.abs(getRow(a) - getRow(b));
+    const dc = Math.abs(getCol(a) - getCol(b));
+    return (dr === 1 && dc === 0) || (dr === 0 && dc === 1);
+  }
+
+  /* ------------------ SHUFFLE ------------------ */
+  function shuffleTiles(
+    arr: Array<string | null>,
+    random: () => number = Math.random
+  ) {
+    const a = [...arr];
+    let empty = a.indexOf(null);
+
+    for (let i = 0; i < 200; i++) {
+      const moves = [-cols, cols, -1, 1];
+      const valid = moves
+        .map((m) => empty + m)
+        .filter((n) => n >= 0 && n < TOTAL);
+
+      const next = valid[Math.floor(random() * valid.length)];
+      [a[empty], a[next]] = [a[next], a[empty]];
+      empty = next;
+    }
+
+    return a;
+  }
+
+  /* ------------------ INITIALIZE ------------------ */
+  useEffect(() => {
+    const INITIAL_TILES = [
+      ...skillsData.slice(0, TOTAL - 1),
+      null,
+    ] as Array<string | null>;
+
+    const shuffled = shuffleTiles(
+      INITIAL_TILES,
+      createSeededRandom(42)
+    );
+
+    setTiles(shuffled);
+  }, [cols]); // re-init when layout changes
+
+  /* ------------------ ACTIVE SECTION ------------------ */
   useEffect(() => {
     if (inView) setActiveSection("Skills");
   }, [inView, setActiveSection]);
 
-  // 🎮 state
-  const initialTiles = [...skillsData.slice(0, TOTAL - 1), null];
-  const [tiles, setTiles] = useState<(string | null)[]>(() =>
-    shuffleTiles(initialTiles)
-  );
-
-  const dragStart = useRef<{ x: number; y: number } | null>(null);
-
   const emptyIndex = tiles.indexOf(null);
 
+  /* ------------------ MOVE TILE ------------------ */
   const moveTile = (index: number) => {
     if (!isAdjacent(index, emptyIndex)) return;
 
@@ -72,42 +115,41 @@ export default function Skills() {
     setTiles(newTiles);
   };
 
-  // 🖱️ drag start
+  /* ------------------ DRAG ------------------ */
   const handlePointerDown = (e: React.PointerEvent) => {
     dragStart.current = { x: e.clientX, y: e.clientY };
   };
 
-  // 🖱️ drag end → detect direction
   const handlePointerUp = (index: number, e: React.PointerEvent) => {
     if (!dragStart.current) return;
 
     const dx = e.clientX - dragStart.current.x;
     const dy = e.clientY - dragStart.current.y;
-
     const absX = Math.abs(dx);
     const absY = Math.abs(dy);
 
-    // small movement → treat as click
+    // tap
     if (absX < 5 && absY < 5) {
       moveTile(index);
+      dragStart.current = null;
       return;
     }
 
-    const empty = emptyIndex;
-
-    // horizontal swipe
+    // swipe
     if (absX > absY) {
-      if (dx > 0 && index === empty - 1) moveTile(index); // right
-      if (dx < 0 && index === empty + 1) moveTile(index); // left
+      if (dx > 0 && index === emptyIndex - 1) moveTile(index);
+      if (dx < 0 && index === emptyIndex + 1) moveTile(index);
     } else {
-      // vertical swipe
-      if (dy > 0 && index === empty - COLS) moveTile(index); // down
-      if (dy < 0 && index === empty + COLS) moveTile(index); // up
+      if (dy > 0 && index === emptyIndex - cols) moveTile(index);
+      if (dy < 0 && index === emptyIndex + cols) moveTile(index);
     }
 
     dragStart.current = null;
   };
 
+  const isMobile = cols === 4;
+
+  /* ------------------ UI ------------------ */
   return (
     <section
       id="skills"
@@ -116,10 +158,13 @@ export default function Skills() {
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
-      {/* 🎮 BOARD */}
-      <div className="mx-auto mt-10 w-[720px] rounded-2xl bg-white/70 backdrop-blur-md border border-black/10 p-4 shadow-lg">
-
-        <div className="grid grid-cols-6 gap-3">
+      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-black/10 bg-white/70 p-4 shadow-lg backdrop-blur-md">
+        <div
+          className="grid gap-3"
+          style={{
+            gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+          }}
+        >
           {tiles.map((tile, index) => {
             const canMove = tile && isAdjacent(index, emptyIndex);
 
@@ -136,13 +181,10 @@ export default function Skills() {
               <motion.div
                 key={tile}
                 layout
-
                 onPointerDown={handlePointerDown}
                 onPointerUp={(e) => handlePointerUp(index, e)}
-
                 whileHover={canMove ? { scale: 1.05 } : {}}
                 whileTap={canMove ? { scale: 0.95 } : {}}
-
                 transition={{
                   layout: {
                     type: "spring",
@@ -150,13 +192,13 @@ export default function Skills() {
                     damping: 35,
                   },
                 }}
-
-                className={`h-16 flex items-center justify-center rounded-lg text-xs font-medium px-2 text-center transition
-                  ${
-                    canMove
-                      ? "bg-white shadow-md cursor-grab active:cursor-grabbing"
-                      : "bg-gray-100 text-gray-400"
-                  }`}
+                className={`flex ${
+                  isMobile ? "h-20" : "h-16"
+                } items-center justify-center rounded-lg px-2 text-center text-xs font-medium transition ${
+                  canMove
+                    ? "cursor-grab bg-white shadow-md active:cursor-grabbing"
+                    : "bg-gray-100 text-gray-400"
+                }`}
               >
                 {tile}
               </motion.div>
@@ -165,10 +207,16 @@ export default function Skills() {
         </div>
       </div>
 
-      {/* 🔄 SHUFFLE */}
       <button
-        onClick={() => setTiles(shuffleTiles(initialTiles))}
-        className="mt-6 px-5 py-2 rounded-xl bg-gray-900 text-white text-sm hover:scale-105 transition"
+        onClick={() => {
+          const INITIAL_TILES = [
+            ...skillsData.slice(0, TOTAL - 1),
+            null,
+          ] as Array<string | null>;
+
+          setTiles(shuffleTiles(INITIAL_TILES));
+        }}
+        className="mt-6 rounded-xl bg-gray-900 px-5 py-2 text-sm text-white transition hover:scale-105"
       >
         Shuffle
       </button>
