@@ -9,6 +9,13 @@ export const links = [
   { name: "Blog", href: "/blog" },
 ] as const;
 
+export const sections = [
+  { name: "Introduction", hash: "#introduction" },
+  { name: "Skills", hash: "#skills" },
+  { name: "Experience", hash: "#experience" },
+  { name: "Contact", hash: "#contact" },
+] as const;
+
 export const experiencesData = [
   {
     title: "B.Tech in Information Technology",
