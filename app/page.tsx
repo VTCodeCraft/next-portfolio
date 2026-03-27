@@ -13,7 +13,7 @@ export default function Home() {
       </aside>
 
       {/* PROFILE IMAGE SECTION */}
-      <div className="hidden lg:top-32 lg:flex lg:min-h-[calc(100vh-32rem)] lg:items-center lg:justify-center lg:self-start">
+      <div className="hidden lg:sticky lg:top-32 lg:flex lg:min-h-[calc(100vh-32rem)] lg:items-center lg:justify-center lg:self-start">
         <ProfileSidebar />
       </div>
 

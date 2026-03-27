@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 const sections = [
@@ -14,7 +15,11 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="fixed left-6 top-6 z-50 lg:hidden">
+      <motion.div className="fixed left-6 top-6 z-50 lg:hidden"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         <button
           type="button"
           aria-controls="mobile-sidebar"
@@ -50,9 +55,13 @@ export default function Sidebar() {
             </nav>
           </aside>
         ) : null}
-      </div>
+      </motion.div>
 
-      <aside className="hidden text-gray-500 lg:flex lg:flex-col lg:gap-8">
+      <motion.aside className="hidden text-gray-500 lg:flex lg:flex-col lg:gap-8"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         {sections.map((item) => (
           <a
             key={item.href}
@@ -65,7 +74,7 @@ export default function Sidebar() {
             </span>
           </a>
         ))}
-      </aside>
+      </motion.aside>
     </>
   );
 }
