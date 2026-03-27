@@ -41,7 +41,7 @@ export default function Sidebar() {
                   onClick={() => setIsOpen(false)}
                   className="flex items-center gap-4 group transition"
                 >
-                  <span className="w-6 h-px bg-gray-300 group-hover:bg-black transition" />
+                  <span className="w-4 h-px bg-gray-300 group-hover:bg-black transition" />
                   <span className="group-hover:text-black transition">
                     {item.name}
                   </span>
@@ -59,7 +59,7 @@ export default function Sidebar() {
             href={item.href}
             className="flex items-center gap-4 group transition"
           >
-            <span className="w-6 h-px bg-gray-300 group-hover:bg-black transition" />
+            <span className="w-4 h-px bg-gray-300 group-hover:bg-black transition" />
             <span className="group-hover:text-black transition">
               {item.name}
             </span>

@@ -29,9 +29,10 @@ export default function RootLayout({
         <Header />
 
         {/* CONTENT */}
-        <main className="flex justify-center w-full px-4 sm:px-6 pt-32 pb-20">
-          <div className="w-full max-w-6xl">{children}</div>
+        <main className="w-full pt-32 pb-20">
+          <div className="w-full">{children}</div>
         </main>
+
       </body>
     </html>
   );
