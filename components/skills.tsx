@@ -2,7 +2,11 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { skillsData } from "@/lib/data";
+import {
+  skillsData,
+  skillIconsData,
+  skillColors,
+} from "@/lib/data";
 import SectionHeading from "./section-heading";
 import { useSectionInView } from "@/lib/hooks";
 
@@ -16,9 +20,8 @@ function createSeededRandom(seed: number) {
   };
 }
 
-/* ------------------ COMPONENT ------------------ */
 export default function Skills() {
-  const [cols, setCols] = useState(6); // default desktop
+  const [cols, setCols] = useState(6);
   const rows = Math.floor(24 / cols);
   const TOTAL = cols * rows;
 
@@ -28,11 +31,8 @@ export default function Skills() {
   /* ------------------ RESPONSIVE ------------------ */
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setCols(4); // mobile
-      } else {
-        setCols(6); // desktop
-      }
+      if (window.innerWidth < 640) setCols(4); // mobile
+      else setCols(6); // desktop
     };
 
     handleResize();
@@ -40,20 +40,15 @@ export default function Skills() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  /* ------------------ GRID HELPERS ------------------ */
-  function getRow(i: number) {
-    return Math.floor(i / cols);
-  }
+  /* ------------------ HELPERS ------------------ */
+  const getRow = (i: number) => Math.floor(i / cols);
+  const getCol = (i: number) => i % cols;
 
-  function getCol(i: number) {
-    return i % cols;
-  }
-
-  function isAdjacent(a: number, b: number) {
+  const isAdjacent = (a: number, b: number) => {
     const dr = Math.abs(getRow(a) - getRow(b));
     const dc = Math.abs(getCol(a) - getCol(b));
     return (dr === 1 && dc === 0) || (dr === 0 && dc === 1);
-  }
+  };
 
   /* ------------------ SHUFFLE ------------------ */
   function shuffleTiles(
@@ -77,7 +72,7 @@ export default function Skills() {
     return a;
   }
 
-  /* ------------------ INITIALIZE ------------------ */
+  /* ------------------ INIT ------------------ */
   useEffect(() => {
     const INITIAL_TILES = [
       ...skillsData.slice(0, TOTAL - 1),
@@ -90,12 +85,11 @@ export default function Skills() {
     );
 
     setTiles(shuffled);
-  }, [cols]); // re-init when layout changes
+  }, [cols]);
 
-  /* ------------------ ACTIVE SECTION ------------------ */
   const ref = useSectionInView("Skills", 0.5);
-
   const emptyIndex = tiles.indexOf(null);
+  const isMobile = cols === 4;
 
   /* ------------------ MOVE TILE ------------------ */
   const moveTile = (index: number) => {
@@ -141,14 +135,12 @@ export default function Skills() {
     dragStart.current = null;
   };
 
-  const isMobile = cols === 4;
-
   /* ------------------ UI ------------------ */
   return (
     <section
       id="skills"
       ref={ref}
-      className="mb-28 max-w-[60rem] scroll-mt-28 text-center sm:mb-40"
+      className="max-w-[60rem] scroll-mt-28 text-center"
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
@@ -166,7 +158,7 @@ export default function Skills() {
               return (
                 <div
                   key="empty"
-                  className="h-16 rounded-lg border border-dashed border-black/10"
+                  className="h-16 sm:h-20 rounded-lg border border-dashed border-black/10"
                 />
               );
             }
@@ -177,7 +169,7 @@ export default function Skills() {
                 layout
                 onPointerDown={handlePointerDown}
                 onPointerUp={(e) => handlePointerUp(index, e)}
-                whileHover={canMove ? { scale: 1.05 } : {}}
+                whileHover={canMove ? { scale: 1.08 } : {}}
                 whileTap={canMove ? { scale: 0.95 } : {}}
                 transition={{
                   layout: {
@@ -188,13 +180,33 @@ export default function Skills() {
                 }}
                 className={`flex ${
                   isMobile ? "h-20" : "h-16"
-                } items-center justify-center rounded-lg px-2 text-center text-xs font-medium transition ${
+                } items-center justify-center rounded-lg px-2 text-center transition ${
                   canMove
-                    ? "cursor-grab bg-white shadow-md active:cursor-grabbing"
-                    : "bg-gray-100 text-gray-400"
+                    ? "cursor-grab bg-white shadow-md active:cursor-grabbing hover:shadow-xl"
+                    : "bg-gray-100 text-gray-400 opacity-60 cursor-default"
                 }`}
               >
-                {tile}
+                <div className="flex flex-col items-center justify-center gap-1">
+                  {/* ICON */}
+                  <span
+                    className={`${isMobile ? "text-xl" : "text-lg"}`}
+                    style={{
+                      color: skillColors[tile],
+                      filter: "drop-shadow(0 0 4px rgba(0,0,0,0.2))",
+                    }}
+                  >
+                    {skillIconsData[tile]}
+                  </span>
+
+                  {/* TEXT */}
+                  <span
+                    className={`${
+                      isMobile ? "text-[11px]" : "text-[10px]"
+                    } leading-tight`}
+                  >
+                    {tile}
+                  </span>
+                </div>
               </motion.div>
             );
           })}
@@ -210,7 +222,7 @@ export default function Skills() {
 
           setTiles(shuffleTiles(INITIAL_TILES));
         }}
-        className="mt-6 rounded-xl bg-gray-900 px-5 py-2 text-sm text-white transition hover:scale-105"
+        className="mt-6 rounded-xl bg-gray-900 px-5 py-2 text-sm text-white transition hover:scale-105 active:scale-95"
       >
         Shuffle
       </button>

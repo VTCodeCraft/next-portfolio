@@ -1,6 +1,9 @@
 import React from "react";
 import { CgWorkAlt } from "react-icons/cg";
 import { LuGraduationCap } from "react-icons/lu";
+import { FaHtml5, FaCss3Alt, FaReact, FaNodeJs, FaPython, FaJava, FaDocker, FaLinux, FaGithub } from "react-icons/fa";
+import { SiJavascript, SiTypescript, SiNextdotjs, SiExpress, SiFastapi, SiMongodb, SiMysql, SiPostgresql, SiSupabase, SiRedis, SiTailwindcss, SiFramer, SiCplusplus } from "react-icons/si";
+import { TbApi, TbBinaryTree } from "react-icons/tb";
 
 export const links = [
   { name: "Home", href: "/" },
@@ -89,3 +92,57 @@ export const skillsData = [
   "Tailwind CSS",
   "Framer Motion",
 ] as const;
+
+export const skillIconsData: Record<string, React.ReactElement> = {
+  "HTML":          React.createElement(FaHtml5),
+  "CSS":           React.createElement(FaCss3Alt),
+  "JavaScript":    React.createElement(SiJavascript),
+  "TypeScript":    React.createElement(SiTypescript),
+  "React":         React.createElement(FaReact),
+  "Next.js":       React.createElement(SiNextdotjs),
+  "Node.js":       React.createElement(FaNodeJs),
+  "Express.js":    React.createElement(SiExpress),
+  "FastAPI":       React.createElement(SiFastapi),
+  "Python":        React.createElement(FaPython),
+  "Java":          React.createElement(FaJava),
+  "C/C++":         React.createElement(SiCplusplus),
+  "DSA":           React.createElement(TbBinaryTree),
+  "MongoDB":       React.createElement(SiMongodb),
+  "MySQL":         React.createElement(SiMysql),
+  "PostgreSQL":    React.createElement(SiPostgresql),
+  "Supabase":      React.createElement(SiSupabase),
+  "Redis":         React.createElement(SiRedis),
+  "REST APIs":     React.createElement(TbApi),
+  "GitHub":        React.createElement(FaGithub),
+  "Docker":        React.createElement(FaDocker),
+  "Linux":         React.createElement(FaLinux),
+  "Tailwind CSS":  React.createElement(SiTailwindcss),
+  "Framer Motion": React.createElement(SiFramer),
+};
+
+export const skillColors: Record<string, string> = {
+  "HTML": "#E34F26",
+  "CSS": "#1572B6",
+  "JavaScript": "#F7DF1E",
+  "TypeScript": "#3178C6",
+  "React": "#61DAFB",
+  "Next.js": "#000000",
+  "Node.js": "#339933",
+  "Express.js": "#444444",
+  "FastAPI": "#009688",
+  "Python": "#3776AB",
+  "Java": "#007396",
+  "C/C++": "#00599C",
+  "DSA": "#8B5CF6",
+  "MongoDB": "#47A248",
+  "MySQL": "#4479A1",
+  "PostgreSQL": "#336791",
+  "Supabase": "#3ECF8E",
+  "Redis": "#DC382D",
+  "REST APIs": "#0EA5E9",
+  "GitHub": "#181717",
+  "Docker": "#2496ED",
+  "Linux": "#FCC624",
+  "Tailwind CSS": "#06B6D4",
+  "Framer Motion": "#E10098",
+};
