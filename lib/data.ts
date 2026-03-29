@@ -1,7 +1,6 @@
 import React from "react";
 import { CgWorkAlt } from "react-icons/cg";
 import { LuGraduationCap } from "react-icons/lu";
-import { FaReact } from "react-icons/fa";
 
 export const links = [
   { name: "Home", href: "/" },
@@ -21,7 +20,9 @@ export const experiencesData = [
     title: "B.Tech in Information Technology",
     location: "New Delhi, India",
     description:
-      "Currently pursuing B.Tech from Bharati Vidyapeeth’s College of Engineering (GGSIPU) with a CGPA of 8.82.",
+      "• CGPA: 8.93 (GGSIPU)\n" +
+      "• Relevant Coursework: Data Structures, OOP, DBMS, Machine Learning, Web Programming, Introduction to CS\n" +
+      "• Developed multiple full-stack applications using modern web technologies\n",
     icon: React.createElement(LuGraduationCap),
     date: "2023 - 2027",
   },
@@ -29,7 +30,13 @@ export const experiencesData = [
     title: "Software Developer Intern",
     location: "New Delhi (Hybrid)",
     description:
-      "Worked at FoundersCart Pvt. Ltd. where I built monday.com integrations, secure authentication flows, CRM data pipelines, and a Chrome softphone extension. Developed full-stack features using React, Node.js, Express, MongoDB, and MySQL.",
+      "• Engineered monday.com integrations with secure OAuth flows and GraphQL APIs\n" +
+      "• Built a Chrome-based softphone extension enabling click-to-call via IVR systems\n" +
+      "• Designed and implemented CRM data pipelines to automate lead management workflows\n" +
+      "• Built a full-stack meeting scheduling application:\n" +
+      " - Implemented dynamic time-slot generation with timezone-aware logic\n" +
+      " - Designed conflict-free booking system with real-time availability updates\n" +
+      " - Used React, TypeScript, PostgreSQL, and TypeORM for robust system design\n",
     icon: React.createElement(CgWorkAlt),
     date: "Jun 2025 - Jul 2025",
   },

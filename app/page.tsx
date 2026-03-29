@@ -1,4 +1,5 @@
 import Intro from "@/components/intro";
+import MyJourney from "@/components/my-journey";
 import ProfileSidebar from "@/components/profile-sidebar";
 import SectionDivider from "@/components/section-divider";
 import Sidebar from "@/components/sidebar";
@@ -24,6 +25,7 @@ export default function Home() {
           <SectionDivider />
           <Skills />
           <SectionDivider />
+          <MyJourney/>
         </div>
       </main>
     </div>
