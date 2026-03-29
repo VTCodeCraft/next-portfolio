@@ -2,10 +2,9 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { useActiveSectionContext } from "@/context/active-section-context";
 import { skillsData } from "@/lib/data";
 import SectionHeading from "./section-heading";
+import { useSectionInView } from "@/lib/hooks";
 
 /* ------------------ SEEDED RANDOM ------------------ */
 function createSeededRandom(seed: number) {
@@ -25,9 +24,6 @@ export default function Skills() {
 
   const [tiles, setTiles] = useState<Array<string | null>>([]);
   const dragStart = useRef<{ x: number; y: number } | null>(null);
-
-  const [ref, inView] = useInView({ threshold: 0.5 });
-  const { setActiveSection } = useActiveSectionContext();
 
   /* ------------------ RESPONSIVE ------------------ */
   useEffect(() => {
@@ -97,9 +93,7 @@ export default function Skills() {
   }, [cols]); // re-init when layout changes
 
   /* ------------------ ACTIVE SECTION ------------------ */
-  useEffect(() => {
-    if (inView) setActiveSection("Skills");
-  }, [inView, setActiveSection]);
+  const ref = useSectionInView("Skills", 0.5);
 
   const emptyIndex = tiles.indexOf(null);
 

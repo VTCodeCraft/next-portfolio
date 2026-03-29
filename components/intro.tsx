@@ -7,21 +7,23 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiDownload, HiOutlineMail } from "react-icons/hi";
 import { BsArrowRight, BsTwitter } from "react-icons/bs";
 import { SiLeetcode } from "react-icons/si";
-import { useEffect } from "react";
-import { useActiveSectionContext } from "@/context/active-section-context";
-import { useInView } from 'react-intersection-observer';
+import { useSectionInView } from "@/lib/hooks";
+
 
 export default function Intro() {
-  const [ref, inView] = useInView({
-    threshold: 0.75,
-  });
-  const { setActiveSection } = useActiveSectionContext();
 
-  useEffect(() => {
-    if (inView) {
-      setActiveSection("Introduction");
-    }
-  }, [inView, setActiveSection]);
+  const ref = useSectionInView("Introduction" , 0.75);
+
+  // const [ref, inView] = useInView({
+  //   threshold: 0.75,
+  // });
+  // const { setActiveSection } = useActiveSectionContext();
+
+  // useEffect(() => {
+  //   if (inView) {
+  //     setActiveSection("Introduction");
+  //   }
+  // }, [inView, setActiveSection]);
   
   return (
     <section id="introduction" ref={ref} className="flex w-full justify-center lg:justify-start scroll-mt-28"
