@@ -33,13 +33,10 @@ export const experiencesData = [
     title: "Software Developer Intern",
     location: "New Delhi (Hybrid)",
     description:
-      "• Engineered monday.com integrations with secure OAuth flows and GraphQL APIs\n" +
-      "• Built a Chrome-based softphone extension enabling click-to-call via IVR systems\n" +
-      "• Designed and implemented CRM data pipelines to automate lead management workflows\n" +
-      "• Built a full-stack meeting scheduling application:\n" +
-      " - Implemented dynamic time-slot generation with timezone-aware logic\n" +
-      " - Designed conflict-free booking system with real-time availability updates\n" +
-      " - Used React, TypeScript, PostgreSQL, and TypeORM for robust system design\n",
+  "• Built monday.com integrations using OAuth & GraphQL APIs\n" +
+  "• Developed Chrome softphone extension for IVR-based click-to-call\n" +
+  "• Automated CRM workflows via data pipelines\n" +
+  "• Built full-stack scheduling system with timezone-aware slots & conflict-free real-time booking (React, TS, PostgreSQL, TypeORM)\n",
     icon: React.createElement(CgWorkAlt),
     date: "Jun 2025 - Jul 2025",
   },

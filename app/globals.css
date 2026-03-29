@@ -3,3 +3,14 @@
 html{
          --line-color: #e5e7eb;
 }
+
+.journey-timeline.vertical-timeline {
+         width: 100%;
+         max-width: none;
+         margin-left: 0;
+         margin-right: 0;
+}
+
+.journey-timeline .vertical-timeline-element-content {
+         max-width: 36rem;
+}

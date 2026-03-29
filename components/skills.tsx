@@ -13,7 +13,6 @@ import { useSectionInView } from "@/lib/hooks";
 /* ------------------ SEEDED RANDOM ------------------ */
 function createSeededRandom(seed: number) {
   let value = seed;
-
   return () => {
     value = (value * 1664525 + 1013904223) % 4294967296;
     return value / 4294967296;
@@ -26,13 +25,15 @@ export default function Skills() {
   const TOTAL = cols * rows;
 
   const [tiles, setTiles] = useState<Array<string | null>>([]);
+  const [solved, setSolved] = useState(false);
+
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
   /* ------------------ RESPONSIVE ------------------ */
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setCols(4); // mobile
-      else setCols(6); // desktop
+      if (window.innerWidth < 640) setCols(4);
+      else setCols(6);
     };
 
     handleResize();
@@ -87,6 +88,15 @@ export default function Skills() {
     setTiles(shuffled);
   }, [cols]);
 
+  /* ------------------ SOLVED CHECK ------------------ */
+  useEffect(() => {
+    const correct = [
+      ...skillsData.slice(0, TOTAL - 1),
+      null,
+    ];
+    setSolved(JSON.stringify(tiles) === JSON.stringify(correct));
+  }, [tiles]);
+
   const ref = useSectionInView("Skills", 0.5);
   const emptyIndex = tiles.indexOf(null);
   const isMobile = cols === 4;
@@ -116,14 +126,12 @@ export default function Skills() {
     const absX = Math.abs(dx);
     const absY = Math.abs(dy);
 
-    // tap
     if (absX < 5 && absY < 5) {
       moveTile(index);
       dragStart.current = null;
       return;
     }
 
-    // swipe
     if (absX > absY) {
       if (dx > 0 && index === emptyIndex - 1) moveTile(index);
       if (dx < 0 && index === emptyIndex + 1) moveTile(index);
@@ -144,7 +152,14 @@ export default function Skills() {
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
-      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-black/10 bg-white/70 p-4 shadow-lg backdrop-blur-md">
+      {/* SOLVED MESSAGE */}
+      {solved && (
+        <p className="text-green-600 font-medium mt-2">
+          🎉 Puzzle Solved!
+        </p>
+      )}
+
+      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl lg:mx-0">
         <div
           className="grid gap-3"
           style={{
@@ -158,7 +173,7 @@ export default function Skills() {
               return (
                 <div
                   key="empty"
-                  className="h-16 sm:h-20 rounded-lg border border-dashed border-black/10"
+                  className="h-16 sm:h-20 rounded-lg border border-dashed border-white/30"
                 />
               );
             }
@@ -169,40 +184,47 @@ export default function Skills() {
                 layout
                 onPointerDown={handlePointerDown}
                 onPointerUp={(e) => handlePointerUp(index, e)}
-                whileHover={canMove ? { scale: 1.08 } : {}}
-                whileTap={canMove ? { scale: 0.95 } : {}}
+                whileHover={
+                  canMove
+                    ? {
+                      scale: 1.1,
+                      rotate: 1,
+                    }
+                    : {}
+                }
+                whileTap={canMove ? { scale: 0.92 } : {}}
                 transition={{
                   layout: {
                     type: "spring",
-                    stiffness: 600,
-                    damping: 35,
+                    stiffness: 500,
+                    damping: 30,
                   },
                 }}
-                className={`flex ${
-                  isMobile ? "h-20" : "h-16"
-                } items-center justify-center rounded-lg px-2 text-center transition ${
-                  canMove
-                    ? "cursor-grab bg-white shadow-md active:cursor-grabbing hover:shadow-xl"
-                    : "bg-gray-100 text-gray-400 opacity-60 cursor-default"
-                }`}
+                className={`relative flex ${isMobile ? "h-20" : "h-16"
+                  } items-center justify-center rounded-lg px-2 text-center transition ${canMove
+                    ? "cursor-grab bg-white/80 shadow-lg active:cursor-grabbing hover:shadow-2xl"
+                    : "bg-gray-100/40 text-gray-400 opacity-60"
+                  }`}
               >
-                <div className="flex flex-col items-center justify-center gap-1">
-                  {/* ICON */}
+                {/* GLOW EFFECT */}
+                {canMove && (
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-400/20 to-purple-400/20 blur-md opacity-0 hover:opacity-100 transition" />
+                )}
+
+                <div className="flex flex-col items-center justify-center gap-1 relative z-10">
                   <span
                     className={`${isMobile ? "text-xl" : "text-lg"}`}
                     style={{
                       color: skillColors[tile],
-                      filter: "drop-shadow(0 0 4px rgba(0,0,0,0.2))",
+                      filter: "drop-shadow(0 0 6px rgba(0,0,0,0.3))",
                     }}
                   >
                     {skillIconsData[tile]}
                   </span>
 
-                  {/* TEXT */}
                   <span
-                    className={`${
-                      isMobile ? "text-[11px]" : "text-[10px]"
-                    } leading-tight`}
+                    className={`${isMobile ? "text-[11px]" : "text-[10px]"
+                      } leading-tight font-medium`}
                   >
                     {tile}
                   </span>
@@ -213,19 +235,23 @@ export default function Skills() {
         </div>
       </div>
 
-      <button
-        onClick={() => {
-          const INITIAL_TILES = [
-            ...skillsData.slice(0, TOTAL - 1),
-            null,
-          ] as Array<string | null>;
+      {/* BUTTON */}
+      <div className="mx-auto mt-6 flex w-full max-w-[720px] justify-center lg:mx-0">
+        <button
+          onClick={() => {
+            const INITIAL_TILES = [
+              ...skillsData.slice(0, TOTAL - 1),
+              null,
+            ] as Array<string | null>;
 
-          setTiles(shuffleTiles(INITIAL_TILES));
-        }}
-        className="mt-6 rounded-xl bg-gray-900 px-5 py-2 text-sm text-white transition hover:scale-105 active:scale-95"
-      >
-        Shuffle
-      </button>
+            setTiles(shuffleTiles(INITIAL_TILES));
+            setSolved(false);
+          }}
+          className="rounded-xl bg-gradient-to-r from-gray-900 to-black px-6 py-2 text-sm text-white shadow-lg transition hover:scale-110 active:scale-95"
+        >
+          Shuffle
+        </button>
+      </div>
     </section>
   );
 }

@@ -14,10 +14,17 @@ export default function MyJourney() {
   const ref = useSectionInView("My Journey", 0.5);
 
   return (
-    <section id="my-journey" ref={ref} className="scroll-mt-28">
+    <section
+      id="my-journey"
+      ref={ref}
+      className="w-full scroll-mt-28 lg:max-w-none"
+    >
       <SectionHeading>My Journey</SectionHeading>
-
-      <VerticalTimeline lineColor="rgba(0, 0, 0, 0.08)">
+      <VerticalTimeline
+        className="journey-timeline"
+        layout="1-column-left"
+        lineColor="rgba(0, 0, 0, 0.06)"
+      >
         {experiencesData.map((item, index) => (
           <VerticalTimelineElement
             key={`${item.title}-${index}`}

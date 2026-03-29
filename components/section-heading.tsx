@@ -9,14 +9,14 @@ type SectionHeadingProps = {
 
 export default function SectionHeading({ children }: SectionHeadingProps) {
   return (
-    <div className="flex flex-col items-center mb-12">
+    <div className="mx-auto mb-12 flex w-full flex-col items-center lg:items-start">
       {/* Heading */}
       <motion.h2
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="text-3xl sm:text-4xl font-semibold text-center tracking-tight"
+        className="text-3xl sm:text-4xl font-semibold text-center tracking-tight lg:text-left"
       >
         {children}
       </motion.h2>
