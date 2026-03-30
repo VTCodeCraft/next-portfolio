@@ -8,42 +8,6 @@ html{
          --line-color: #e5e7eb;
 }
 
-.aurora-layer {
-         position: absolute;
-         inset: auto;
-         border-radius: 9999px;
-         filter: blur(110px);
-         opacity: 0.65;
-         will-change: transform;
-         animation: aurora-float 18s ease-in-out infinite alternate;
-}
-
-.aurora-layer-left {
-         top: -8rem;
-         left: -12rem;
-         height: 34rem;
-         width: 42rem;
-         background: radial-gradient(circle, rgba(191, 175, 255, 0.55) 0%, rgba(191, 175, 255, 0.25) 45%, transparent 75%);
-}
-
-.aurora-layer-right {
-         top: -6rem;
-         right: -10rem;
-         height: 30rem;
-         width: 36rem;
-         background: radial-gradient(circle, rgba(255, 203, 214, 0.52) 0%, rgba(255, 203, 214, 0.22) 42%, transparent 74%);
-         animation-duration: 22s;
-}
-
-.aurora-layer-center {
-         top: 6rem;
-         left: 28%;
-         height: 26rem;
-         width: 32rem;
-         background: radial-gradient(circle, rgba(214, 237, 255, 0.34) 0%, rgba(214, 237, 255, 0.16) 46%, transparent 74%);
-         animation-duration: 24s;
-}
-
 @keyframes aurora-float {
          0% {
                   transform: translate3d(0, 0, 0) scale(1);
