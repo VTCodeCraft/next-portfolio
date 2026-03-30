@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
 
@@ -32,10 +33,10 @@ export default function RootLayout({
         <ActiveSectionContextProvider>
         <Header />
         {/* CONTENT */}
-        <main className="w-full pt-32 pb-20">
+        <main className="w-full pt-32 pb-10">
           <div className="w-full">{children}</div>
         </main>
-
+        <Footer />
         <Toaster position="top-right"/>
         </ActiveSectionContextProvider>
       </body>

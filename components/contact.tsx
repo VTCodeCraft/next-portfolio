@@ -13,7 +13,7 @@ export default function Contact() {
          return (
                   <motion.section
                            id="contact"
-                           className="w-full scroll-mt-28  max-w-[38rem] text-center sm:mb-28 lg:mx-0 lg:text-left"
+                           className="w-full scroll-mt-28 max-w-[38rem] pb-2 text-center sm:mb-10 lg:mx-0 lg:text-left"
                            initial={{ opacity: 0, y: 50 }}
                            whileInView={{ opacity: 1, y: 0 }}
                            transition={{ duration: 0.5 }}
@@ -33,7 +33,7 @@ export default function Contact() {
                                     or through this form.
                            </p>
 
-                           <form className="flex flex-col mt-10 w-full mb-4"
+                           <form className="mt-10 mb-2 flex w-full flex-col"
                                     action={async (formData) => {
                                              const { data, error } = await sendEmail(formData);
 
