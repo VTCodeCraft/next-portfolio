@@ -19,7 +19,9 @@ export default function MyJourney() {
       ref={ref}
       className="w-full scroll-mt-28 lg:max-w-none"
     >
-      <SectionHeading>My Journey</SectionHeading>
+      <div className="w-full max-w-[720px] lg:mx-0">
+        <SectionHeading>My Journey</SectionHeading>
+      </div>
       <VerticalTimeline
         className="journey-timeline"
         layout="1-column-left"

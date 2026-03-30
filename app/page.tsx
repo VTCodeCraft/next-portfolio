@@ -1,3 +1,4 @@
+import Contact from "@/components/contact";
 import Intro from "@/components/intro";
 import MyJourney from "@/components/my-journey";
 import ProfileSidebar from "@/components/profile-sidebar";
@@ -30,6 +31,7 @@ export default function Home() {
                 <SectionDivider />
                 <MyJourney />
                 <SectionDivider />
+                <Contact />
               </div>
             </main>
           </div>

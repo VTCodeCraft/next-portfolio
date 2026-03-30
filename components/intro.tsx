@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { HiDownload, HiOutlineMail } from "react-icons/hi";
-import { BsArrowRight, BsTwitter } from "react-icons/bs";
+import { HiDownload } from "react-icons/hi";
+import { BsTwitter } from "react-icons/bs";
 import { SiLeetcode } from "react-icons/si";
 import { useSectionInView } from "@/lib/hooks";
 
@@ -140,13 +140,13 @@ export default function Intro() {
             transition={{ delay: 0.2 }}
           >
             <Link
-              href="mailto:work.vishesh12.05@gmail.com"
+              href="https://x.com/VTCodeCraft_"
               target="_blank"
+              rel="noopener noreferrer"
               className="group flex items-center gap-2 rounded-full bg-gray-900 px-5 py-3 text-white transition hover:scale-105 sm:px-7"
             >
-              <HiOutlineMail />
-              Contact me here
-              <BsArrowRight className="opacity-70 group-hover:translate-x-1 transition" />
+              <span>Connect on</span>
+              <BsTwitter className="text-lg" />
             </Link>
 
             <a
