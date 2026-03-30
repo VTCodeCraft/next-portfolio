@@ -25,6 +25,7 @@ export default function Skills() {
   const TOTAL = cols * rows;
 
   const [tiles, setTiles] = useState<Array<string | null>>([]);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -38,6 +39,24 @@ export default function Skills() {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+
+    const syncTheme = () => {
+      setIsDarkMode(root.classList.contains("dark"));
+    };
+
+    syncTheme();
+
+    const observer = new MutationObserver(syncTheme);
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
   }, []);
 
   /* ------------------ HELPERS ------------------ */
@@ -71,6 +90,14 @@ export default function Skills() {
 
     return a;
   }
+
+  const darkSkillColors: Record<string, string> = {
+    "Next.js": "#f8fafc",
+    "GitHub": "#f8fafc",
+    "Express.js": "#e5e7eb",
+    "MySQL": "#93c5fd",
+    "Java": "#67e8f9",
+  };
 
   /* ------------------ INIT ------------------ */
   useEffect(() => {
@@ -142,7 +169,7 @@ export default function Skills() {
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
-      <motion.div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl lg:mx-0"
+      <motion.div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black dark:from-black dark:to-black dark:shadow-[0_22px_70px_rgba(0,0,0,0.45)] lg:mx-0"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -161,7 +188,7 @@ export default function Skills() {
               return (
                 <div
                   key="empty"
-                  className="h-16 sm:h-20 rounded-lg border border-dashed border-white/30"
+                  className="h-16 rounded-lg border border-dashed border-white/30 dark:border-white/14 dark:bg-black sm:h-20"
                 />
               );
             }
@@ -189,9 +216,9 @@ export default function Skills() {
                   },
                 }}
                 className={`relative flex ${isMobile ? "h-20" : "h-16"
-                  } items-center justify-center rounded-lg px-2 text-center transition ${canMove
-                    ? "cursor-grab bg-white/80 shadow-lg active:cursor-grabbing hover:shadow-2xl"
-                    : "bg-gray-100/40 text-gray-400 opacity-60"
+                  } items-center justify-center rounded-lg border px-2 text-center transition ${canMove
+                    ? "cursor-grab border-white/30 bg-white/85 shadow-lg active:cursor-grabbing hover:shadow-2xl dark:border-cyan-300/28 dark:bg-[#151c28] dark:text-white"
+                    : "border-black/5 bg-gray-100/70 text-gray-600 dark:border-white/12 dark:bg-[#0a0a0a] dark:text-white"
                   }`}
               >
                 {/* GLOW EFFECT */}
@@ -201,18 +228,22 @@ export default function Skills() {
 
                 <div className="flex flex-col items-center justify-center gap-1 relative z-10">
                   <span
-                    className={`${isMobile ? "text-xl" : "text-lg"}`}
+                    className={`${isMobile ? "text-[1.35rem]" : "text-[1.15rem]"}`}
                     style={{
-                      color: skillColors[tile],
-                      filter: "drop-shadow(0 0 6px rgba(0,0,0,0.3))",
+                      color: isDarkMode
+                        ? darkSkillColors[tile] ?? skillColors[tile]
+                        : skillColors[tile],
+                      filter: isDarkMode
+                        ? "drop-shadow(0 0 10px rgba(255,255,255,0.04))"
+                        : "drop-shadow(0 0 6px rgba(0,0,0,0.3))",
                     }}
                   >
                     {skillIconsData[tile]}
                   </span>
 
                   <span
-                    className={`${isMobile ? "text-[11px]" : "text-[10px]"
-                      } leading-tight font-medium`}
+                    className={`${isMobile ? "text-[11px]" : "text-[11px]"
+                      } leading-tight font-semibold text-gray-700 dark:text-white`}
                   >
                     {tile}
                   </span>
@@ -239,7 +270,7 @@ export default function Skills() {
 
             setTiles(shuffleTiles(INITIAL_TILES));
           }}
-          className="rounded-xl bg-gradient-to-r from-gray-900 to-black px-6 py-2 text-sm text-white shadow-lg transition hover:scale-110 active:scale-95"
+          className="rounded-xl bg-gradient-to-r from-gray-900 to-black px-6 py-2 text-sm text-white shadow-lg transition hover:scale-110 active:scale-95 dark:from-white dark:to-zinc-200 dark:text-gray-900"
         >
           Shuffle
         </button>

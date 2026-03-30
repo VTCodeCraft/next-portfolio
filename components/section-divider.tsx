@@ -12,7 +12,7 @@ export default function SectionDivider() {
                                     whileInView={{ opacity: 1, scaleX: 1 }}
                                     transition={{ duration: 0.6, ease: "easeOut" }}
                                     viewport={{ once: true }}
-                                    className="relative w-full max-w-3xl h-px bg-linear-to-r from-transparent via-neutral-300 to-transparent"
+                                    className="relative h-px w-full max-w-3xl bg-linear-to-r from-transparent via-neutral-300 to-transparent dark:via-white/15"
                            />
 
                   </div>

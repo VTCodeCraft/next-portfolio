@@ -47,13 +47,13 @@ export default function Intro() {
               height={120}
               quality={95}
               priority
-              className="h-32 w-32 rounded-full object-cover border-4 border-white shadow-xl"
+              className="h-32 w-32 rounded-full border-4 border-white object-cover shadow-xl dark:border-white/20"
             />
           </motion.div>
 
           {/* NAME */}
           <motion.h1
-            className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
+            className="text-3xl font-bold tracking-tight dark:text-white sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -63,7 +63,7 @@ export default function Intro() {
 
           {/* ROLE */}
           <motion.p
-            className="mt-1.5 text-lg text-neutral-500 sm:text-2xl lg:text-[1.7rem]"
+            className="mt-1.5 text-lg text-neutral-500 dark:text-neutral-400 sm:text-2xl lg:text-[1.7rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -81,7 +81,7 @@ export default function Intro() {
             <Link
               href="https://github.com/VTCodeCraft"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
             >
               <FaGithub />
               GitHub
@@ -90,7 +90,7 @@ export default function Intro() {
             <Link
               href="https://x.com/VTCodeCraft_"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
             >
               <BsTwitter />
               X
@@ -99,7 +99,7 @@ export default function Intro() {
             <Link
               href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
             >
               <FaLinkedin />
               LinkedIn
@@ -109,7 +109,7 @@ export default function Intro() {
               href="https://leetcode.com/u/VTCodeCraft/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
             >
               <SiLeetcode />
               LeetCode
@@ -118,7 +118,7 @@ export default function Intro() {
 
           {/* DESCRIPTION */}
           <motion.p
-            className="mt-6 max-w-[33rem] text-base leading-relaxed text-neutral-700 sm:text-lg lg:text-[1.08rem]"
+            className="mt-6 max-w-[33rem] text-base leading-relaxed text-neutral-700 dark:text-neutral-300 sm:text-lg lg:text-[1.08rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -143,7 +143,7 @@ export default function Intro() {
               href="https://x.com/VTCodeCraft_"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-[0.95rem] text-white transition hover:scale-105 sm:px-5"
+              className="group flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-[0.95rem] text-white transition hover:scale-105 dark:border dark:border-cyan-400/20 dark:bg-cyan-400/12 dark:text-white dark:hover:bg-cyan-400/18 sm:px-5"
             >
               <span>Connect on</span>
               <BsTwitter className="text-lg" />
@@ -154,7 +154,7 @@ export default function Intro() {
               download="Vishesh-Tripathi-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-[0.95rem] transition hover:scale-105 sm:px-5"
+              className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-[0.95rem] transition hover:scale-105 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-5"
             >
               Download CV
               <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />

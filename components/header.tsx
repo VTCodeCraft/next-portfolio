@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { links } from "@/lib/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "./theme-toggle";
 
 export default function Header() {
   const pathname = usePathname();
@@ -17,13 +18,13 @@ export default function Header() {
 
         {/* BACKGROUND */}
         <motion.div
-          className="absolute inset-0 rounded-full bg-white/60 backdrop-blur-md border border-white/30 shadow-sm"
+          className="absolute inset-0 rounded-full border border-white/30 bg-white/60 shadow-sm backdrop-blur-md dark:border-white/12 dark:bg-black/65 dark:shadow-[0_10px_35px_rgba(0,0,0,0.35)]"
           initial={{ y: -60, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         />
 
         {/* NAV */}
-        <nav className="relative px-2.5 py-1 sm:px-3.5">
+        <nav className="relative flex items-center gap-3 px-2 py-1.5 sm:gap-4 sm:px-3.5">
           <ul className="flex items-center justify-center gap-1 whitespace-nowrap text-[10px] font-medium sm:gap-3 sm:text-[12px]">
 
             {links.map((link) => (
@@ -34,10 +35,10 @@ export default function Header() {
               >
                 <Link
                   href={link.href}
-                  className={`rounded-full px-2 py-1 transition sm:px-2.5 ${
+                  className={`rounded-full px-2.5 py-1.5 transition sm:px-3 ${
                     pathname === link.href
-                      ? "bg-gray-100 text-black shadow-sm"
-                      : "text-gray-600 hover:text-black hover:bg-white/70"
+                      ? "bg-gray-100 text-black shadow-sm dark:bg-white/12 dark:text-white"
+                      : "text-gray-600 hover:bg-white/70 hover:text-black dark:text-white/80 dark:hover:bg-white/8 dark:hover:text-white"
                   }`}
                 >
                   {link.name}
@@ -46,6 +47,8 @@ export default function Header() {
             ))}
 
           </ul>
+          <span className="h-7 w-px bg-black/10 dark:bg-white/10" />
+          <ThemeToggle />
         </nav>
       </div>
     </header>

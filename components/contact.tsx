@@ -22,7 +22,7 @@ export default function Contact() {
                   >
                            <SectionHeading>Contact Me</SectionHeading>
 
-                           <p className="text-gray-600 dark:text-gray-400 mt-4 mb-8">
+                           <p className="mb-8 mt-4 text-gray-600 dark:text-gray-400">
                                     Feel free to reach out to me directly at{" "}
                                     <a
                                              href="mailto:work.vishesh12.05@gmail.com"
@@ -46,7 +46,7 @@ export default function Contact() {
                                     }}
                            >
                                     <input
-                                             className="h-14 px-4 rounded-lg border text-gray-900 border-gray-200 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm"
+                                             className="h-14 rounded-lg border border-gray-200 bg-white px-4 text-gray-900 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder:text-white/45"
                                              type="email"
                                              name="senderEmail"
                                              placeholder="Your Email"
@@ -54,7 +54,7 @@ export default function Contact() {
                                              maxLength={500}
                                     />
                                     <textarea
-                                             className="h-52 my-3 rounded-lg border text-gray-900 border-gray-200 p-4 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm resize-none"
+                                             className="my-3 h-52 resize-none rounded-lg border border-gray-200 bg-white p-4 text-gray-900 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-white/10 dark:bg-white/10 dark:text-white dark:placeholder:text-white/45"
                                              name="message"
                                              placeholder="Your Message..."
                                              required

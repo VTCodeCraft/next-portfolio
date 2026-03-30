@@ -16,7 +16,7 @@ export default function SectionHeading({ children }: SectionHeadingProps) {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         viewport={{ once: true }}
-        className="text-3xl sm:text-4xl font-semibold text-center tracking-tight lg:text-left"
+        className="text-center text-3xl font-semibold tracking-tight dark:text-white sm:text-4xl lg:text-left"
       >
         {children}
       </motion.h2>

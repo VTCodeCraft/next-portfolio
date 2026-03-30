@@ -8,6 +8,16 @@ html{
          --line-color: #e5e7eb;
 }
 
+:root {
+         --journey-card-bg: #f3f4f6;
+         --journey-card-border: rgba(0, 0, 0, 0.05);
+         --journey-card-arrow: #e5e7eb;
+         --journey-line-color: rgba(0, 0, 0, 0.08);
+         --journey-icon-bg: #ffffff;
+         --journey-icon-fg: #111827;
+         --journey-icon-ring: rgba(255, 255, 255, 1);
+}
+
 @keyframes aurora-float {
          0% {
                   transform: translate3d(0, 0, 0) scale(1);
@@ -143,6 +153,13 @@ html{
          --sidebar-accent-foreground: oklch(0.985 0 0);
          --sidebar-border: oklch(1 0 0 / 10%);
          --sidebar-ring: oklch(0.556 0 0);
+         --journey-card-bg: rgba(17, 24, 39, 0.88);
+         --journey-card-border: rgba(255, 255, 255, 0.1);
+         --journey-card-arrow: rgba(17, 24, 39, 0.88);
+         --journey-line-color: rgba(255, 255, 255, 0.28);
+         --journey-icon-bg: rgba(10, 14, 22, 0.96);
+         --journey-icon-fg: #ffffff;
+         --journey-icon-ring: rgba(255, 255, 255, 0.18);
 }
 
 @layer base {

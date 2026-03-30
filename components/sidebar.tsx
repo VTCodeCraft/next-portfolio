@@ -42,16 +42,16 @@ export default function Sidebar() {
       >
         <button
           onClick={() => setIsOpen((v) => !v)}
-          className="flex h-12 w-12 flex-col items-center justify-center gap-1 rounded-full bg-white shadow-md"
+          className="flex h-12 w-12 flex-col items-center justify-center gap-1 rounded-full bg-white shadow-md dark:bg-white/10"
         >
-          <span className="h-px w-5 bg-gray-900" />
-          <span className="h-px w-5 bg-gray-900" />
-          <span className="h-px w-5 bg-gray-900" />
+          <span className="h-px w-5 bg-gray-900 dark:bg-white" />
+          <span className="h-px w-5 bg-gray-900 dark:bg-white" />
+          <span className="h-px w-5 bg-gray-900 dark:bg-white" />
         </button>
 
         {isOpen && (
-          <aside className="mt-4 w-60 rounded-3xl bg-white p-6 shadow-xl">
-            <nav className="flex flex-col gap-6 text-gray-500">
+          <aside className="mt-4 w-60 rounded-3xl bg-white p-6 shadow-xl dark:bg-zinc-900">
+            <nav className="flex flex-col gap-6 text-gray-500 dark:text-white/70">
               {sections.map((item) => {
                 const isActive = activeSection === item.name;
 
@@ -69,8 +69,8 @@ export default function Sidebar() {
                       className={clsx(
                         "h-px",
                         isActive
-                          ? "w-6 bg-black"
-                          : "w-4 bg-gray-300 group-hover:bg-black"
+                          ? "w-6 bg-black dark:bg-white"
+                          : "w-4 bg-gray-300 group-hover:bg-black dark:bg-white/20 dark:group-hover:bg-white"
                       )}
                       transition={{
                         type: "spring",
@@ -83,8 +83,8 @@ export default function Sidebar() {
                       layout
                       className={clsx(
                         isActive
-                          ? "text-black font-semibold"
-                          : "group-hover:text-black"
+                          ? "font-semibold text-black dark:text-white"
+                          : "group-hover:text-black dark:group-hover:text-white"
                       )}
                       transition={{ type: "spring", stiffness: 200 }}
                     >
@@ -100,7 +100,7 @@ export default function Sidebar() {
 
       {/* DESKTOP */}
       <motion.aside
-        className="hidden text-gray-500 lg:flex lg:flex-col lg:gap-8"
+        className="hidden text-gray-500 dark:text-white/70 lg:flex lg:flex-col lg:gap-8"
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.3 }}
@@ -122,8 +122,8 @@ export default function Sidebar() {
                 className={clsx(
                   "h-px",
                   isActive
-                    ? "w-6 bg-black"
-                    : "w-4 bg-gray-300 group-hover:bg-black"
+                    ? "w-6 bg-black dark:bg-white"
+                    : "w-4 bg-gray-300 group-hover:bg-black dark:bg-white/20 dark:group-hover:bg-white"
                 )}
                 transition={{
                   type: "spring",
@@ -136,8 +136,8 @@ export default function Sidebar() {
                 layout
                 className={clsx(
                   isActive
-                    ? "text-black font-semibold"
-                    : "group-hover:text-black"
+                    ? "font-semibold text-black dark:text-white"
+                    : "group-hover:text-black dark:group-hover:text-white"
                 )}
                 transition={{ type: "spring", stiffness: 200 }}
               >
