@@ -53,7 +53,7 @@ export default function Intro() {
 
           {/* NAME */}
           <motion.h1
-            className="text-3xl font-bold tracking-tight dark:text-white sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
+            className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] dark:text-white sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}

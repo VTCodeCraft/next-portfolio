@@ -8,6 +8,24 @@ html{
          --line-color: #e5e7eb;
 }
 
+.light-canvas {
+         background:
+                  radial-gradient(circle at 20% 18%, rgba(214, 243, 239, 0.72) 0%, transparent 24%),
+                  radial-gradient(circle at 50% 14%, rgba(189, 238, 250, 0.78) 0%, transparent 30%),
+                  radial-gradient(circle at 84% 18%, rgba(255, 242, 221, 0.55) 0%, transparent 24%),
+                  linear-gradient(135deg, #f5fbfc 0%, #fbfefd 52%, #fffdf7 100%);
+}
+
+.light-canvas::after {
+         content: "";
+         position: absolute;
+         inset: 0;
+         background:
+                  radial-gradient(circle at center, rgba(255, 255, 255, 0.42) 0%, transparent 46%),
+                  linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05) 55%, rgba(255, 255, 255, 0.12));
+         pointer-events: none;
+}
+
 :root {
          --journey-card-bg: #f3f4f6;
          --journey-card-border: rgba(0, 0, 0, 0.05);
@@ -44,8 +62,8 @@ html{
 }
 
 @theme inline {
-         --font-heading: var(--font-sans);
-         --font-sans: var(--font-sans);
+         --font-heading: var(--font-display);
+         --font-sans: var(--font-body);
          --color-sidebar-ring: var(--sidebar-ring);
          --color-sidebar-border: var(--sidebar-border);
          --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Manrope, Sora } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ["latin"],
+  variable: "--font-body",
+});
+
+const sora = Sora({
+  subsets: ["latin"],
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
@@ -32,14 +38,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth" suppressHydrationWarning>
       <body
-        className={`${inter.className} relative min-h-screen overflow-x-hidden bg-[#f7f7fb] text-gray-900 transition-colors duration-300 dark:bg-[#05070b] dark:text-white`}
+        className={`${manrope.className} ${manrope.variable} ${sora.variable} relative min-h-screen overflow-x-hidden bg-[#f4fbfc] text-gray-900 transition-colors duration-300 dark:bg-[#05070b] dark:text-white`}
         suppressHydrationWarning
       >
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <div className="light-canvas absolute inset-0 -z-20 dark:hidden" />
         <div className="absolute inset-0 -z-20 hidden bg-[#05070b] dark:block" />
         {/* BACKGROUND BLOBS */}
-        <div className="absolute top-[-6rem] right-[11rem] -z-10 h-[31.25rem] w-[31.25rem] rounded-full bg-[#fbe2e3] blur-[10rem] dark:bg-cyan-400/12 sm:w-[68.75rem]"></div>
-        <div className="absolute top-[-1rem] left-[-35rem] -z-10 h-[31.25rem] w-[50rem] rounded-full bg-[#dbd7fb] blur-[10rem] dark:bg-blue-500/16 sm:w-[68.75rem] md:left-[-33rem] lg:left-[-28rem] xl:left-[-15rem] 2xl:left-[-5rem]"></div>
+        <div className="absolute top-[-7rem] right-[8rem] -z-10 h-[34rem] w-[34rem] rounded-full bg-[#fff1dc] blur-[9rem] dark:bg-cyan-400/12 sm:w-[72rem]"></div>
+        <div className="absolute top-[-2rem] left-[-32rem] -z-10 h-[32rem] w-[54rem] rounded-full bg-[#d8f4ef] blur-[9rem] dark:bg-blue-500/16 sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
+        <div className="absolute left-[22%] top-[5rem] -z-10 h-[30rem] w-[46rem] rounded-full bg-[#c9f2ff] opacity-85 blur-[11rem] dark:hidden" />
         <div className="absolute inset-x-0 top-0 -z-10 hidden h-[26rem] bg-[radial-gradient(circle_at_top,rgba(16,93,140,0.38),transparent_58%)] dark:block" />
         
         <ActiveSectionContextProvider>
