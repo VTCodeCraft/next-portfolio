@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Inter, Geist } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import ActiveSectionContextProvider from "@/context/active-section-context";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)} suppressHydrationWarning>
+    <html lang="en" className="!scroll-smooth" suppressHydrationWarning>
       <body
         className={`${inter.className} bg-[#f7f7fb] text-gray-900 relative min-h-screen overflow-x-hidden`}
         suppressHydrationWarning
@@ -37,6 +35,8 @@ export default function RootLayout({
         <main className="w-full pt-32 pb-20">
           <div className="w-full">{children}</div>
         </main>
+
+        <Toaster position="top-right"/>
         </ActiveSectionContextProvider>
       </body>
     </html>
