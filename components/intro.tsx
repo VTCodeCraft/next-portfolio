@@ -30,10 +30,10 @@ export default function Intro() {
     >
       
       {/* CENTERED CONTAINER */}
-      <div className="flex w-full max-w-5xl flex-col items-center justify-center gap-12 lg:items-start lg:justify-start lg:gap-16">
+      <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-10 lg:items-start lg:justify-start lg:gap-10">
 
         {/* CONTENT */}
-        <div className="flex max-w-xl flex-col items-center text-center lg:items-start lg:text-left">
+        <div className="flex max-w-[34rem] flex-col items-center text-center lg:items-start lg:text-left">
           <motion.div
             className="mb-6 lg:hidden"
             initial={{ opacity: 0, scale: 0 }}
@@ -53,7 +53,7 @@ export default function Intro() {
 
           {/* NAME */}
           <motion.h1
-            className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
+            className="text-3xl font-bold tracking-tight sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -63,7 +63,7 @@ export default function Intro() {
 
           {/* ROLE */}
           <motion.p
-            className="mt-2 text-lg text-neutral-500 sm:text-2xl"
+            className="mt-1.5 text-lg text-neutral-500 sm:text-2xl lg:text-[1.7rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -73,7 +73,7 @@ export default function Intro() {
 
           {/* SOCIALS */}
           <motion.div
-            className="mt-6 flex flex-wrap justify-center gap-3 lg:justify-start lg:gap-4"
+            className="mt-4 flex flex-wrap justify-center gap-2.5 lg:justify-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
@@ -81,7 +81,7 @@ export default function Intro() {
             <Link
               href="https://github.com/VTCodeCraft"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
             >
               <FaGithub />
               GitHub
@@ -90,7 +90,7 @@ export default function Intro() {
             <Link
               href="https://x.com/VTCodeCraft_"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
             >
               <BsTwitter />
               X
@@ -99,7 +99,7 @@ export default function Intro() {
             <Link
               href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
             >
               <FaLinkedin />
               LinkedIn
@@ -109,7 +109,7 @@ export default function Intro() {
               href="https://leetcode.com/u/VTCodeCraft/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-white px-4 py-2 shadow-md transition hover:scale-105 sm:px-5"
+              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 sm:px-4"
             >
               <SiLeetcode />
               LeetCode
@@ -118,7 +118,7 @@ export default function Intro() {
 
           {/* DESCRIPTION */}
           <motion.p
-            className="mt-8 text-base leading-relaxed text-neutral-700 sm:text-lg"
+            className="mt-6 max-w-[33rem] text-base leading-relaxed text-neutral-700 sm:text-lg lg:text-[1.08rem]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
@@ -143,7 +143,7 @@ export default function Intro() {
               href="https://x.com/VTCodeCraft_"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full bg-gray-900 px-5 py-3 text-white transition hover:scale-105 sm:px-7"
+              className="group flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-[0.95rem] text-white transition hover:scale-105 sm:px-5"
             >
               <span>Connect on</span>
               <BsTwitter className="text-lg" />
@@ -154,7 +154,7 @@ export default function Intro() {
               download="Vishesh-Tripathi-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white px-5 py-3 transition hover:scale-105 sm:px-7"
+              className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-[0.95rem] transition hover:scale-105 sm:px-5"
             >
               Download CV
               <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />

@@ -25,7 +25,6 @@ export default function Skills() {
   const TOTAL = cols * rows;
 
   const [tiles, setTiles] = useState<Array<string | null>>([]);
-  const [solved, setSolved] = useState(false);
 
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -88,15 +87,6 @@ export default function Skills() {
     setTiles(shuffled);
   }, [cols]);
 
-  /* ------------------ SOLVED CHECK ------------------ */
-  useEffect(() => {
-    const correct = [
-      ...skillsData.slice(0, TOTAL - 1),
-      null,
-    ];
-    setSolved(JSON.stringify(tiles) === JSON.stringify(correct));
-  }, [tiles]);
-
   const ref = useSectionInView("Skills", 0.5);
   const emptyIndex = tiles.indexOf(null);
   const isMobile = cols === 4;
@@ -152,14 +142,12 @@ export default function Skills() {
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
-      {/* SOLVED MESSAGE */}
-      {solved && (
-        <p className="text-green-600 font-medium mt-2">
-          🎉 Puzzle Solved!
-        </p>
-      )}
-
-      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl lg:mx-0">
+      <motion.div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl lg:mx-0"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
         <div
           className="grid gap-3"
           style={{
@@ -233,10 +221,15 @@ export default function Skills() {
             );
           })}
         </div>
-      </div>
+      </motion.div>
 
       {/* BUTTON */}
-      <div className="mx-auto mt-6 flex w-full max-w-[720px] justify-center lg:mx-0">
+      <motion.div className="mx-auto mt-6 flex w-full max-w-[720px] justify-center lg:mx-0"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
         <button
           onClick={() => {
             const INITIAL_TILES = [
@@ -245,13 +238,12 @@ export default function Skills() {
             ] as Array<string | null>;
 
             setTiles(shuffleTiles(INITIAL_TILES));
-            setSolved(false);
           }}
           className="rounded-xl bg-gradient-to-r from-gray-900 to-black px-6 py-2 text-sm text-white shadow-lg transition hover:scale-110 active:scale-95"
         >
           Shuffle
         </button>
-      </div>
+      </motion.div>
     </section>
   );
 }

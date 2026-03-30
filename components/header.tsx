@@ -10,7 +10,7 @@ export default function Header() {
   const pathname = usePathname();
 
   return (
-    <header className="fixed top-6 inset-x-0 z-50 flex justify-center px-4">
+    <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
 
       {/* NAV CONTAINER */}
       <div className="relative w-fit max-w-[calc(100vw-7rem)]">
@@ -23,8 +23,8 @@ export default function Header() {
         />
 
         {/* NAV */}
-        <nav className="relative px-3 py-2 sm:px-5">
-          <ul className="flex items-center justify-center gap-1.5 text-[11px] font-medium whitespace-nowrap sm:gap-4 sm:text-[13px]">
+        <nav className="relative px-2.5 py-1 sm:px-3.5">
+          <ul className="flex items-center justify-center gap-1 whitespace-nowrap text-[10px] font-medium sm:gap-3 sm:text-[12px]">
 
             {links.map((link) => (
               <motion.li
@@ -34,7 +34,7 @@ export default function Header() {
               >
                 <Link
                   href={link.href}
-                  className={`rounded-full px-2 py-1 transition sm:px-3 ${
+                  className={`rounded-full px-2 py-1 transition sm:px-2.5 ${
                     pathname === link.href
                       ? "bg-gray-100 text-black shadow-sm"
                       : "text-gray-600 hover:text-black hover:bg-white/70"

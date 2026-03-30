@@ -17,7 +17,7 @@ export default function ProfileSidebar() {
         height={120}
         quality={95}
         priority
-        className="h-50 w-50 rounded-full object-cover border-4 border-white shadow-xl"
+        className="h-32 w-32 rounded-full border-4 border-white object-cover shadow-xl xl:h-36 xl:w-36"
       />
     </motion.div>
   );

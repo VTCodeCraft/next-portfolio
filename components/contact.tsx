@@ -12,7 +12,7 @@ export default function Contact() {
          return (
                   <motion.section
                            id="contact"
-                           className="w-full scroll-mt-28 mb-20 max-w-[38rem] text-center sm:mb-28 lg:mx-0 lg:text-left"
+                           className="w-full scroll-mt-28  max-w-[38rem] text-center sm:mb-28 lg:mx-0 lg:text-left"
                            initial={{ opacity: 0, y: 50 }}
                            whileInView={{ opacity: 1, y: 0 }}
                            transition={{ duration: 0.5 }}
@@ -38,11 +38,13 @@ export default function Contact() {
                                              type="email"
                                              placeholder="Your Email"
                                              required
+                                             maxLength={500}
                                     />
                                     <textarea
                                              className="h-52 my-3 rounded-lg border text-gray-900 border-gray-200 p-4 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white shadow-sm resize-none"
                                              placeholder="Your Message..."
                                              required
+                                             maxLength={500}
                                     />
                                     <button
                                              type="submit"
