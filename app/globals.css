@@ -8,6 +8,10 @@ html{
          --line-color: #e5e7eb;
 }
 
+.dark .light-only {
+         display: none;
+}
+
 .light-canvas {
          background:
                   radial-gradient(circle at 20% 18%, rgba(214, 243, 239, 0.72) 0%, transparent 24%),
