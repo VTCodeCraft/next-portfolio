@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { links } from "@/lib/data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "./theme-toggle";
+// import ThemeToggle from "./theme-toggle";
 
 export default function Header() {
   const pathname = usePathname();
@@ -50,8 +50,9 @@ export default function Header() {
             ))}
 
           </ul>
-          <span className="h-7 w-px bg-black/10 dark:bg-white/10" />
-          <ThemeToggle />
+          {/* Re-enable these when you want light mode back */}
+          {/* <span className="h-7 w-px bg-black/10 dark:bg-white/10" />
+          <ThemeToggle /> */}
         </nav>
       </motion.div>
     </header>

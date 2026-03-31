@@ -8,7 +8,7 @@ export default function ThemeToggle() {
     const nextDarkMode = !root.classList.contains("dark");
 
     root.classList.toggle("dark", nextDarkMode);
-    window.localStorage.setItem("theme", nextDarkMode ? "dark" : "light");
+    root.style.colorScheme = nextDarkMode ? "dark" : "light";
   };
 
   return (
