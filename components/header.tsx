@@ -14,13 +14,16 @@ export default function Header() {
     <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4">
 
       {/* NAV CONTAINER */}
-      <div className="relative w-fit max-w-[calc(100vw-7rem)]">
+      <motion.div
+        className="relative w-fit max-w-[calc(100vw-7rem)]"
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.35, ease: "easeOut" }}
+      >
 
         {/* BACKGROUND */}
-        <motion.div
+        <div
           className="absolute inset-0 rounded-full border border-white/30 bg-white/60 shadow-sm backdrop-blur-md dark:border-white/12 dark:bg-black/65 dark:shadow-[0_10px_35px_rgba(0,0,0,0.35)]"
-          initial={{ y: -60, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
         />
 
         {/* NAV */}
@@ -50,7 +53,7 @@ export default function Header() {
           <span className="h-7 w-px bg-black/10 dark:bg-white/10" />
           <ThemeToggle />
         </nav>
-      </div>
+      </motion.div>
     </header>
   );
 }
