@@ -21,9 +21,9 @@ export const sections = [
 export const experiencesData = [
   {
     title: "B.Tech in Information Technology",
-    location: "New Delhi, India",
+    location: "Bharati Vidyapeeth's College of Engineering, New Delhi, India",
     description:
-      "• CGPA: 8.93 (GGSIPU)\n" +
+      "• CGPA: 8.93 |(GGSIPU)\n" +
       "• Relevant Coursework: Data Structures, OOP, DBMS, Machine Learning, Web Programming, Introduction to CS\n" +
       "• Developed multiple full-stack applications using modern web technologies\n",
     icon: React.createElement(LuGraduationCap),

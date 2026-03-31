@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiDownload } from "react-icons/hi";
-import { BsTwitter } from "react-icons/bs";
+import { BsTwitterX , BsTwitter } from "react-icons/bs";
 import { SiLeetcode } from "react-icons/si";
 import { useSectionInView } from "@/lib/hooks";
 
@@ -92,7 +92,7 @@ export default function Intro() {
               target="_blank"
               className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
             >
-              <BsTwitter />
+              <BsTwitter/>
               X
             </Link>
 
@@ -146,7 +146,7 @@ export default function Intro() {
               className="group flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-[0.95rem] text-white transition hover:scale-105 dark:border dark:border-cyan-400/20 dark:bg-cyan-400/12 dark:text-white dark:hover:bg-cyan-400/18 sm:px-5"
             >
               <span>Connect on</span>
-              <BsTwitter className="text-lg" />
+              <BsTwitterX className="text-lg" />
             </Link>
 
             <a
