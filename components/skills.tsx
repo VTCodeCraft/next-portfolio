@@ -10,7 +10,6 @@ import {
 import SectionHeading from "./section-heading";
 import { useSectionInView } from "@/lib/hooks";
 
-/* ------------------ SEEDED RANDOM ------------------ */
 function createSeededRandom(seed: number) {
   let value = seed;
   return () => {
@@ -29,7 +28,6 @@ export default function Skills() {
 
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
-  /* ------------------ RESPONSIVE ------------------ */
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) setCols(4);
@@ -59,7 +57,6 @@ export default function Skills() {
     return () => observer.disconnect();
   }, []);
 
-  /* ------------------ HELPERS ------------------ */
   const getRow = (i: number) => Math.floor(i / cols);
   const getCol = (i: number) => i % cols;
 
@@ -69,7 +66,7 @@ export default function Skills() {
     return (dr === 1 && dc === 0) || (dr === 0 && dc === 1);
   };
 
-  /* ------------------ SHUFFLE ------------------ */
+  //shuffle 
   function shuffleTiles(
     arr: Array<string | null>,
     random: () => number = Math.random
@@ -99,7 +96,7 @@ export default function Skills() {
     "Java": "#67e8f9",
   };
 
-  /* ------------------ INIT ------------------ */
+  // init
   useEffect(() => {
     const INITIAL_TILES = [
       ...skillsData.slice(0, TOTAL - 1),
@@ -118,7 +115,7 @@ export default function Skills() {
   const emptyIndex = tiles.indexOf(null);
   const isMobile = cols === 4;
 
-  /* ------------------ MOVE TILE ------------------ */
+  //move tile
   const moveTile = (index: number) => {
     if (!isAdjacent(index, emptyIndex)) return;
 
@@ -130,7 +127,7 @@ export default function Skills() {
     setTiles(newTiles);
   };
 
-  /* ------------------ DRAG ------------------ */
+  //drag
   const handlePointerDown = (e: React.PointerEvent) => {
     dragStart.current = { x: e.clientX, y: e.clientY };
   };
