@@ -27,7 +27,7 @@ export default function Header() {
         />
 
         {/* NAV */}
-        <nav className="relative flex items-center gap-3 px-2 py-1.5 sm:gap-4 sm:px-3.5">
+        <nav className="relative flex items-center gap-3 px-2 py-2 sm:gap-4 sm:px-3.5 sm:py-2.5">
           <ul className="flex items-center justify-center gap-1 whitespace-nowrap text-[10px] font-medium sm:gap-3 sm:text-[12px]">
 
             {links.map((link) => (
