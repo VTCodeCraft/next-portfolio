@@ -150,13 +150,12 @@ export default function Intro() {
             </Link>
 
             <a
-              href="/Vishesh_Tripathi_Resume.pdf"
-              download="Vishesh-Tripathi-Resume.pdf"
+              href="https://drive.google.com/file/d/1-xtUGMoIuXq_9fDntOD4Cc0xmlwfKBHs/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-[0.95rem] transition hover:scale-105 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-5"
             >
-              Download CV
+              Resume
               <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />
             </a>
           </motion.div>
