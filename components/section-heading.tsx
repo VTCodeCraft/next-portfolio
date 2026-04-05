@@ -24,7 +24,7 @@ export default function SectionHeading({ children }: SectionHeadingProps) {
       {/* Gradient underline */}
       <motion.div
         initial={{ width: 0 }}
-        whileInView={{ width: "95px" }}
+        whileInView={{ width: "95px" , height: "1px" }}
         transition={{ duration: 0.4, delay: 0.2 }}
         className="h-1 mt-3 rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
       />
