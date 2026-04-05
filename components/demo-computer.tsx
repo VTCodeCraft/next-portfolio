@@ -6,19 +6,78 @@ Source: https://sketchfab.com/3d-models/laptop-3d-model-asus-tuf-dash-f15-2022-4
 Title: LAPTOP 3D MODEL (Asus Tuf Dash F15 2022)
 */
 
-import React, { JSX } from "react";
+import React, { JSX, useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
-import { Group, Mesh } from "three";
+import { Material, Mesh, MeshStandardMaterial } from "three";
 
 type GLTFResult = {
   nodes: Record<string, Mesh>;
-  materials: Record<string, any>;
+  materials: Record<string, Material>;
 };
 
 type DemoComputerProps = JSX.IntrinsicElements["group"];
 
 export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
   const { nodes, materials } = useGLTF("/models/asus_tuf_f15.glb") as unknown as GLTFResult;
+
+  useEffect(() => {
+    const applyPbrTuning = (materialName: string, material: Material) => {
+      if (!(material instanceof MeshStandardMaterial)) {
+        return;
+      }
+
+      material.envMapIntensity = 1.45;
+      material.roughness ??= 0.7;
+      material.metalness ??= 0.15;
+
+      switch (materialName) {
+        case "DECK":
+        case "DECK.001":
+          material.color.offsetHSL(0, -0.02, -0.03);
+          material.metalness = 0.72;
+          material.roughness = 0.28;
+          break;
+        case "material":
+        case "material_7":
+          material.metalness = 0.58;
+          material.roughness = 0.34;
+          break;
+        case "KEYS":
+        case "wasd_key":
+        case "power_button":
+          material.metalness = 0.08;
+          material.roughness = 0.78;
+          break;
+        case "display_sqr":
+          material.metalness = 0.02;
+          material.roughness = 0.08;
+          material.envMapIntensity = 0.45;
+          material.emissive.copy(material.color).multiplyScalar(0.18);
+          break;
+        case "tuf_logo":
+        case "ASUS_LOGO":
+        case "outer_logo":
+          material.metalness = 0.82;
+          material.roughness = 0.24;
+          material.envMapIntensity = 1.9;
+          break;
+        case "keyLight":
+          material.metalness = 0;
+          material.roughness = 0.18;
+          material.emissive.copy(material.color).multiplyScalar(0.65);
+          material.toneMapped = false;
+          break;
+        default:
+          break;
+      }
+
+      material.needsUpdate = true;
+    };
+
+    Object.entries(materials).forEach(([materialName, material]) => {
+      applyPbrTuning(materialName, material as Material);
+    });
+  }, [materials]);
 
   return (
     <group {...props} dispose={null}>

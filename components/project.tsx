@@ -2,13 +2,139 @@
 
 import { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Center, OrbitControls } from "@react-three/drei";
+import {
+  Center,
+  ContactShadows,
+  Environment,
+  Lightformer,
+  OrbitControls,
+} from "@react-three/drei";
+import {
+  Bloom,
+  BrightnessContrast,
+  EffectComposer,
+  HueSaturation,
+} from "@react-three/postprocessing";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { myProjects } from "@/lib/data";
 import { FaGithub } from "react-icons/fa";
+import { ACESFilmicToneMapping, PCFSoftShadowMap } from "three";
 import CanvasLoader from "./canvas-loader";
 import { DemoComputer } from "./demo-computer";
+
+function ProjectScene() {
+  return (
+    <Canvas
+      className="h-full w-full"
+      dpr={[1, 1.75]}
+      performance={{ min: 0.8 }}
+      shadows="soft"
+      camera={{ position: [0, 0.72, 4.35], fov: 32 }}
+      gl={{
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+      }}
+      onCreated={({ gl }) => {
+        gl.toneMapping = ACESFilmicToneMapping;
+        gl.toneMappingExposure = 1.08;
+        gl.shadowMap.enabled = true;
+        gl.shadowMap.type = PCFSoftShadowMap;
+      }}
+    >
+      <ambientLight intensity={0.1} />
+
+      <spotLight
+        position={[5.8, 4.6, 2.8]}
+        angle={0.3}
+        penumbra={0.9}
+        intensity={34}
+        castShadow
+        shadow-bias={-0.0001}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+
+      <directionalLight
+        position={[-5.5, 3.4, 2.4]}
+        intensity={1.35}
+        castShadow
+        shadow-bias={-0.00012}
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
+
+      <pointLight position={[3.2, 1.2, 2.4]} intensity={12} distance={6.5} color="#d7e7ff" />
+      <pointLight position={[-3.2, 1.15, 2.2]} intensity={10} distance={6.2} color="#cfdcff" />
+
+      <Environment preset="studio" resolution={256}>
+        <Lightformer
+          form="rect"
+          intensity={2.2}
+          position={[5.4, 1.8, 2.1]}
+          rotation={[0, -Math.PI / 5, 0]}
+          scale={[3.8, 5.5, 1]}
+        />
+        <Lightformer
+          form="rect"
+          intensity={1.75}
+          position={[-5.2, 1.7, 2.2]}
+          rotation={[0, Math.PI / 5, 0]}
+          scale={[3.6, 5.2, 1]}
+        />
+        <Lightformer
+          form="rect"
+          intensity={0.45}
+          position={[0, 5.4, -3.6]}
+          rotation={[Math.PI / 2.8, 0, 0]}
+          scale={[6, 3, 1]}
+        />
+      </Environment>
+
+      <Suspense fallback={<CanvasLoader />}>
+        <Center>
+          <group scale={1.40} position={[0, -1.50, 0]} rotation={[0.01, 0, 0]}>
+            <DemoComputer />
+          </group>
+        </Center>
+
+        <ContactShadows
+          position={[0, -1.48, 0]}
+          opacity={0.52}
+          scale={8}
+          blur={2.4}
+          far={3.2}
+          resolution={512}
+          color="#000000"
+        />
+      </Suspense>
+
+      <EffectComposer enableNormalPass={false} multisampling={0}>
+        <Bloom
+          intensity={0.42}
+          luminanceThreshold={0.82}
+          luminanceSmoothing={0.22}
+          mipmapBlur
+        />
+        <BrightnessContrast brightness={0.01} contrast={0.1} />
+        <HueSaturation saturation={0.08} />
+      </EffectComposer>
+
+      <OrbitControls
+        autoRotate
+        autoRotateSpeed={0.7}
+        enableDamping
+        dampingFactor={0.08}
+        enablePan={false}
+        enableZoom={false}
+        minPolarAngle={Math.PI / 3.2}
+        maxPolarAngle={Math.PI / 1.9}
+        target={[0, -0.05, 0]}
+      />
+    </Canvas>
+  );
+}
 
 export default function Project() {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
@@ -129,19 +255,8 @@ export default function Project() {
           </div>
 
           <div className="overflow-hidden rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(16,19,26,0.98),rgba(9,11,17,0.98))] shadow-[0_14px_30px_rgba(0,0,0,0.16)] lg:h-[420px]">
-              <Canvas className="h-full w-full">
-                <ambientLight intensity={Math.PI} />
-                <directionalLight position={[10, 10, 5]} />
-                <Center>
-                  <Suspense fallback={<CanvasLoader />}>
-                    <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
-                      <DemoComputer/>
-                    </group>
-                  </Suspense>
-                </Center>
-                <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
-              </Canvas>
-       </div>
+            <ProjectScene />
+          </div>
         </div>
       </div>
     </section >
