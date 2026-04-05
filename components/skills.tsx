@@ -19,6 +19,15 @@ function createSeededRandom(seed: number) {
 }
 
 export default function Skills() {
+  const getColsForViewport = () =>
+    typeof window !== "undefined" && window.visualViewport
+      ? window.visualViewport.width < 650
+        ? 4
+        : 6
+      : typeof window !== "undefined" && window.innerWidth < 650
+        ? 4
+        : 6;
+
   const [cols, setCols] = useState(6);
   const rows = Math.floor(24 / cols);
   const TOTAL = cols * rows;
@@ -30,13 +39,17 @@ export default function Skills() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) setCols(4);
-      else setCols(6);
+      setCols(getColsForViewport());
     };
 
-    handleResize();
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.visualViewport?.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.visualViewport?.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
