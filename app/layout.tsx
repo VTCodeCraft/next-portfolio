@@ -43,9 +43,7 @@ export default function RootLayout({
         <div className="light-only absolute top-[-7rem] right-[8rem] -z-10 h-[34rem] w-[34rem] rounded-full bg-[#fff1dc] blur-[9rem] sm:w-[72rem]"></div>
         <div className="light-only absolute top-[-2rem] left-[-32rem] -z-10 h-[32rem] w-[54rem] rounded-full bg-[#d8f4ef] blur-[9rem] sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
         <div className="light-only absolute left-[22%] top-[5rem] -z-10 h-[30rem] w-[46rem] rounded-full bg-[#c9f2ff] opacity-85 blur-[11rem]" />
-        <div className="absolute top-[-7rem] right-[8rem] -z-10 hidden h-[34rem] w-[34rem] rounded-full bg-cyan-400/12 blur-[9rem] dark:block sm:w-[72rem]"></div>
-        <div className="absolute top-[-2rem] left-[-32rem] -z-10 hidden h-[32rem] w-[54rem] rounded-full bg-blue-500/16 blur-[9rem] dark:block sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
-        <div className="absolute inset-x-0 top-0 -z-10 hidden h-[26rem] bg-[radial-gradient(circle_at_top,rgba(16,93,140,0.38),transparent_58%)] dark:block" />
+        <div className="absolute inset-0 -z-10 hidden bg-[#05070b] dark:block" />
         
         <ActiveSectionContextProvider>
         <Header />

@@ -1,4 +1,9 @@
+import Project from "@/components/project";
+
 export default function ProjectsPage() {
-  return <div className="text-center mt-40">
-    Projects Page</div>;
+  return (
+    <div className="-mt-14 px-4 pb-4 sm:px-6">
+      <Project />
+    </div>
+  );
 }
