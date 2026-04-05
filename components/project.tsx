@@ -1,10 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import { Suspense, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Center, OrbitControls } from "@react-three/drei";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { myProjects } from "@/lib/data";
 import { FaGithub } from "react-icons/fa";
+import CanvasLoader from "./canvas-loader";
+import { DemoComputer } from "./demo-computer";
 
 export default function Project() {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
@@ -124,13 +128,22 @@ export default function Project() {
             </div>
           </div>
 
-          <div className="flex min-h-[12.25rem] items-center justify-center rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(16,19,26,0.98),rgba(9,11,17,0.98))] p-4 text-center text-neutral-500 shadow-[0_14px_30px_rgba(0,0,0,0.16)] lg:h-[420px]">
-            <p className="text-[0.8rem] sm:text-[0.86rem]">
-              Project Preview / 3D / Image here
-            </p>
-          </div>
+          <div className="overflow-hidden rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(16,19,26,0.98),rgba(9,11,17,0.98))] shadow-[0_14px_30px_rgba(0,0,0,0.16)] lg:h-[420px]">
+              <Canvas className="h-full w-full">
+                <ambientLight intensity={Math.PI} />
+                <directionalLight position={[10, 10, 5]} />
+                <Center>
+                  <Suspense fallback={<CanvasLoader />}>
+                    <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
+                      <DemoComputer/>
+                    </group>
+                  </Suspense>
+                </Center>
+                <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
+              </Canvas>
+       </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
