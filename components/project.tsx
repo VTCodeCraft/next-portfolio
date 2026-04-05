@@ -15,6 +15,7 @@ import {
   EffectComposer,
   HueSaturation,
 } from "@react-three/postprocessing";
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { myProjects } from "@/lib/data";
@@ -22,6 +23,13 @@ import { FaGithub } from "react-icons/fa";
 import { ACESFilmicToneMapping, PCFSoftShadowMap } from "three";
 import CanvasLoader from "./canvas-loader";
 import { DemoComputer } from "./demo-computer";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 28 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] as const },
+  viewport: { once: true, amount: 0.25 },
+});
 
 function ProjectScene() {
   return (
@@ -167,17 +175,27 @@ export default function Project() {
   }, [selectedProjectIndex]);
 
   return (
-    <section className="mx-auto w-full max-w-6xl">
+    <motion.section
+      id="projects"
+      className="mx-auto w-full max-w-6xl"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.45 }}
+      viewport={{ once: true, amount: 0.2 }}
+    >
       <div className="mx-auto w-full max-w-[1080px]">
-        <div className="mb-4 flex flex-col items-start">
+        <motion.div {...fadeUp(0)} className="mb-4 flex flex-col items-start">
           <h1 className="font-[family:var(--font-heading)] text-3xl font-semibold tracking-[-0.04em] text-white sm:text-[2.85rem]">
             My Projects
           </h1>
           <div className="mt-3 h-1 w-[90px] rounded-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
-        </div>
+        </motion.div>
 
         <div className="mt-4 grid w-full grid-cols-1 gap-6 lg:grid-cols-[460px_minmax(0,1fr)] lg:items-stretch">
-          <div className="relative flex flex-col gap-3 rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(24,25,28,0.98),rgba(18,19,22,0.99))] px-4 py-4 text-white shadow-[0_14px_30px_rgba(0,0,0,0.18)] lg:h-[420px] lg:w-[460px]">
+          <motion.div
+            {...fadeUp(0.08)}
+            className="relative flex flex-col gap-3 rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(24,25,28,0.98),rgba(18,19,22,0.99))] px-4 py-4 text-white shadow-[0_14px_30px_rgba(0,0,0,0.18)] lg:h-[420px] lg:w-[460px]"
+          >
             {"featured" in currentProject && currentProject.featured && (
               <div className="absolute right-3 top-3 rounded-full border border-cyan-300/18 bg-cyan-400/10 px-2.5 py-1 text-[10px] text-cyan-100">
                 Featured
@@ -252,13 +270,16 @@ export default function Project() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="overflow-hidden rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(16,19,26,0.98),rgba(9,11,17,0.98))] shadow-[0_14px_30px_rgba(0,0,0,0.16)] lg:h-[420px]">
+          <motion.div
+            {...fadeUp(0.16)}
+            className="overflow-hidden rounded-[1.25rem] border border-white/8 bg-[linear-gradient(180deg,rgba(16,19,26,0.98),rgba(9,11,17,0.98))] shadow-[0_14px_30px_rgba(0,0,0,0.16)] lg:h-[420px]"
+          >
             <ProjectScene />
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section >
+    </motion.section>
   );
 }
