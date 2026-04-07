@@ -198,9 +198,6 @@ export default function Project() {
       <div className="relative mx-auto w-full max-w-[1030px]">
         {/* ── heading ── */}
         <motion.div {...fadeUp(0)} className="mb-4 flex flex-col items-start">
-          <p className="mb-1 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-primary">
-            Portfolio
-          </p>
           <SectionHeading>My Projects</SectionHeading>
         </motion.div>
 
