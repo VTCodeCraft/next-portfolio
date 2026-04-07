@@ -353,7 +353,7 @@ export default function Project() {
 
             {/* "drag to rotate" hint */}
             <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[0.54rem] tracking-widest text-muted-foreground/50 uppercase">
-              Auto-rotating · Drag to explore
+              Drag to explore
             </p>
           </motion.div>
         </div>
