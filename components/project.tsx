@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense, useState, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Suspense, useState } from "react";
+import { Canvas, useThree } from "@react-three/fiber";
 import {
   Center,
   ContactShadows,
@@ -38,16 +38,22 @@ const fadeUp = (delay = 0) => ({
 });
 
 /* ─── ambient particle ring (decorative mesh) ────────────────────── */
-function RingGlow() {
-  const ref = useRef<any>(null);
-  useFrame((_, dt) => {
-    if (ref.current) ref.current.rotation.y += dt * 0.18;
-  });
+function LaptopRig() {
+  const { size } = useThree();
+  const isSmallScreen = size.width < 650;
+
   return (
-    <mesh ref={ref} position={[0, -1.48, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-      <torusGeometry args={[2.6, 0.012, 8, 96]} />
-      <meshBasicMaterial color="#6366f1" transparent opacity={0.22} />
-    </mesh>
+    <Float speed={1.2} rotationIntensity={0.06} floatIntensity={0.18}>
+      <Center>
+        <group
+          scale={isSmallScreen ? 1.05 : 1.42}
+          position={[0, isSmallScreen ? -1.34 : -1.52, 0]}
+          rotation={[0.01, 0, 0]}
+        >
+          <DemoComputer />
+        </group>
+      </Center>
+    </Float>
   );
 }
 
@@ -106,15 +112,7 @@ function ProjectScene() {
       </Environment>
 
       <Suspense fallback={<CanvasLoader />}>
-        <Float speed={1.2} rotationIntensity={0.06} floatIntensity={0.18}>
-          <Center>
-            <group scale={1.42} position={[0, -1.52, 0]} rotation={[0.01, 0, 0]}>
-              <DemoComputer />
-            </group>
-          </Center>
-        </Float>
-
-        <RingGlow />
+        <LaptopRig />
 
         <ContactShadows
           position={[0, -1.5, 0]}
@@ -194,6 +192,7 @@ export default function Project() {
         aria-hidden
         className="pointer-events-none absolute right-0 top-0 h-[320px] w-[320px] rounded-full bg-accent/10 blur-[80px]"
       />
+
       <div className="relative w-full">
 
         {/* ── heading ── */}
@@ -207,7 +206,7 @@ export default function Project() {
           {/* ── info card ── */}
           <motion.div
             {...fadeUp(0.1)}
-            className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border/70 bg-card/95 px-4 py-4 text-card-foreground shadow-[0_20px_60px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.04)] lg:h-[386px] lg:w-[436px]"
+            className="order-2 group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border/70 bg-card/95 px-4 py-4 text-card-foreground shadow-[0_20px_60px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.04)] lg:order-1 lg:h-[386px] lg:w-[436px]"
           >
             {/* corner glow */}
             <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-2xl transition-all duration-700 group-hover:bg-primary/16" />
@@ -328,7 +327,7 @@ export default function Project() {
           {/* ── canvas card ── */}
           <motion.div
             {...fadeUp(0.18)}
-            className="relative overflow-hidden rounded-2xl border border-border/70 bg-card/90 shadow-[0_20px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] lg:h-[386px]"
+            className="order-1 relative overflow-hidden rounded-lg border border-border/70 bg-card/90 shadow-[0_20px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] sm:rounded-2xl lg:order-2 lg:h-[386px]"
           >
             {/* grid overlay */}
             <div
