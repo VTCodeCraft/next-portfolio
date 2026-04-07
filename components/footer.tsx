@@ -29,7 +29,7 @@ const techStack = [
 
 export default function Footer() {
   return (
-    <footer className="px-4 pb-8 text-center">
+    <footer className="px-4 pb-6 text-center">
       <div className="mx-auto max-w-lg border-t border-gray-200 pt-5 dark:border-white/10">
         <small className="mb-3 block text-xs font-medium uppercase tracking-widest text-gray-400 dark:text-white/45">
           &copy; {new Date().getFullYear()} Vishesh Tripathi

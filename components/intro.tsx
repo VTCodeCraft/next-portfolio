@@ -31,10 +31,6 @@ export default function Intro() {
       ref={ref}
       className="relative isolate -mx-4 -mt-14 flex w-auto justify-center px-4 pt-14 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
     >
-      <div className="pointer-events-none absolute left-1/2 top-[-8rem] -z-10 hidden h-[48rem] w-screen -translate-x-1/2 dark:block sm:h-[34rem]">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_26%,rgba(22,93,145,0.48),transparent_30%),radial-gradient(circle_at_62%_36%,rgba(13,74,122,0.28),transparent_34%),radial-gradient(circle_at_82%_22%,rgba(8,40,67,0.18),transparent_26%)] blur-[24px]" />
-      </div>
-      
       {/* CENTERED CONTAINER */}
       <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-10 lg:items-start lg:justify-start lg:gap-10">
 
