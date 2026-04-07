@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 import clsx from "clsx";
 import { sections } from "@/lib/data";
@@ -34,12 +33,7 @@ export default function Sidebar() {
   return (
     <>
       {/* MOBILE */}
-      <motion.div
-        className="fixed left-6 top-6 z-50 lg:hidden"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-      >
+      <div className="fixed left-6 top-6 z-50 lg:hidden">
         <button
           onClick={() => setIsOpen((v) => !v)}
           className="flex h-12 w-12 flex-col items-center justify-center gap-1 rounded-full bg-white shadow-md dark:bg-white/10"
@@ -64,47 +58,34 @@ export default function Sidebar() {
                     }
                     className="flex items-center gap-4 group"
                   >
-                    <motion.span
-                      layout
+                    <span
                       className={clsx(
                         "h-px",
                         isActive
                           ? "w-6 bg-black dark:bg-white"
                           : "w-4 bg-gray-300 group-hover:bg-black dark:bg-white/20 dark:group-hover:bg-white"
                       )}
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 20,
-                      }}
                     />
 
-                    <motion.span
-                      layout
+                    <span
                       className={clsx(
                         isActive
                           ? "font-semibold text-black dark:text-white"
                           : "group-hover:text-black dark:group-hover:text-white"
                       )}
-                      transition={{ type: "spring", stiffness: 200 }}
                     >
                       {item.name}
-                    </motion.span>
+                    </span>
                   </a>
                 );
               })}
             </nav>
           </aside>
         )}
-      </motion.div>
+      </div>
 
       {/* DESKTOP */}
-      <motion.aside
-        className="hidden text-gray-500 dark:text-white/70 lg:flex lg:flex-col lg:gap-8"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-      >
+      <aside className="hidden text-gray-500 dark:text-white/70 lg:flex lg:flex-col lg:gap-8">
         {sections.map((item) => {
           const isActive = activeSection === item.name;
 
@@ -117,36 +98,28 @@ export default function Sidebar() {
               }
               className="flex items-center gap-4 group"
             >
-              <motion.span
-                layout
+              <span
                 className={clsx(
                   "h-px",
                   isActive
                     ? "w-6 bg-black dark:bg-white"
                     : "w-4 bg-gray-300 group-hover:bg-black dark:bg-white/20 dark:group-hover:bg-white"
                 )}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
-                }}
               />
 
-              <motion.span
-                layout
+              <span
                 className={clsx(
                   isActive
                     ? "font-semibold text-black dark:text-white"
                     : "group-hover:text-black dark:group-hover:text-white"
                 )}
-                transition={{ type: "spring", stiffness: 200 }}
               >
                 {item.name}
-              </motion.span>
+              </span>
             </a>
           );
         })}
-      </motion.aside>
+      </aside>
     </>
   );
 }

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiDownload } from "react-icons/hi";
 import { BsTwitterX , BsTwitter } from "react-icons/bs";
@@ -36,12 +35,7 @@ export default function Intro() {
 
         {/* CONTENT */}
         <div className="flex max-w-[34rem] flex-col items-center text-center lg:items-start lg:text-left">
-          <motion.div
-            className="mb-6 lg:hidden"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4 }}
-          >
+          <div className="mb-6 lg:hidden">
             <Image
               src="/profile.jpg"
               alt="Vishesh Tripathi"
@@ -51,35 +45,20 @@ export default function Intro() {
               priority
               className="h-32 w-32 rounded-full border-4 border-white object-cover shadow-xl dark:border-white/20"
             />
-          </motion.div>
+          </div>
 
           {/* NAME */}
-          <motion.h1
-            className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] dark:text-white sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-          >
+          <h1 className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] dark:text-white sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
             Vishesh Tripathi
-          </motion.h1>
+          </h1>
 
           {/* ROLE */}
-          <motion.p
-            className="mt-1.5 text-lg text-neutral-500 dark:text-neutral-400 sm:text-2xl lg:text-[1.7rem]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-          >
+          <p className="mt-1.5 text-lg text-neutral-500 dark:text-neutral-400 sm:text-2xl lg:text-[1.7rem]">
             Full-Stack Developer
-          </motion.p>
+          </p>
 
           {/* SOCIALS */}
-          <motion.div
-            className="mt-4 flex flex-wrap justify-center gap-2.5 lg:justify-start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <div className="mt-4 flex flex-wrap justify-center gap-2.5 lg:justify-start">
             <Link
               href="https://github.com/VTCodeCraft"
               target="_blank"
@@ -116,15 +95,10 @@ export default function Intro() {
               <SiLeetcode />
               LeetCode
             </Link>
-          </motion.div>
+          </div>
 
           {/* DESCRIPTION */}
-          <motion.p
-            className="mt-6 max-w-[33rem] text-base leading-relaxed text-neutral-700 dark:text-neutral-300 sm:text-lg lg:text-[1.08rem]"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-          >
+          <p className="mt-6 max-w-[33rem] text-base leading-relaxed text-neutral-700 dark:text-neutral-300 sm:text-lg lg:text-[1.08rem]">
             <span className="font-bold">Hello, I&apos;m Vishesh.</span>{" "}
             I&apos;m a <span className="font-bold">full-stack developer</span> focused on{" "}
             building <span className="italic">scalable real-world applications</span>{" "}
@@ -132,15 +106,10 @@ export default function Intro() {
             <span className="font-bold">DSA in Java</span>. I specialize in{" "}
             <span className="font-bold">React (Next.js)</span> and{" "}
             <span className="font-bold">backend systems</span>.
-          </motion.p>
+          </p>
 
           {/* BUTTONS */}
-          <motion.div
-            className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Link
               href="https://x.com/VTCodeCraft_"
               target="_blank"
@@ -160,7 +129,7 @@ export default function Intro() {
               Resume
               <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />
             </a>
-          </motion.div>
+          </div>
 
         </div>
       </div>

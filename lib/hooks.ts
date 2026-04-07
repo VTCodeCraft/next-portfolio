@@ -7,13 +7,13 @@ export function useSectionInView(sectionName: SectionName, threshold: number = 0
          const [ref, inView] = useInView({
                   threshold: threshold,
          });
-         const { setActiveSection } = useActiveSectionContext();
+         const { activeSection, setActiveSection } = useActiveSectionContext();
 
          useEffect(() => {
-                  if (inView) {
+                  if (inView && activeSection !== sectionName) {
                            setActiveSection(sectionName);
                   }
-         }, [inView, setActiveSection, sectionName]);
+         }, [activeSection, inView, setActiveSection, sectionName]);
 
          return ref;
 }

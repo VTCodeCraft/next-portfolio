@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
 import {
   skillsData,
   skillIconsData,
@@ -179,12 +178,7 @@ export default function Skills() {
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
-      <motion.div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black dark:from-black dark:to-black dark:shadow-[0_22px_70px_rgba(0,0,0,0.45)] lg:mx-0"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-      >
+      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black dark:from-black dark:to-black dark:shadow-[0_22px_70px_rgba(0,0,0,0.45)] lg:mx-0">
         <div
           className="grid gap-3"
           style={{
@@ -204,36 +198,19 @@ export default function Skills() {
             }
 
             return (
-              <motion.div
+              <div
                 key={tile}
-                layout
                 onPointerDown={handlePointerDown}
                 onPointerUp={(e) => handlePointerUp(index, e)}
-                whileHover={
-                  canMove
-                    ? {
-                      scale: 1.1,
-                      rotate: 1,
-                    }
-                    : {}
-                }
-                whileTap={canMove ? { scale: 0.92 } : {}}
-                transition={{
-                  layout: {
-                    type: "spring",
-                    stiffness: 500,
-                    damping: 30,
-                  },
-                }}
                 className={`relative flex ${isMobile ? "h-20" : "h-16"
-                  } items-center justify-center rounded-lg border px-2 text-center transition ${canMove
-                    ? "cursor-grab border-white/30 bg-white/85 shadow-lg active:cursor-grabbing hover:shadow-2xl dark:border-cyan-300/28 dark:bg-[#151c28] dark:text-white"
+                  } items-center justify-center rounded-lg border px-2 text-center transition-transform duration-200 ${canMove
+                    ? "cursor-grab border-white/30 bg-white/85 shadow-lg active:cursor-grabbing hover:scale-[1.03] hover:shadow-xl dark:border-cyan-300/28 dark:bg-[#151c28] dark:text-white"
                     : "border-black/5 bg-gray-100/70 text-gray-600 dark:border-white/12 dark:bg-[#0a0a0a] dark:text-white"
                   }`}
               >
                 {/* GLOW EFFECT */}
                 {canMove && (
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-400/20 to-purple-400/20 blur-md opacity-0 hover:opacity-100 transition" />
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 transition hover:opacity-100" />
                 )}
 
                 <div className="flex flex-col items-center justify-center gap-1 relative z-10">
@@ -258,19 +235,14 @@ export default function Skills() {
                     {tile}
                   </span>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
-      </motion.div>
+      </div>
 
       {/* BUTTON */}
-      <motion.div className="mx-auto mt-6 flex w-full max-w-[720px] justify-center lg:mx-0"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        viewport={{ once: true }}
-      >
+      <div className="mx-auto mt-6 flex w-full max-w-[720px] justify-center lg:mx-0">
         <button
           onClick={() => {
             const INITIAL_TILES = [
@@ -284,7 +256,7 @@ export default function Skills() {
         >
           Shuffle
         </button>
-      </motion.div>
+      </div>
     </section>
   );
 }
