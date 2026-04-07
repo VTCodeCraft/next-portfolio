@@ -50,9 +50,9 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
           break;
         case "display_sqr":
           material.metalness = 0.02;
-          material.roughness = 0.08;
-          material.envMapIntensity = 0.45;
-          material.emissive.copy(material.color).multiplyScalar(0.18);
+          material.roughness = 0.22;
+          material.envMapIntensity = 0.12;
+          material.emissive.setScalar(0.03);
           break;
         case "tuf_logo":
         case "ASUS_LOGO":

@@ -46,7 +46,7 @@ function ProjectScene() {
       }}
       onCreated={({ gl }) => {
         gl.toneMapping = ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.08;
+        gl.toneMappingExposure = 0.88;
         gl.shadowMap.enabled = true;
         gl.shadowMap.type = PCFSoftShadowMap;
       }}
@@ -73,20 +73,20 @@ function ProjectScene() {
         shadow-mapSize-height={1024}
       />
 
-      <pointLight position={[3.2, 1.2, 2.4]} intensity={12} distance={6.5} color="#d7e7ff" />
-      <pointLight position={[-3.2, 1.15, 2.2]} intensity={10} distance={6.2} color="#cfdcff" />
+      <pointLight position={[3.2, 1.2, 2.4]} intensity={4} distance={6.5} color="#d7e7ff" />
+      <pointLight position={[-3.2, 1.15, 2.2]} intensity={3.5} distance={6.2} color="#cfdcff" />
 
       <Environment preset="studio" resolution={256}>
         <Lightformer
           form="rect"
-          intensity={2.2}
+          intensity={1.1}
           position={[5.4, 1.8, 2.1]}
           rotation={[0, -Math.PI / 5, 0]}
           scale={[3.8, 5.5, 1]}
         />
         <Lightformer
           form="rect"
-          intensity={1.75}
+          intensity={0.9}
           position={[-5.2, 1.7, 2.2]}
           rotation={[0, Math.PI / 5, 0]}
           scale={[3.6, 5.2, 1]}
@@ -120,11 +120,11 @@ function ProjectScene() {
 
       <EffectComposer enableNormalPass={false} multisampling={0}>
         <Bloom
-          intensity={0.42}
-          luminanceThreshold={0.82}
-          luminanceSmoothing={0.22}
-          mipmapBlur
+          intensity={0.16}
+          luminanceThreshold={0.92}
+          luminanceSmoothing={0.08}
         />
+
         <BrightnessContrast brightness={0.01} contrast={0.1} />
         <HueSaturation saturation={0.08} />
       </EffectComposer>
