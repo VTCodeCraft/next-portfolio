@@ -29,9 +29,9 @@ export default function Intro() {
     <section
       id="introduction"
       ref={ref}
-      className="relative isolate flex w-full justify-center overflow-visible scroll-mt-28 lg:justify-start"
+      className="relative isolate -mx-4 -mt-14 flex w-auto justify-center px-4 pt-14 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
     >
-      <div className="pointer-events-none absolute inset-x-[-18rem] top-[-8rem] -z-10 hidden h-[34rem] dark:block">
+      <div className="pointer-events-none absolute left-1/2 top-[-8rem] -z-10 hidden h-[48rem] w-screen -translate-x-1/2 dark:block sm:h-[34rem]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_26%,rgba(22,93,145,0.48),transparent_30%),radial-gradient(circle_at_62%_36%,rgba(13,74,122,0.28),transparent_34%),radial-gradient(circle_at_82%_22%,rgba(8,40,67,0.18),transparent_26%)] blur-[24px]" />
       </div>
       
