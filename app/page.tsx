@@ -26,12 +26,18 @@ export default function Home() {
             <main className="min-w-0 max-w-full lg:pl-4 xl:pl-6">
               <div className="space-y-24 sm:space-y-28 lg:space-y-32">
                 <Intro />
-                <SectionDivider />
-                <Skills />
-                <SectionDivider />
-                <MyJourney />
-                <SectionDivider />
-                <Contact />
+                <div className="deferred-section">
+                  <SectionDivider />
+                  <Skills />
+                </div>
+                <div className="deferred-section">
+                  <SectionDivider />
+                  <MyJourney />
+                </div>
+                <div className="deferred-section">
+                  <SectionDivider />
+                  <Contact />
+                </div>
               </div>
             </main>
           </div>
