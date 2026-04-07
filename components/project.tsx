@@ -179,7 +179,7 @@ export default function Project() {
   return (
     <motion.section
       id="projects"
-      className="relative mx-auto w-full max-w-[1100px] px-4 py-1 scroll-smooth sm:px-6 lg:px-8"
+      className="relative mx-auto w-full max-w-[1100px] px-2 py-1 sm:px-4 lg:px-6"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -188,21 +188,21 @@ export default function Project() {
       {/* ── decorative background glow ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-24 -top-20 h-[420px] w-[420px] rounded-full bg-primary/8 blur-[96px]"
+        className="pointer-events-none absolute left-0 -translate-x-1/2 -top-20 h-[420px] w-[420px] rounded-full bg-primary/8 blur-[96px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-16 top-0 h-[320px] w-[320px] rounded-full bg-accent/10 blur-[80px]"
+        className="pointer-events-none absolute right-0 top-0 h-[320px] w-[320px] rounded-full bg-accent/10 blur-[80px]"
       />
+      <div className="relative w-full">
 
-      <div className="relative mx-auto w-full max-w-[1030px]">
         {/* ── heading ── */}
         <motion.div {...fadeUp(0)} className="mb-4 flex flex-col items-start">
           <SectionHeading>My Projects</SectionHeading>
         </motion.div>
 
         {/* ── grid ── */}
-        <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-[436px_minmax(0,1fr)] lg:items-stretch">
+        <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-[minmax(0,436px)_1fr] lg:items-stretch">
 
           {/* ── info card ── */}
           <motion.div
@@ -235,11 +235,10 @@ export default function Project() {
                   <button
                     key={i}
                     onClick={() => setSelectedProjectIndex(i)}
-                    className={`h-1 rounded-full transition-all duration-300 ${
-                      i === selectedProjectIndex
+                    className={`h-1 rounded-full transition-all duration-300 ${i === selectedProjectIndex
                         ? "w-5 bg-primary"
                         : "w-1.5 bg-muted hover:bg-muted-foreground/50"
-                    }`}
+                      }`}
                   />
                 ))}
               </div>
