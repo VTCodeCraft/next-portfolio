@@ -22,7 +22,7 @@ import { BlendFunction } from "postprocessing";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { myProjects } from "@/lib/data";
+import { myProjects, skillColors } from "@/lib/data";
 import { FaGithub, FaArrowLeft, FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
 import { ACESFilmicToneMapping, PCFSoftShadowMap, Vector2 } from "three";
 import CanvasLoader from "./canvas-loader";
@@ -36,6 +36,13 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] as const },
   viewport: { once: true, amount: 0.2 },
 });
+
+const getTagColor = (tagName: string) => {
+  if (skillColors[tagName]) return skillColors[tagName];
+  if (tagName.startsWith("React")) return skillColors.React;
+  if (tagName.startsWith("Tailwind")) return skillColors["Tailwind CSS"];
+  return undefined;
+};
 
 /* ─── ambient particle ring (decorative mesh) ────────────────────── */
 function LaptopRig() {
@@ -272,12 +279,13 @@ export default function Project() {
             <div className="animatedText flex max-w-[22rem] flex-wrap gap-1.5">
               {currentProject.tags.map((tag) => {
                 const Icon = tag.icon;
+                const iconColor = getTagColor(tag.name);
                 return (
                   <div
                     key={tag.id}
                     className="flex items-center gap-1.5 rounded-full border border-border/70 bg-secondary/50 px-2 py-0.5 text-[0.66rem] text-muted-foreground backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-primary/30 hover:bg-accent/60 hover:text-foreground"
                   >
-                    <Icon className="text-primary" style={{ fontSize: "0.68rem" }} />
+                    <Icon style={{ fontSize: "0.68rem", color: iconColor }} />
                     {tag.name}
                   </div>
                 );

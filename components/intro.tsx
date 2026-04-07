@@ -145,10 +145,10 @@ export default function Intro() {
               href="https://x.com/VTCodeCraft_"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2.5 text-[0.95rem] text-white transition hover:scale-105 dark:border dark:border-cyan-400/20 dark:bg-cyan-400/12 dark:text-white dark:hover:bg-cyan-400/18 sm:px-5"
+              className="group flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-[0.95rem] text-white transition hover:scale-105 dark:border dark:border-white/10 dark:bg-black dark:text-white dark:hover:bg-black/90 sm:px-5"
             >
               <span>Connect on</span>
-              <BsTwitterX className="text-lg" />
+              <BsTwitterX className="text-lg text-white" />
             </Link>
 
             <a
