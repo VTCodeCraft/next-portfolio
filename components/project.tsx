@@ -184,7 +184,7 @@ export default function Project() {
   return (
     <motion.section
       id="projects"
-      className="relative mx-auto w-full max-w-[1100px] px-2 py-1 sm:px-4 lg:px-6"
+      className="relative mx-auto mb-5 w-full max-w-[1100px] px-2 py-1 sm:px-4 lg:px-6"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
