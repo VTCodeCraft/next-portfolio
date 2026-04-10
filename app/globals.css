@@ -80,6 +80,7 @@ html {
 
 .journey-timeline .vertical-timeline-element-content {
   max-width: 36rem;
+  margin-left: 68px;
 }
 
 @media only screen and (max-width: 767px) {

@@ -16,11 +16,6 @@ export default function Contact() {
       ref={ref}
       className="relative w-full scroll-mt-28 max-w-[32rem] pb-2 text-center sm:mb-10 lg:mx-0 lg:text-left"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-10 -left-8 h-52 w-52 rounded-full bg-primary/10 blur-3xl"
-      />
-
       <p className="mb-0.5 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-primary">
         &nbsp;Let&apos;s talk
       </p>
