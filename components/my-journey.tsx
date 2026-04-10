@@ -20,7 +20,7 @@ export default function MyJourney() {
       className="w-full scroll-mt-28 lg:max-w-none"
     >
       <div className="w-full max-w-[720px] lg:mx-0">
-        <SectionHeading>My Journey</SectionHeading>
+        <SectionHeading>&nbsp;My Journey</SectionHeading>
       </div>
       <VerticalTimeline
         className="journey-timeline"

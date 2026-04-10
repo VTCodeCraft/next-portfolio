@@ -22,10 +22,10 @@ export default function Contact() {
       />
 
       <p className="mb-0.5 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-primary">
-        Let&apos;s talk
+        &nbsp;Let&apos;s talk
       </p>
 
-      <SectionHeading>Contact Me</SectionHeading>
+      <SectionHeading>&nbsp;Contact Me</SectionHeading>
 
       <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
         Have a project in mind or just want to say hello? Reach me at{" "}
