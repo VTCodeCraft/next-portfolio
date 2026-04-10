@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
+import GalaxyDeferred from "@/components/GalaxyDeferred";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -39,19 +40,22 @@ export default function RootLayout({
       >
         <div className="light-canvas light-only absolute inset-0 -z-20" />
         <div className="dark-canvas absolute inset-0 -z-20 hidden dark:block" />
+        <div className="pointer-events-none absolute inset-0 -z-10 hidden dark:block">
+          <GalaxyDeferred />
+        </div>
         {/* BACKGROUND BLOBS */}
         <div className="light-only absolute top-[-7rem] right-[8rem] -z-10 h-[34rem] w-[34rem] rounded-full bg-primary/8 blur-[9rem] sm:w-[72rem]"></div>
         <div className="light-only absolute top-[-2rem] left-[-32rem] -z-10 h-[32rem] w-[54rem] rounded-full bg-secondary/70 blur-[9rem] sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
         <div className="light-only absolute left-[22%] top-[5rem] -z-10 h-[30rem] w-[46rem] rounded-full bg-accent/60 opacity-85 blur-[11rem]" />
-        
+
         <ActiveSectionContextProvider>
-        <Header />
-        {/* CONTENT */}
-        <main className="w-full pt-32 pb-10">
-          <div className="w-full">{children}</div>
-        </main>
-        <Footer />
-        <Toaster position="top-right"/>
+          <Header />
+          {/* CONTENT */}
+          <main className="w-full pt-32 pb-10">
+            <div className="w-full">{children}</div>
+          </main>
+          <Footer />
+          <Toaster position="top-right" />
         </ActiveSectionContextProvider>
       </body>
     </html>

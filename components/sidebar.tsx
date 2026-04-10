@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 import clsx from "clsx";
 import { sections } from "@/lib/data";
@@ -58,24 +59,32 @@ export default function Sidebar() {
                     }
                     className="flex items-center gap-4 group"
                   >
-                    <span
+                    <motion.span
+                      layout
                       className={clsx(
                         "h-px",
                         isActive
                           ? "w-6 bg-foreground"
                           : "w-4 bg-border group-hover:bg-foreground"
                       )}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20,
+                      }}
                     />
 
-                    <span
+                    <motion.span
+                      layout
                       className={clsx(
                         isActive
                           ? "font-semibold text-foreground"
                           : "group-hover:text-foreground"
                       )}
+                      transition={{ type: "spring", stiffness: 200 }}
                     >
                       {item.name}
-                    </span>
+                    </motion.span>
                   </a>
                 );
               })}
@@ -98,24 +107,32 @@ export default function Sidebar() {
               }
               className="flex items-center gap-4 group"
             >
-              <span
+              <motion.span
+                layout
                 className={clsx(
                   "h-px",
                   isActive
                     ? "w-6 bg-foreground"
                     : "w-4 bg-border group-hover:bg-foreground"
                 )}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 20,
+                }}
               />
 
-              <span
+              <motion.span
+                layout
                 className={clsx(
                   isActive
                     ? "font-semibold text-foreground"
                     : "group-hover:text-foreground"
                 )}
+                transition={{ type: "spring", stiffness: 200 }}
               >
                 {item.name}
-              </span>
+              </motion.span>
             </a>
           );
         })}

@@ -82,6 +82,24 @@ html {
   max-width: 36rem;
 }
 
+@media only screen and (max-width: 767px) {
+  .journey-timeline.vertical-timeline {
+    padding-left: 0.5rem;
+  }
+
+  .journey-timeline.vertical-timeline::before {
+    left: 24px;
+  }
+
+  .journey-timeline .vertical-timeline-element-icon {
+    left: 6px;
+  }
+
+  .journey-timeline .vertical-timeline-element-content {
+    margin-left: 72px;
+  }
+}
+
 @theme inline {
   --font-heading: var(--font-display);
   --font-sans: var(--font-body);
