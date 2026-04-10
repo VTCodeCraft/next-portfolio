@@ -42,7 +42,7 @@ export default function GalaxyDeferred() {
     <Galaxy
       mouseRepulsion={false}
       mouseInteraction={false}
-      density={0.5}
+      density={1}
       glowIntensity={0.1}
       saturation={0.12}
       hueShift={100}
