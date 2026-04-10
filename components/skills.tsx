@@ -178,7 +178,7 @@ export default function Skills() {
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
-      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-white/20 bg-gradient-to-br from-white/60 to-white/30 p-4 shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-black dark:from-black dark:to-black dark:shadow-[0_22px_70px_rgba(0,0,0,0.45)] lg:mx-0">
+      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-border bg-card/80 p-4 shadow-2xl backdrop-blur-xl lg:mx-0">
         <div
           className="grid gap-3"
           style={{
@@ -192,7 +192,7 @@ export default function Skills() {
               return (
                 <div
                   key="empty"
-                  className="h-16 rounded-lg border border-dashed border-white/30 dark:border-white/14 dark:bg-black sm:h-20"
+                  className="h-16 rounded-lg border border-dashed border-border bg-background/60 sm:h-20"
                 />
               );
             }
@@ -204,13 +204,13 @@ export default function Skills() {
                 onPointerUp={(e) => handlePointerUp(index, e)}
                 className={`relative flex ${isMobile ? "h-20" : "h-16"
                   } items-center justify-center rounded-lg border px-2 text-center transition-transform duration-200 ${canMove
-                    ? "cursor-grab border-white/30 bg-white/85 shadow-lg active:cursor-grabbing hover:scale-[1.03] hover:shadow-xl dark:border-cyan-300/28 dark:bg-[#151c28] dark:text-white"
-                    : "border-black/5 bg-gray-100/70 text-gray-600 dark:border-white/12 dark:bg-[#0a0a0a] dark:text-white"
+                    ? "cursor-grab border-border bg-secondary shadow-lg active:cursor-grabbing hover:scale-[1.03] hover:shadow-xl text-secondary-foreground"
+                    : "border-border bg-background/70 text-muted-foreground"
                   }`}
               >
                 {/* GLOW EFFECT */}
                 {canMove && (
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 transition hover:opacity-100" />
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 to-accent/40 opacity-0 transition hover:opacity-100" />
                 )}
 
                 <div className="flex flex-col items-center justify-center gap-1 relative z-10">
@@ -230,7 +230,7 @@ export default function Skills() {
 
                   <span
                     className={`${isMobile ? "text-[11px]" : "text-[11px]"
-                      } leading-tight font-semibold text-gray-700 dark:text-white`}
+                      } leading-tight font-semibold text-foreground`}
                   >
                     {tile}
                   </span>
@@ -252,7 +252,7 @@ export default function Skills() {
 
             setTiles(shuffleTiles(INITIAL_TILES));
           }}
-          className="rounded-xl bg-gradient-to-r from-gray-900 to-black px-6 py-2 text-sm text-white shadow-lg transition hover:scale-110 active:scale-95 dark:from-white dark:to-zinc-200 dark:text-gray-900"
+          className="rounded-xl bg-primary px-6 py-2 text-sm text-primary-foreground shadow-lg transition hover:scale-110 hover:opacity-90 active:scale-95"
         >
           Shuffle
         </button>

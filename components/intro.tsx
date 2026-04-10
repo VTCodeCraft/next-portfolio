@@ -43,17 +43,17 @@ export default function Intro() {
               height={120}
               quality={95}
               priority
-              className="h-32 w-32 rounded-full border-4 border-white object-cover shadow-xl dark:border-white/20"
+              className="h-32 w-32 rounded-full border-4 border-border bg-card object-cover shadow-xl"
             />
           </div>
 
           {/* NAME */}
-          <h1 className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] dark:text-white sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
+          <h1 className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
             Vishesh Tripathi
           </h1>
 
           {/* ROLE */}
-          <p className="mt-1.5 text-lg text-neutral-500 dark:text-neutral-400 sm:text-2xl lg:text-[1.7rem]">
+          <p className="mt-1.5 text-lg text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
             Full-Stack Developer
           </p>
 
@@ -62,7 +62,7 @@ export default function Intro() {
             <Link
               href="https://github.com/VTCodeCraft"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
             >
               <FaGithub />
               GitHub
@@ -71,7 +71,7 @@ export default function Intro() {
             <Link
               href="https://x.com/VTCodeCraft_"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
             >
               <BsTwitter/>
               X
@@ -80,7 +80,7 @@ export default function Intro() {
             <Link
               href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
               target="_blank"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
             >
               <FaLinkedin />
               LinkedIn
@@ -90,7 +90,7 @@ export default function Intro() {
               href="https://leetcode.com/u/VTCodeCraft/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[0.9rem] shadow-md transition hover:scale-105 dark:border dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-4"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
             >
               <SiLeetcode />
               LeetCode
@@ -98,7 +98,7 @@ export default function Intro() {
           </div>
 
           {/* DESCRIPTION */}
-          <p className="mt-6 max-w-[33rem] text-base leading-relaxed text-neutral-700 dark:text-neutral-300 sm:text-lg lg:text-[1.08rem]">
+          <p className="mt-6 max-w-[33rem] text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-[1.08rem]">
             <span className="font-bold">Hello, I&apos;m Vishesh.</span>{" "}
             I&apos;m a <span className="font-bold">full-stack developer</span> focused on{" "}
             building <span className="italic">scalable real-world applications</span>{" "}
@@ -114,17 +114,17 @@ export default function Intro() {
               href="https://x.com/VTCodeCraft_"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full bg-black px-4 py-2.5 text-[0.95rem] text-white transition hover:scale-105 dark:border dark:border-white/10 dark:bg-black dark:text-white dark:hover:bg-black/90 sm:px-5"
+              className="group flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-[0.95rem] text-primary-foreground transition hover:scale-105 hover:opacity-90 sm:px-5"
             >
               <span>Connect on</span>
-              <BsTwitterX className="text-lg text-white" />
+              <BsTwitterX className="text-lg text-primary-foreground" />
             </Link>
 
             <a
               href="https://drive.google.com/file/d/1-xtUGMoIuXq_9fDntOD4Cc0xmlwfKBHs/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-[0.95rem] transition hover:scale-105 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 sm:px-5"
+              className="group flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-[0.95rem] text-card-foreground transition hover:scale-105 hover:bg-accent sm:px-5"
             >
               Resume
               <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />

@@ -16,7 +16,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-black bg-white text-gray-900 shadow-[0_6px_20px_rgba(15,23,42,0.12)] transition hover:scale-105 dark:border-white dark:bg-zinc-950 dark:text-white sm:h-11 sm:w-11"
+      className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-border bg-card text-foreground shadow-md transition hover:scale-105 sm:h-11 sm:w-11"
     >
       <HiMoon className="text-[1.1rem] sm:text-[1.2rem] dark:hidden" />
       <HiSun className="hidden text-[1.1rem] dark:block sm:text-[1.2rem]" />

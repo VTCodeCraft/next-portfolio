@@ -18,31 +18,31 @@ export default function Contact() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-10 -left-8 h-52 w-52 rounded-full bg-indigo-500/10 blur-3xl dark:bg-indigo-400/8"
+        className="pointer-events-none absolute -top-10 -left-8 h-52 w-52 rounded-full bg-primary/10 blur-3xl"
       />
 
-      <p className="mb-0.5 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-indigo-500 dark:text-indigo-400">
+      <p className="mb-0.5 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-primary">
         Let&apos;s talk
       </p>
 
       <SectionHeading>Contact Me</SectionHeading>
 
-      <p className="mb-5 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+      <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
         Have a project in mind or just want to say hello? Reach me at{" "}
         <a
           href="mailto:work.vishesh12.05@gmail.com"
-          className="group relative inline-block font-medium text-gray-800 dark:text-gray-200"
+          className="group relative inline-block font-medium text-foreground"
         >
           work.vishesh12.05@gmail.com
-          <span className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-indigo-500 transition-transform duration-300 group-hover:scale-x-100" />
+          <span className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
         </a>{" "}
         or drop a message below.
       </p>
 
-      <div className="relative overflow-hidden rounded-xl border border-gray-200/80 bg-white/60 p-4 shadow-lg shadow-gray-200/40 backdrop-blur-md dark:border-white/8 dark:bg-white/[0.04] dark:shadow-black/30">
+      <div className="relative overflow-hidden rounded-xl border border-border bg-card/70 p-4 shadow-lg backdrop-blur-md">
         <span
           aria-hidden
-          className="pointer-events-none absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-gradient-to-bl from-indigo-100/60 to-transparent dark:from-indigo-500/10"
+          className="pointer-events-none absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-gradient-to-bl from-primary/10 to-transparent"
         />
 
         <form
@@ -57,7 +57,7 @@ export default function Contact() {
           }}
         >
           <div>
-            <label className="mb-1 block text-left font-mono text-[0.6rem] uppercase tracking-widest text-gray-400 dark:text-gray-500">
+            <label className="mb-1 block text-left font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">
               Your Email
             </label>
             <input
@@ -66,12 +66,12 @@ export default function Contact() {
               placeholder="Enter your email address"
               required
               maxLength={500}
-              className="h-10 w-full rounded-lg border border-gray-200 bg-gray-50/80 px-3 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/30 dark:focus:border-indigo-400/60 dark:focus:bg-white/8"
+              className="h-10 w-full rounded-lg border border-input bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring/20"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-left font-mono text-[0.6rem] uppercase tracking-widest text-gray-400 dark:text-gray-500">
+            <label className="mb-1 block text-left font-mono text-[0.6rem] uppercase tracking-widest text-muted-foreground">
               Message
             </label>
             <textarea
@@ -79,7 +79,7 @@ export default function Contact() {
               placeholder="Write your message here..."
               required
               maxLength={500}
-              className="h-32 w-full resize-none rounded-lg border border-gray-200 bg-gray-50/80 p-3 text-sm text-gray-900 placeholder:text-gray-400 transition-all duration-200 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-400/20 dark:border-white/10 dark:bg-white/5 dark:text-white dark:placeholder:text-white/30 dark:focus:border-indigo-400/60 dark:focus:bg-white/8"
+              className="h-32 w-full resize-none rounded-lg border border-input bg-background p-3 text-sm text-foreground placeholder:text-muted-foreground transition-all duration-200 focus:border-ring focus:bg-background focus:outline-none focus:ring-2 focus:ring-ring/20"
             />
           </div>
 
@@ -87,7 +87,7 @@ export default function Contact() {
         </form>
       </div>
 
-      <p className="mt-3 text-center text-[0.7rem] text-gray-400 dark:text-gray-600">
+      <p className="mt-3 text-center text-[0.7rem] text-muted-foreground">
         I usually reply within 24 hours
       </p>
     </section>

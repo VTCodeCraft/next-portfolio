@@ -36,16 +36,16 @@ export default function Sidebar() {
       <div className="fixed left-6 top-6 z-50 lg:hidden">
         <button
           onClick={() => setIsOpen((v) => !v)}
-          className="flex h-12 w-12 flex-col items-center justify-center gap-1 rounded-full bg-white shadow-md dark:bg-white/10"
+          className="flex h-12 w-12 flex-col items-center justify-center gap-1 rounded-full border border-border bg-card shadow-md"
         >
-          <span className="h-px w-5 bg-gray-900 dark:bg-white" />
-          <span className="h-px w-5 bg-gray-900 dark:bg-white" />
-          <span className="h-px w-5 bg-gray-900 dark:bg-white" />
+          <span className="h-px w-5 bg-foreground" />
+          <span className="h-px w-5 bg-foreground" />
+          <span className="h-px w-5 bg-foreground" />
         </button>
 
         {isOpen && (
-          <aside className="mt-4 w-60 rounded-3xl bg-white p-6 shadow-xl dark:bg-zinc-900">
-            <nav className="flex flex-col gap-6 text-gray-500 dark:text-white/70">
+          <aside className="mt-4 w-60 rounded-3xl border border-border bg-card p-6 shadow-xl">
+            <nav className="flex flex-col gap-6 text-muted-foreground">
               {sections.map((item) => {
                 const isActive = activeSection === item.name;
 
@@ -62,16 +62,16 @@ export default function Sidebar() {
                       className={clsx(
                         "h-px",
                         isActive
-                          ? "w-6 bg-black dark:bg-white"
-                          : "w-4 bg-gray-300 group-hover:bg-black dark:bg-white/20 dark:group-hover:bg-white"
+                          ? "w-6 bg-foreground"
+                          : "w-4 bg-border group-hover:bg-foreground"
                       )}
                     />
 
                     <span
                       className={clsx(
                         isActive
-                          ? "font-semibold text-black dark:text-white"
-                          : "group-hover:text-black dark:group-hover:text-white"
+                          ? "font-semibold text-foreground"
+                          : "group-hover:text-foreground"
                       )}
                     >
                       {item.name}
@@ -85,7 +85,7 @@ export default function Sidebar() {
       </div>
 
       {/* DESKTOP */}
-      <aside className="hidden text-gray-500 dark:text-white/70 lg:flex lg:flex-col lg:gap-8">
+      <aside className="hidden text-muted-foreground lg:flex lg:flex-col lg:gap-8">
         {sections.map((item) => {
           const isActive = activeSection === item.name;
 
@@ -102,16 +102,16 @@ export default function Sidebar() {
                 className={clsx(
                   "h-px",
                   isActive
-                    ? "w-6 bg-black dark:bg-white"
-                    : "w-4 bg-gray-300 group-hover:bg-black dark:bg-white/20 dark:group-hover:bg-white"
+                    ? "w-6 bg-foreground"
+                    : "w-4 bg-border group-hover:bg-foreground"
                 )}
               />
 
               <span
                 className={clsx(
                   isActive
-                    ? "font-semibold text-black dark:text-white"
-                    : "group-hover:text-black dark:group-hover:text-white"
+                    ? "font-semibold text-foreground"
+                    : "group-hover:text-foreground"
                 )}
               >
                 {item.name}

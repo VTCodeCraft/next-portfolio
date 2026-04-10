@@ -21,7 +21,7 @@ export default function Header() {
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
             <div
-              className="absolute inset-0 rounded-full border border-white/30 bg-white/60 shadow-sm backdrop-blur-md dark:border-white/12 dark:bg-black/65 dark:shadow-[0_10px_35px_rgba(0,0,0,0.35)]"
+              className="absolute inset-0 rounded-full border border-border/70 bg-background/75 shadow-sm backdrop-blur-md"
             />
 
             <nav className="relative flex items-center gap-2 px-1.5 py-1.5 sm:gap-4 sm:px-3.5 sm:py-2.5">
@@ -36,8 +36,8 @@ export default function Header() {
                       href={link.href}
                       className={`block rounded-full px-2 py-1.5 leading-none transition sm:px-3 ${
                         pathname === link.href
-                          ? "bg-gray-100 text-black shadow-sm dark:bg-white/12 dark:text-white"
-                          : "text-gray-600 hover:bg-white/70 hover:text-black dark:text-white/80 dark:hover:bg-white/8 dark:hover:text-white"
+                          ? "bg-accent text-foreground shadow-sm"
+                          : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                       }`}
                     >
                       {link.name}

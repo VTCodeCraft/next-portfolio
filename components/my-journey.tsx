@@ -41,7 +41,7 @@ export default function MyJourney() {
               borderRight: "0.4rem solid var(--journey-card-arrow)",
             }}
             date={item.date}
-            dateClassName="!text-sm !font-medium !text-gray-500 dark:!text-white/45"
+            dateClassName="!text-sm !font-medium !text-muted-foreground"
             icon={item.icon}
             iconStyle={{
               background: "var(--journey-icon-bg)",
@@ -49,11 +49,11 @@ export default function MyJourney() {
               boxShadow: "0 0 0 4px var(--journey-icon-ring)",
             }}
           >
-            <h3 className="text-lg font-semibold capitalize leading-snug dark:text-white">
+            <h3 className="text-lg font-semibold capitalize leading-snug text-foreground">
               {item.title}
             </h3>
-            <p className="!mt-0 text-base font-normal dark:text-white/70">{item.location}</p>
-            <ul className="!mt-3 space-y-1.5 text-sm leading-6 text-gray-700 dark:text-white/65">
+            <p className="!mt-0 text-base font-normal text-muted-foreground">{item.location}</p>
+            <ul className="!mt-3 space-y-1.5 text-sm leading-6 text-muted-foreground">
               {item.description.split("\n").map((line, lineIndex) => (
                 <li
                   key={`${item.title}-line-${lineIndex}`}
