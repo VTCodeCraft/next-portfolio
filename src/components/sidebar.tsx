@@ -57,7 +57,7 @@ export default function Sidebar() {
                     onClick={(e) =>
                       handleClick(e, item.name, item.hash)
                     }
-                    className="flex items-center gap-4 group"
+                    className="sidebar-link flex items-center gap-4 group"
                   >
                     <motion.span
                       layout
@@ -105,7 +105,7 @@ export default function Sidebar() {
               onClick={(e) =>
                 handleClick(e, item.name, item.hash)
               }
-              className="flex items-center gap-4 group"
+              className="sidebar-link flex items-center gap-4 group"
             >
               <motion.span
                 layout
