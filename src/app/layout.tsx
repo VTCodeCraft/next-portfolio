@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Manrope, Sora } from "next/font/google";
 import "./globals.css";
+import "@/styles/mdx.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
 // import GalaxyDeferred from "@/components/GalaxyDeferred";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vtcodecraft.in";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -18,6 +21,7 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Vishesh Tripathi - Portfolio",
   description: "Vishesh Tripathi is a full-stack developer portfolio.",
 };

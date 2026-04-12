@@ -1,0 +1,51 @@
+---
+title: "Building a Fast Portfolio Without Losing the Vibe"
+description: "A practical note on balancing polished UI, motion, and runtime performance in a modern Next.js portfolio."
+date: "2026-04-10"
+published: true
+tags: ["nextjs", "performance", "ui"]
+cover: "/profile.jpg"
+---
+
+## Why performance is part of the design
+
+A portfolio can look beautiful in a screenshot and still feel heavy in the hand. The goal is not to remove every animation. The goal is to make the page feel intentional: load the useful content first, then add motion where it actually helps the experience.
+
+<Callout type="note">
+The best visual effect is the one that makes the interface feel clearer, not the one that wins a GPU arm-wrestling match in the background.
+</Callout>
+
+## The pattern I like
+
+For this site, the safer rhythm is:
+
+- Keep route-level content server-rendered where possible.
+- Defer expensive client-only visuals until the page is stable.
+- Prefer theme tokens over local one-off colors.
+- Measure before adding more motion.
+
+## A small client boundary
+
+The blog search uses URL state, but it stays isolated to the listing UI:
+
+```tsx
+"use client";
+
+import { useDeferredValue } from "react";
+
+export function SearchableTitleList({ query }: { query: string }) {
+  const deferredQuery = useDeferredValue(query.toLowerCase());
+
+  return <p>Filtering with {deferredQuery}</p>;
+}
+```
+
+## Keep the system easy to theme
+
+When components use tokens like `bg-card`, `border-border`, and `text-muted-foreground`, a theme update can happen in one place instead of becoming a treasure hunt through dozens of local colors.
+
+Read more about the underlying framework in the [Next.js docs](https://nextjs.org/docs).
+
+## What I would tune next
+
+I would keep the blog calm and fast. Save the heavier 3D and canvas work for places where it clearly supports the portfolio story, like the projects route.
