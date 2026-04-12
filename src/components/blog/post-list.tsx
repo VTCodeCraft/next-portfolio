@@ -14,7 +14,7 @@ export function PostList({ posts }: PostListProps) {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="grid gap-x-8 gap-y-12 md:grid-cols-2">
       {posts.map((post) => (
         <PostCard key={post.slugAsParams} post={post} />
       ))}

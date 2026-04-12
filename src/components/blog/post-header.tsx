@@ -1,6 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 import { Tag } from "@/components/blog/tag";
+import SectionHeading from "@/components/section-heading";
 
 type PostHeaderProps = {
   title: string;
@@ -27,17 +30,28 @@ export function PostHeader({
   tags,
 }: PostHeaderProps) {
   return (
-    <header className="space-y-8">
+    <header className="space-y-5">
       <div className="mx-auto max-w-3xl space-y-5 text-center">
+        <div className="flex justify-end">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.24em] text-muted-foreground transition hover:text-foreground"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span>Back to blog</span>
+          </Link>
+        </div>
+
+        <SectionHeading className="mb-2 items-center lg:items-center">
+          {title}
+        </SectionHeading>
+
         <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.28em] text-muted-foreground">
           <time dateTime={date}>{formatDate(date)}</time>
           <span aria-hidden>•</span>
           <span>{readingTime}</span>
         </div>
 
-        <h1 className="font-heading text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-          {title}
-        </h1>
         <p className="text-base leading-7 text-muted-foreground sm:text-lg">
           {description}
         </p>
@@ -50,14 +64,14 @@ export function PostHeader({
       </div>
 
       {cover ? (
-        <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-[0_24px_70px_rgba(0,0,0,0.25)]">
+        <div className="relative overflow-hidden rounded-[30px] border border-border bg-card shadow-[0_24px_70px_rgba(0,0,0,0.25)]">
           <Image
             src={cover}
             alt=""
             width={1600}
             height={900}
             priority
-            className="aspect-[16/9] w-full object-cover opacity-90"
+            className="aspect-[16/9] w-full object-cover opacity-82"
           />
         </div>
       ) : null}

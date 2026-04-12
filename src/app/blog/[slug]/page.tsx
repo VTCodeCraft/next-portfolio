@@ -6,13 +6,12 @@ import { posts } from "#site/content";
 import { MdxContent } from "@/components/blog/mdx-content";
 import { PostHeader } from "@/components/blog/post-header";
 import { ReadingProgress } from "@/components/blog/reading-progress";
-import { Toc } from "@/components/blog/toc";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vtcodecraft.in";
+const siteUrl = "https://vtcodecraft.in";
 
 const getPost = (slug: string) =>
   posts.find((post) => post.slugAsParams === slug && post.published);
@@ -96,25 +95,21 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         }}
       />
 
-      <article className="mx-auto w-full max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-        <PostHeader
-          title={post.title}
-          description={post.description}
-          date={post.date}
-          readingTime={post.readingTime}
-          cover={post.cover}
-          tags={post.tags}
-        />
+      <article className="mx-auto -mt-8 w-full max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl">
+          <PostHeader
+            title={post.title}
+            description={post.description}
+            date={post.date}
+            readingTime={post.readingTime}
+            cover={post.cover}
+            tags={post.tags}
+          />
 
-        <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1fr)_260px] lg:items-start">
-          <div className="min-w-0 rounded-3xl border border-border bg-card/75 px-5 py-8 shadow-[0_24px_70px_rgba(0,0,0,0.2)] sm:px-8 lg:px-10">
+          <div className="mx-auto mt-12 max-w-3xl rounded-[30px] border border-border bg-card/75 px-5 py-8 shadow-[0_24px_70px_rgba(0,0,0,0.18)] sm:px-8 lg:px-10">
             <div className="mdx-content">
               <MdxContent code={post.body} />
             </div>
-          </div>
-
-          <div className="hidden lg:sticky lg:top-28 lg:block">
-            <Toc items={post.toc} />
           </div>
         </div>
       </article>
