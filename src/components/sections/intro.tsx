@@ -37,7 +37,7 @@ export default function Intro() {
         <div className="flex max-w-[34rem] flex-col items-center text-center lg:items-start lg:text-left">
           <div className="mb-6 lg:hidden">
             <Image
-              src="/profile.jpg"
+              src="/images/profile.jpg"
               alt="Vishesh Tripathi"
               width={120}
               height={120}

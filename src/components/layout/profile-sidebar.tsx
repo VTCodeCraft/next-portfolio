@@ -6,7 +6,7 @@ export default function ProfileSidebar() {
          return (
     <div>
       <Image
-        src="/assets/profile.jpg"
+        src="/images/profile.jpg"
         alt="Vishesh Tripathi"
         width={120}
         height={120}
