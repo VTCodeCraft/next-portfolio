@@ -4,38 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiDownload } from "react-icons/hi";
-import { BsTwitterX , BsTwitter } from "react-icons/bs";
+import { BsTwitter, BsTwitterX } from "react-icons/bs";
 import { SiLeetcode } from "react-icons/si";
 import { useSectionInView } from "@/lib/hooks";
 
-
 export default function Intro() {
+  const ref = useSectionInView("Introduction", 0.75);
 
-  const ref = useSectionInView("Introduction" , 0.75);
-
-  // const [ref, inView] = useInView({
-  //   threshold: 0.75,
-  // });
-  // const { setActiveSection } = useActiveSectionContext();
-
-  // useEffect(() => {
-  //   if (inView) {
-  //     setActiveSection("Introduction");
-  //   }
-  // }, [inView, setActiveSection]);
-  
   return (
     <section
       id="introduction"
       ref={ref}
       className="relative isolate -mx-4 -mt-14 flex w-auto scroll-mt-28 justify-center px-4 pt-14 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
     >
-      {/* CENTERED CONTAINER */}
       <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-10 lg:items-start lg:justify-start lg:gap-10">
-
-        {/* CONTENT */}
-        <div className="flex max-w-[34rem] flex-col items-center text-center lg:items-start lg:text-left">
-          <div className="mb-6 lg:hidden">
+        <div className="flex w-full max-w-[48rem] flex-col items-center text-center lg:items-start lg:text-left">
+          <div className="mb-6 flex flex-col items-center gap-4 lg:hidden">
             <Image
               src="/images/profile.jpg"
               alt="Vishesh Tripathi"
@@ -45,19 +29,20 @@ export default function Intro() {
               priority
               className="h-32 w-32 rounded-full border-4 border-border bg-card object-cover shadow-xl"
             />
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/8 px-4 py-2 font-mono text-[0.78rem] text-emerald-300 shadow-[0_0_24px_rgba(16,185,129,0.12)]">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+              Available for work
+            </span>
           </div>
 
-          {/* NAME */}
           <h1 className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
             Vishesh Tripathi
           </h1>
 
-          {/* ROLE */}
           <p className="mt-1.5 text-lg text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
             Full-Stack Developer
           </p>
 
-          {/* SOCIALS */}
           <div className="mt-4 flex flex-wrap justify-center gap-2.5 lg:justify-start">
             <Link
               href="https://github.com/VTCodeCraft"
@@ -73,7 +58,7 @@ export default function Intro() {
               target="_blank"
               className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
             >
-              <BsTwitter/>
+              <BsTwitter />
               X
             </Link>
 
@@ -97,18 +82,30 @@ export default function Intro() {
             </Link>
           </div>
 
-          {/* DESCRIPTION */}
-          <p className="mt-6 max-w-[33rem] text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-[1.08rem]">
-            <span className="font-bold">Hello, I&apos;m Vishesh.</span>{" "}
-            I&apos;m a <span className="font-bold">full-stack developer</span> focused on{" "}
-            building <span className="italic">scalable real-world applications</span>{" "}
-            and solving problems using{" "}
-            <span className="font-bold">DSA in Java</span>. I specialize in{" "}
-            <span className="font-bold">React (Next.js)</span> and{" "}
-            <span className="font-bold">backend systems</span>.
+          <p className="mt-6 w-full max-w-none text-base leading-relaxed text-foreground/72 sm:text-lg lg:text-[1.08rem]">
+            <span className="font-semibold text-foreground">Hey, I&apos;m a Full-Stack Developer</span> with experience building{" "}
+            <span className="font-semibold text-foreground">web applications, API-driven systems, Chrome extensions, and scalable backend features</span>.
+            <br />
+            <span className="block h-2" aria-hidden />
+            I work primarily with <span className="font-semibold text-foreground">Next.js, React, TypeScript, and modern backend technologies</span>, with a strong focus on{" "}
+            <span className="font-semibold text-foreground">performance, clean architecture, and user-friendly products</span>.
+            <br />
+            <span className="block h-2" aria-hidden />
+            I also strengthen my problem-solving foundation through{" "}
+            <span className="font-semibold text-foreground">Data Structures and Algorithms in Java</span>.
+            <br />
+            <span className="block h-2" aria-hidden />
+            <span className="font-semibold text-foreground">Open to work:</span>{" "}
+            <span>Internships, full-time roles, freelance work, and collaborations.</span>{" "}
+            <a
+              href="mailto:work.vishesh12.05@gmail.com"
+              className="font-semibold text-foreground underline decoration-primary/60 underline-offset-4 transition hover:text-primary hover:decoration-primary"
+            >
+              Let&apos;s talk
+            </a>
+            .
           </p>
 
-          {/* BUTTONS */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
             <Link
               href="https://x.com/VTCodeCraft_"
@@ -127,10 +124,9 @@ export default function Intro() {
               className="group flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-[0.95rem] text-card-foreground transition hover:scale-105 hover:bg-accent sm:px-5"
             >
               Resume
-              <HiDownload className="opacity-60 group-hover:translate-y-1 transition" />
+              <HiDownload className="opacity-60 transition group-hover:translate-y-1" />
             </a>
           </div>
-
         </div>
       </div>
     </section>
