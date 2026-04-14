@@ -56,6 +56,7 @@ export default function RootLayout({
 
         <LenisProvider>
           <ActiveSectionContextProvider>
+            <div id="top" className="absolute top-0 h-px w-px" aria-hidden />
             <Header />
             {/* CONTENT */}
             <main className="w-full pt-32 pb-24 sm:pb-10">
