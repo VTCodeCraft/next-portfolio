@@ -7,6 +7,7 @@ import { HiDownload } from "react-icons/hi";
 import { BsTwitter, BsTwitterX } from "react-icons/bs";
 import { SiLeetcode } from "react-icons/si";
 import { useSectionInView } from "@/lib/hooks";
+import TextType from "@/components/TextType";
 
 export default function Intro() {
   const ref = useSectionInView("Introduction", 0.75);
@@ -35,9 +36,19 @@ export default function Intro() {
             </span>
           </div>
 
-          <h1 className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
-            Vishesh Tripathi
-          </h1>
+          <TextType
+            as="h1"
+            text="Vishesh Tripathi"
+            typingSpeed={50}
+            pauseDuration={2000}
+            showCursor
+            cursorCharacter="_"
+            deletingSpeed={50}
+            loop={true}
+            variableSpeed={{ min: 60, max: 120 }}
+            cursorBlinkDuration={0.5}
+            className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
+          />
 
           <p className="mt-1.5 text-lg text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
             Full-Stack Developer
