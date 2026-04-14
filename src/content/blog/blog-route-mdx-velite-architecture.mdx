@@ -1,0 +1,196 @@
+---
+title: "Blog Route, MDX, Slugs, and Velite"
+description: "A concise technical walkthrough of the blog system, including MDX content files, Velite transforms, slug routes, metadata, and reusable article rendering."
+date: "2026-04-12"
+published: true
+tags: ["mdx", "velite", "blog"]
+cover: "/assets/blogs/BlogRoute.jpg"
+---
+
+## Goal
+
+The blog route was built to be:
+
+- content-driven
+- statically generated
+- easy to maintain
+- visually consistent with the portfolio
+
+Instead of hardcoding articles, the system reads MDX files and turns them into structured data.
+
+## Content source
+
+All posts live in:
+
+```text
+src/content/blog/
+```
+
+Each post contains frontmatter like:
+
+```mdx
+---
+title: "Post Title"
+description: "Short description"
+date: "2026-04-12"
+published: true
+tags: ["mdx", "nextjs"]
+cover: "/profile.jpg"
+---
+```
+
+This makes posts easy to add without touching route code.
+
+## Velite pipeline
+
+The content layer is configured in `velite.config.ts`.
+
+Main job of Velite:
+
+- read MDX files
+- validate fields
+- compile MDX body
+- generate slug
+- generate TOC
+- calculate reading time
+
+Important schema fields:
+
+```ts
+slug: s.path(),
+body: s.mdx(),
+raw: s.raw(),
+toc: s.toc({ maxDepth: 3 }),
+```
+
+And in transform:
+
+```ts
+slugAsParams: post.slug.replace(/^blog\//, "")
+readingTime: readingTime(post.raw).text
+```
+
+## Blog list route
+
+The main route is `src/app/blog/page.tsx`.
+
+It:
+
+- imports posts from `#site/content`
+- filters published posts
+- sorts by newest date
+- passes data to the client search component
+
+```tsx
+const publishedPosts = posts
+  .filter((post) => post.published)
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+```
+
+## Search behavior
+
+Search is handled in `blog-client.tsx`.
+
+Approach:
+
+- read `?search=`
+- filter by title
+- keep the URL in sync
+
+```tsx
+const search = searchParams.get("search") ?? "";
+const filteredPosts = posts.filter((post) =>
+  post.title.toLowerCase().includes(search.trim().toLowerCase())
+);
+```
+
+This keeps the list route server-first while allowing lightweight client interaction.
+
+## Dynamic slug route
+
+Articles are rendered by:
+
+```text
+src/app/blog/[slug]/page.tsx
+```
+
+This route handles:
+
+- `generateStaticParams()`
+- `generateMetadata()`
+- `notFound()`
+- JSON-LD
+- MDX rendering
+
+Example:
+
+```tsx
+export function generateStaticParams() {
+  return posts
+    .filter((post) => post.published)
+    .map((post) => ({ slug: post.slugAsParams }));
+}
+```
+
+This makes all published posts statically generated.
+
+## MDX rendering layer
+
+Compiled MDX is rendered through custom components.
+
+Main files:
+
+- `mdx-content.tsx`
+- `mdx-components.tsx`
+
+This allows support for:
+
+- custom links
+- code blocks
+- callouts
+- YouTube embeds
+
+Example idea:
+
+```tsx
+<MdxContent code={post.body} />
+```
+
+## Styling approach
+
+Prose styles are scoped in:
+
+```text
+src/styles/mdx.css
+```
+
+They are wrapped under:
+
+```css
+.mdx-content { ... }
+```
+
+This prevents blog typography from leaking into the rest of the site.
+
+## Short architecture summary
+
+The blog system is:
+
+- MDX files for authoring
+- Velite for transformation and typing
+- static slug routes for rendering
+- small client boundary for search
+- custom MDX components for richer article content
+
+## Prompt
+
+If you want to build a blog system like this, use this prompt:
+
+```text
+Build an MDX-powered blog system in Next.js App Router using Velite.
+Store posts in src/content/blog as .mdx files with frontmatter.
+Generate typed content with slug, reading time, and TOC.
+Create a server-rendered /blog page with search handled in a small client component.
+Create statically generated /blog/[slug] pages with metadata, JSON-LD, and custom MDX rendering.
+Use scoped prose styles and keep the design consistent with the rest of the portfolio.
+```

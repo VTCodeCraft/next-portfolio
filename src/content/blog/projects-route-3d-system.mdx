@@ -1,0 +1,166 @@
+---
+title: "Projects Route and 3D Scene Architecture"
+description: "A focused explanation of how the projects route is built, with emphasis on the 3D laptop scene, lighting setup, post-processing, and the supporting project card system."
+date: "2026-04-06"
+published: true
+tags: ["threejs", "projects", "3d"]
+cover: "/assets/blogs/ProjectRoute.avif"
+---
+
+## Goal
+
+The projects route is designed to feel like a showcase, not just a list of links.
+
+Main goals:
+
+- combine project details with a 3D hero area
+- make the laptop model feel polished
+- keep the layout responsive
+- keep interaction controlled
+
+## Route structure
+
+The route is built around two main blocks:
+
+- project info card
+- 3D canvas card
+
+This is the basic idea:
+
+```tsx
+<ProjectInfoCard />
+<ProjectScene />
+```
+
+The card explains the project. The canvas gives the route its visual identity.
+
+## 3D stack
+
+The scene uses:
+
+- React Three Fiber
+- Drei
+- Three.js
+- postprocessing
+
+Key scene pieces:
+
+```tsx
+<Canvas>
+  <Environment />
+  <Float>
+    <DemoComputer />
+  </Float>
+  <ContactShadows />
+  <OrbitControls />
+</Canvas>
+```
+
+This keeps the scene modular and easy to tune.
+
+## Lighting approach
+
+The model uses layered lighting instead of one generic source.
+
+Used lights:
+
+- ambient light
+- spotlight
+- directional light
+- rim point lights
+- backlight
+
+Example:
+
+```tsx
+<ambientLight intensity={0.06} />
+<spotLight position={[6, 5, 3]} intensity={48} />
+<directionalLight position={[-5, 3.5, 2.5]} intensity={1.6} />
+```
+
+Why:
+
+- better shape definition
+- stronger product feel
+- more controlled highlights
+
+## Post-processing
+
+The route uses subtle post-processing for polish:
+
+- bloom
+- contrast tuning
+- saturation
+- chromatic aberration
+- vignette
+
+Example:
+
+```tsx
+<EffectComposer>
+  <Bloom intensity={0.45} />
+  <BrightnessContrast brightness={0.02} contrast={0.12} />
+  <Vignette darkness={0.65} />
+</EffectComposer>
+```
+
+The values stay restrained so the model still feels clean.
+
+## Model rig and responsiveness
+
+The laptop model is wrapped in a rig that changes based on screen width.
+
+```tsx
+const isSmallScreen = size.width < 650;
+
+<group
+  scale={isSmallScreen ? 1.05 : 1.42}
+  position={[0, isSmallScreen ? -1.34 : -1.52, 0]}
+>
+  <DemoComputer />
+</group>
+```
+
+This is important because a model that looks good on desktop can easily break composition on smaller devices.
+
+## Project card system
+
+The text card handles:
+
+- project title
+- bullet points
+- featured badge
+- tags
+- live/repo actions
+- previous/next controls
+
+The project data is stored centrally and rendered from state.
+
+```tsx
+const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+const currentProject = myProjects[selectedProjectIndex];
+```
+
+That makes the route easier to update without rewriting UI logic.
+
+## Short architecture summary
+
+The projects route is:
+
+- one responsive 2-column showcase
+- one controlled 3D scene
+- one state-driven project card system
+- one shared visual language using global tokens
+
+## Prompt
+
+If you want to build a projects route like this, use this prompt:
+
+```text
+Build a projects showcase page in Next.js with React Three Fiber.
+Use a 2-column layout with a project information card and a 3D laptop scene.
+Use layered lighting, soft post-processing, and a responsive model rig.
+Keep controls constrained so the scene stays elegant.
+Render project content from centralized data with title, points, tags, repo link, and live link.
+Make the route feel premium but still responsive on small screens.
+```

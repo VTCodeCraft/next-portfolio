@@ -1,0 +1,130 @@
+---
+title: "Home Route System Architecture"
+description: "A concise breakdown of how the home route is structured, how sections are composed, and how the sidebar, theming, and deferred rendering work together."
+date: "2026-04-01"
+published: true
+tags: ["architecture", "nextjs", "home"]
+cover: "/assets/blogs/HomeRoute.webp"
+---
+
+## Goal
+
+The home route is built as a structured one-page system, not a random stack of sections.
+
+Main goals:
+
+- keep navigation clear
+- make sections reusable
+- support sticky desktop layout
+- avoid heavy initial rendering
+- keep colors driven by global theme tokens
+
+## Core structure
+
+The route is assembled in `src/app/page.tsx`.
+
+```tsx
+<Sidebar />
+<ProfileSidebar />
+<Intro />
+<Skills />
+<MyJourney />
+<Contact />
+```
+
+That keeps the page readable and makes each section independently maintainable.
+
+## Layout approach
+
+Desktop:
+
+- left sidebar for section navigation
+- sticky profile image column
+- main content column for sections
+
+Mobile:
+
+- everything stacks vertically
+
+This keeps the route simple while still feeling structured.
+
+## Sidebar behavior
+
+The sidebar works through shared active-section state.
+
+Approach:
+
+- each section reports when it enters view
+- active section is stored in context
+- sidebar reads that state
+- clicking an item scrolls to that section
+
+Example idea:
+
+```tsx
+const { activeSection, setActiveSection } = useActiveSectionContext();
+```
+
+This avoids prop drilling and keeps navigation logic centralized.
+
+## Deferred rendering
+
+Lower-priority sections are wrapped in a deferred container to reduce early rendering pressure.
+
+```tsx
+<div className="deferred-section">
+  <SectionDivider />
+  <Skills />
+</div>
+```
+
+That helps with:
+
+- scroll smoothness
+- first render stability
+- better loading priority
+
+## Styling system
+
+The route relies on global CSS variables and shared utility classes instead of hardcoded local colors.
+
+Useful pattern:
+
+```tsx
+className="bg-card text-foreground border-border"
+```
+
+This makes theme updates easier and keeps visual consistency across sections.
+
+## Stack used
+
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- React context
+- intersection-based section tracking
+- reusable section components
+
+## Short architecture summary
+
+The home route is basically:
+
+- route-level layout shell
+- section-based component composition
+- shared active navigation state
+- global theme token styling
+- deferred rendering for lower sections
+
+## Prompt
+
+If you want to build a portfolio home route like this, use this prompt:
+
+```text
+Build a section-based portfolio home page in Next.js App Router.
+Use a sticky left sidebar for in-page navigation, a profile image column on desktop, and a main content column for sections.
+Create reusable sections for intro, skills, journey, and contact.
+Use shared active-section context instead of prop drilling.
+Use global CSS variables and theme tokens instead of local hardcoded colors.
+Add deferred rendering for lower sections to improve perceived performance.
+Keep the architecture clean, component-based, and easy to extend.
+```
