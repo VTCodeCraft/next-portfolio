@@ -289,3 +289,18 @@ button:focus-visible {
   box-shadow: none !important;
   -webkit-focus-ring-color: transparent;
 }
+
+html,
+body,
+* {
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  display: block;
+  width: 12px;
+  height: 12px;
+}

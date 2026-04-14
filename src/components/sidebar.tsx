@@ -10,26 +10,10 @@ export default function Sidebar() {
   const { activeSection, setActiveSection } = useActiveSectionContext();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleClick = (
-  e: React.MouseEvent<HTMLAnchorElement>,
-  name: (typeof sections)[number]["name"],
-  hash: string
-) => {
-  e.preventDefault();
-
-  const el = document.querySelector(hash);
-  if (el) {
-    el.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-  }
-
-  // window.history.pushState(null, "", hash);
-
-  setActiveSection(name);
-  setIsOpen(false);
-};
+  const handleClick = (name: (typeof sections)[number]["name"]) => {
+    setActiveSection(name);
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -54,9 +38,7 @@ export default function Sidebar() {
                   <a
                     key={item.hash}
                     href={item.hash}
-                    onClick={(e) =>
-                      handleClick(e, item.name, item.hash)
-                    }
+                    onClick={() => handleClick(item.name)}
                     className="sidebar-link flex items-center gap-4 group"
                   >
                     <motion.span
@@ -102,9 +84,7 @@ export default function Sidebar() {
             <a
               key={item.hash}
               href={item.hash}
-              onClick={(e) =>
-                handleClick(e, item.name, item.hash)
-              }
+              onClick={() => handleClick(item.name)}
               className="sidebar-link flex items-center gap-4 group"
             >
               <motion.span

@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Manrope, Sora } from "next/font/google";
+import "lenis/dist/lenis.css";
 import "./globals.css";
 import "@/styles/mdx.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
+import LenisProvider from "@/components/lenis-provider";
 // import GalaxyDeferred from "@/components/GalaxyDeferred";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vtcodecraft.in";
@@ -34,7 +36,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className="dark !scroll-smooth"
+      className="dark"
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
@@ -52,15 +54,17 @@ export default function RootLayout({
         <div className="light-only absolute top-[-2rem] left-[-32rem] -z-10 h-[32rem] w-[54rem] rounded-full bg-secondary/70 blur-[9rem] sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
         <div className="light-only absolute left-[22%] top-[5rem] -z-10 h-[30rem] w-[46rem] rounded-full bg-accent/60 opacity-85 blur-[11rem]" />
 
-        <ActiveSectionContextProvider>
-          <Header />
-          {/* CONTENT */}
-          <main className="w-full pt-32 pb-10">
-            <div className="w-full">{children}</div>
-          </main>
-          <Footer />
-          <Toaster position="top-right" />
-        </ActiveSectionContextProvider>
+        <LenisProvider>
+          <ActiveSectionContextProvider>
+            <Header />
+            {/* CONTENT */}
+            <main className="w-full pt-32 pb-10">
+              <div className="w-full">{children}</div>
+            </main>
+            <Footer />
+            <Toaster position="top-right" />
+          </ActiveSectionContextProvider>
+        </LenisProvider>
       </body>
     </html>
   );

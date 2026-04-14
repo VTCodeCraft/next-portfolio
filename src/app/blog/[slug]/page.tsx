@@ -5,7 +5,6 @@ import { posts } from "#site/content";
 
 import { MdxContent } from "@/components/blog/mdx-content";
 import { PostHeader } from "@/components/blog/post-header";
-import { ReadingProgress } from "@/components/blog/reading-progress";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -87,7 +86,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <>
-      <ReadingProgress />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
