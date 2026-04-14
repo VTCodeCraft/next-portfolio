@@ -41,7 +41,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${manrope.className} ${manrope.variable} ${sora.variable} relative min-h-screen overflow-x-hidden bg-background text-foreground transition-colors duration-300`}
+        className={`${manrope.className} ${manrope.variable} ${sora.variable} relative min-h-screen min-h-dvh overflow-x-hidden bg-background text-foreground transition-colors duration-300`}
         suppressHydrationWarning
       >
         <div className="light-canvas light-only absolute inset-0 -z-20" />
@@ -58,7 +58,7 @@ export default function RootLayout({
           <ActiveSectionContextProvider>
             <Header />
             {/* CONTENT */}
-            <main className="w-full pt-32 pb-10">
+            <main className="w-full pt-32 pb-24 sm:pb-10">
               <div className="w-full">{children}</div>
             </main>
             <Footer />

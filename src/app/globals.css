@@ -8,6 +8,11 @@ html {
   --line-color: #d1d5db;
 }
 
+html,
+body {
+  min-height: 100%;
+}
+
 .dark .light-only {
   display: none;
 }

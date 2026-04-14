@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useEffectEvent, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
@@ -13,34 +13,88 @@ export default function LenisProvider({
   const lenisRef = useRef<Lenis | null>(null);
   const progressBarRef = useRef<HTMLDivElement | null>(null);
 
-  const syncProgressBar = () => {
+  const syncProgressBar = useEffectEvent(() => {
     const progressBar = progressBarRef.current;
-    const lenis = lenisRef.current;
 
-    if (!progressBar || !lenis) {
+    if (!progressBar) {
       return;
     }
 
-    const progress = lenis.limit > 0 ? lenis.progress : 0;
+    const root = document.documentElement;
+    const scrollHeight = Math.max(root.scrollHeight, document.body.scrollHeight);
+    const maxScroll = Math.max(scrollHeight - window.innerHeight, 0);
+    const scrollTop = window.scrollY || root.scrollTop || 0;
+    const progress =
+      maxScroll > 0 ? Math.min(Math.max(scrollTop / maxScroll, 0), 1) : 0;
+
     progressBar.style.width = `${Math.min(Math.max(progress, 0), 1) * 100}%`;
-  };
+  });
 
   useEffect(() => {
-    const lenis = new Lenis({
-      autoRaf: true,
-      anchors: true,
-      duration: 1.9,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-    lenisRef.current = lenis;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const isTouchDevice =
+      window.matchMedia("(pointer: coarse)").matches ||
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0;
+
+    const resizePage = () => {
+      window.requestAnimationFrame(() => {
+        lenisRef.current?.resize();
+        syncProgressBar();
+      });
+    };
+    const syncOnScroll = () => syncProgressBar();
+
+    let unsubscribe: (() => void) | undefined;
+
+    if (!isTouchDevice && !prefersReducedMotion) {
+      const lenis = new Lenis({
+        autoRaf: true,
+        anchors: true,
+        duration: 2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      lenisRef.current = lenis;
+      unsubscribe = lenis.on("scroll", syncProgressBar);
+    }
 
     syncProgressBar();
-    const unsubscribe = lenis.on("scroll", syncProgressBar);
+
+    window.addEventListener("load", resizePage);
+    window.addEventListener("resize", resizePage);
+    window.addEventListener("orientationchange", resizePage);
+    window.addEventListener("scroll", syncOnScroll, { passive: true });
+    window.visualViewport?.addEventListener("resize", resizePage);
 
     return () => {
-      unsubscribe();
+      const lenis = lenisRef.current;
+      unsubscribe?.();
+      window.removeEventListener("load", resizePage);
+      window.removeEventListener("resize", resizePage);
+      window.removeEventListener("orientationchange", resizePage);
+      window.removeEventListener("scroll", syncOnScroll);
+      window.visualViewport?.removeEventListener("resize", resizePage);
       lenisRef.current = null;
-      lenis.destroy();
+      document.documentElement.classList.remove(
+        "lenis",
+        "lenis-smooth",
+        "lenis-stopped",
+      );
+      document.body.classList.remove(
+        "lenis",
+        "lenis-smooth",
+        "lenis-stopped",
+      );
+      if (document.documentElement.getAttribute("style") === "") {
+        document.documentElement.removeAttribute("style");
+      }
+      if (document.body.getAttribute("style") === "") {
+        document.body.removeAttribute("style");
+      }
+      lenis?.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
