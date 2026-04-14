@@ -28,7 +28,7 @@ export default function Intro() {
     <section
       id="introduction"
       ref={ref}
-      className="relative isolate -mx-4 -mt-14 flex w-auto justify-center px-4 pt-14 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+      className="relative isolate -mx-4 -mt-14 flex w-auto scroll-mt-28 justify-center px-4 pt-14 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
     >
       {/* CENTERED CONTAINER */}
       <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-10 lg:items-start lg:justify-start lg:gap-10">

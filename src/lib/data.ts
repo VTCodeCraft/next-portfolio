@@ -38,7 +38,7 @@ export const links = [
 ] as const;
 
 export const sections = [
-  { name: "Introduction", hash: "#top" },
+  { name: "Introduction", hash: "#introduction" },
   { name: "Skills", hash: "#skills" },
   { name: "My Journey", hash: "#my-journey" },
   { name: "Contact", hash: "#contact" },
