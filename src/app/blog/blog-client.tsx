@@ -53,3 +53,4 @@ export default function BlogClient({ posts }: BlogClientProps) {
     </div>
   );
 }
+

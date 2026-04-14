@@ -5,7 +5,7 @@ import { posts } from "#site/content";
 
 import BlogClient from "@/app/blog/blog-client";
 import type { PostCardData } from "@/components/blog/post-card";
-import SectionHeading from "@/components/section-heading";
+import SectionHeading from "@/components/ui/section-heading";
 
 export const metadata: Metadata = {
   title: "Blog | Vishesh Tripathi",
@@ -41,3 +41,4 @@ export default function BlogPage() {
     </section>
   );
 }
+

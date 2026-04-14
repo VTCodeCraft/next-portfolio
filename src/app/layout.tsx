@@ -3,12 +3,12 @@ import { Manrope, Sora } from "next/font/google";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import "@/styles/mdx.css";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+import Header from "@/components/layout/header";
+import Footer from "@/components/layout/footer";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
-import LenisProvider from "@/components/lenis-provider";
-// import GalaxyDeferred from "@/components/GalaxyDeferred";
+import LenisProvider from "@/components/providers/lenis-provider";
+// import GalaxyDeferred from "@/components/3d/GalaxyDeferred";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vtcodecraft.in";
 
@@ -69,3 +69,4 @@ export default function RootLayout({
     </html>
   );
 }
+

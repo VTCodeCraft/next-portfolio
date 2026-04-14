@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
-const Galaxy = dynamic(() => import("@/components/Galaxy"), {
+const Galaxy = dynamic(() => import("@/components/3d/Galaxy"), {
   ssr: false,
   loading: () => null,
 });
@@ -56,3 +56,4 @@ export default function GalaxyDeferred() {
     />
   );
 }
+

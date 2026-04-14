@@ -21,3 +21,4 @@ export function MdxContent({ code }: MdxContentProps) {
 
   return <Component components={mdxComponents} />;
 }
+

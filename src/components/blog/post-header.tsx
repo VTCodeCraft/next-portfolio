@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { Tag } from "@/components/blog/tag";
-import SectionHeading from "@/components/section-heading";
+import SectionHeading from "@/components/ui/section-heading";
 
 type PostHeaderProps = {
   title: string;
@@ -78,3 +78,4 @@ export function PostHeader({
     </header>
   );
 }
+

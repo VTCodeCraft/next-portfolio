@@ -6,7 +6,7 @@ import {
   skillIconsData,
   skillColors,
 } from "@/lib/data";
-import SectionHeading from "./section-heading";
+import SectionHeading from "../ui/section-heading";
 import { useSectionInView } from "@/lib/hooks";
 
 function createSeededRandom(seed: number) {
@@ -260,3 +260,4 @@ export default function Skills() {
     </section>
   );
 }
+

@@ -8,7 +8,7 @@ import {
 import "react-vertical-timeline-component/style.min.css";
 import { experiencesData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
-import SectionHeading from "./section-heading";
+import SectionHeading from "../ui/section-heading";
 
 export default function MyJourney() {
   const ref = useSectionInView("My Journey", 0.5);
@@ -69,3 +69,4 @@ export default function MyJourney() {
     </section>
   );
 }
+

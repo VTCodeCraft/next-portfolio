@@ -1,4 +1,4 @@
-import Project from "@/components/project";
+import Project from "@/components/sections/project";
 
 export default function ProjectsPage() {
   return (
@@ -7,3 +7,4 @@ export default function ProjectsPage() {
     </div>
   );
 }
+

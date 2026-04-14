@@ -25,9 +25,9 @@ import { useGSAP } from "@gsap/react";
 import { myProjects, skillColors } from "@/lib/data";
 import { FaGithub, FaArrowLeft, FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
 import { ACESFilmicToneMapping, PCFSoftShadowMap, Vector2 } from "three";
-import CanvasLoader from "./canvas-loader";
-import { DemoComputer } from "./demo-computer";
-import SectionHeading from "./section-heading";
+import CanvasLoader from "../ui/canvas-loader";
+import { DemoComputer } from "../3d/demo-computer";
+import SectionHeading from "../ui/section-heading";
 
 /* ─── animation helpers ────────────────────────────────────────────── */
 const fadeUp = (delay = 0) => ({
@@ -369,3 +369,4 @@ export default function Project() {
     </motion.section>
   );
 }
+

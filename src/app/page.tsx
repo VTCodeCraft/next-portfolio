@@ -1,10 +1,10 @@
-import Contact from "@/components/contact";
-import Intro from "@/components/intro";
-import MyJourney from "@/components/my-journey";
-import ProfileSidebar from "@/components/profile-sidebar";
-import SectionDivider from "@/components/section-divider";
-import Sidebar from "@/components/sidebar";
-import Skills from "@/components/skills";
+import Contact from "@/components/sections/contact";
+import Intro from "@/components/sections/intro";
+import MyJourney from "@/components/sections/my-journey";
+import ProfileSidebar from "@/components/layout/profile-sidebar";
+import SectionDivider from "@/components/ui/section-divider";
+import Sidebar from "@/components/layout/sidebar";
+import Skills from "@/components/sections/skills";
 
 export default function Home() {
   return (
@@ -46,3 +46,4 @@ export default function Home() {
     </div>
   );
 }
+
