@@ -12,6 +12,9 @@ export default function LenisProvider({
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
   const progressBarRef = useRef<HTMLDivElement | null>(null);
+  const unsubscribeRef = useRef<(() => void) | undefined>(undefined);
+  const activationTimeoutRef = useRef<number | null>(null);
+  const activationFrameRefs = useRef<number[]>([]);
 
   const syncProgressBar = useEffectEvent(() => {
     const progressBar = progressBarRef.current;
@@ -50,37 +53,91 @@ export default function LenisProvider({
       });
     };
     const syncOnScroll = () => syncProgressBar();
+    const clearActivationQueue = () => {
+      if (activationTimeoutRef.current !== null) {
+        window.clearTimeout(activationTimeoutRef.current);
+        activationTimeoutRef.current = null;
+      }
 
-    let unsubscribe: (() => void) | undefined;
+      activationFrameRefs.current.forEach((frame) =>
+        window.cancelAnimationFrame(frame),
+      );
+      activationFrameRefs.current = [];
+    };
+    const cleanupLenis = () => {
+      unsubscribeRef.current?.();
+      unsubscribeRef.current = undefined;
+      lenisRef.current?.destroy();
+      lenisRef.current = null;
+    };
+    const detachIntentListeners = () => {
+      window.removeEventListener("wheel", activateLenis);
+      window.removeEventListener("touchstart", activateLenis);
+      window.removeEventListener("keydown", activateLenis);
+      window.removeEventListener("mousedown", activateLenis);
+    };
+    const activateLenis = () => {
+      if (isTouchDevice || prefersReducedMotion || lenisRef.current) {
+        return;
+      }
 
-    if (!isTouchDevice && !prefersReducedMotion) {
+      clearActivationQueue();
+
       const lenis = new Lenis({
         autoRaf: true,
         anchors: true,
         duration: 2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
+
       lenisRef.current = lenis;
-      unsubscribe = lenis.on("scroll", syncProgressBar);
-    }
+      unsubscribeRef.current = lenis.on("scroll", syncProgressBar);
+      detachIntentListeners();
+
+      window.requestAnimationFrame(() => {
+        lenis.resize();
+        syncProgressBar();
+      });
+    };
+    const queueActivation = () => {
+      if (isTouchDevice || prefersReducedMotion) {
+        return;
+      }
+
+      const firstFrame = window.requestAnimationFrame(() => {
+        const secondFrame = window.requestAnimationFrame(() => {
+          activationTimeoutRef.current = window.setTimeout(() => {
+            activateLenis();
+          }, 120);
+        });
+
+        activationFrameRefs.current.push(secondFrame);
+      });
+
+      activationFrameRefs.current.push(firstFrame);
+    };
 
     syncProgressBar();
+    queueActivation();
 
     window.addEventListener("load", resizePage);
     window.addEventListener("resize", resizePage);
     window.addEventListener("orientationchange", resizePage);
     window.addEventListener("scroll", syncOnScroll, { passive: true });
     window.visualViewport?.addEventListener("resize", resizePage);
+    window.addEventListener("wheel", activateLenis, { passive: true });
+    window.addEventListener("touchstart", activateLenis, { passive: true });
+    window.addEventListener("keydown", activateLenis);
+    window.addEventListener("mousedown", activateLenis);
 
     return () => {
-      const lenis = lenisRef.current;
-      unsubscribe?.();
+      clearActivationQueue();
+      detachIntentListeners();
       window.removeEventListener("load", resizePage);
       window.removeEventListener("resize", resizePage);
       window.removeEventListener("orientationchange", resizePage);
       window.removeEventListener("scroll", syncOnScroll);
       window.visualViewport?.removeEventListener("resize", resizePage);
-      lenisRef.current = null;
       document.documentElement.classList.remove(
         "lenis",
         "lenis-smooth",
@@ -98,10 +155,9 @@ export default function LenisProvider({
       if (document.body.getAttribute("style") === "") {
         document.body.removeAttribute("style");
       }
-      lenis?.destroy();
-      lenisRef.current = null;
+      cleanupLenis();
     };
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
@@ -119,7 +175,7 @@ export default function LenisProvider({
       <div className="pointer-events-none fixed inset-x-0 top-0 z-50 h-1 bg-transparent">
         <div
           ref={progressBarRef}
-          className="bar h-full w-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-[#67e8f9] shadow-[0_0_24px_var(--project-progress-glow)]"
+          className="bar h-full w-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-[var(--project-scene-ring)] shadow-[0_0_24px_var(--project-progress-glow)]"
         />
       </div>
       {children}

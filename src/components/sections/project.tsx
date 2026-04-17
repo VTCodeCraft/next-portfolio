@@ -72,19 +72,53 @@ function SceneReady({ onReady }: { onReady: () => void }) {
   return null;
 }
 
+function getThemeColor(name: string, fallback: string) {
+  if (typeof window === "undefined") {
+    return fallback;
+  }
+
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim();
+
+  return value || fallback;
+}
+
 /* ─── 3-D scene ────────────────────────────────────────────────────── */
 function ProjectScene() {
   const [isModelReady, setIsModelReady] = useState(false);
+  const [sceneColors, setSceneColors] = useState({
+    accent: "#2563eb",
+    ring: "#93c5fd",
+    shadow: "#08131d",
+  });
+
+  useEffect(() => {
+    const syncSceneColors = () => {
+      setSceneColors({
+        accent: getThemeColor("--project-scene-accent", "#2563eb"),
+        ring: getThemeColor("--project-scene-ring", "#93c5fd"),
+        shadow: getThemeColor("--project-scene-shadow", "#08131d"),
+      });
+    };
+
+    syncSceneColors();
+
+    const observer = new MutationObserver(syncSceneColors);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "style"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="relative h-full w-full">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 24%, rgba(56, 189, 248, 0.22) 0%, rgba(14, 165, 233, 0.16) 34%, rgba(6, 39, 59, 0.42) 72%, rgba(3, 8, 14, 0.68) 100%)",
-        }}
+        style={{ background: "var(--project-scene-floor)" }}
       />
       <Canvas
         className="relative z-[1] h-full w-full"
@@ -126,12 +160,24 @@ function ProjectScene() {
         />
 
         {/* Subtle warm backlight */}
-        <pointLight position={[0, 3, -3]} intensity={3} distance={8} color="#0ea5e9" />
+        <pointLight
+          position={[0, 3, -3]}
+          intensity={3}
+          distance={8}
+          color={sceneColors.accent}
+        />
 
         <Environment preset="city" resolution={256}>
           <Lightformer form="rect" intensity={1.4} position={[6, 2, 2]} rotation={[0, -Math.PI / 4.5, 0]} scale={[4, 6, 1]} />
           <Lightformer form="rect" intensity={1.1} position={[-6, 1.8, 2]} rotation={[0, Math.PI / 4.5, 0]} scale={[3.8, 5.5, 1]} />
-          <Lightformer form="ring" intensity={0.6} position={[0, 6, -4]} rotation={[Math.PI / 2.4, 0, 0]} scale={[6.5, 6.5, 1]} color="#67e8f9" />
+          <Lightformer
+            form="ring"
+            intensity={0.6}
+            position={[0, 6, -4]}
+            rotation={[Math.PI / 2.4, 0, 0]}
+            scale={[6.5, 6.5, 1]}
+            color={sceneColors.ring}
+          />
         </Environment>
 
         <Suspense fallback={<CanvasLoader />}>
@@ -145,7 +191,7 @@ function ProjectScene() {
             blur={4.2}
             far={3.5}
             resolution={256}
-            color="#08131d"
+            color={sceneColors.shadow}
           />
         </Suspense>
 

@@ -9,13 +9,13 @@ import "react-vertical-timeline-component/style.min.css";
 import { experiencesData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
 import SectionHeading from "../ui/section-heading";
-import { MotionSection } from "@/components/ui/reveal";
+import { MotionMountSection } from "@/components/ui/reveal";
 
 export default function MyJourney() {
   const ref = useSectionInView("My Journey", 0.5);
 
   return (
-    <MotionSection
+    <MotionMountSection
       id="my-journey"
       ref={ref}
       delay={0.12}
@@ -68,7 +68,7 @@ export default function MyJourney() {
           </VerticalTimelineElement>
         ))}
       </VerticalTimeline>
-    </MotionSection>
+    </MotionMountSection>
   );
 }
 

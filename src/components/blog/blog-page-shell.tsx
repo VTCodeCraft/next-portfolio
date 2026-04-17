@@ -1,7 +1,6 @@
 "use client";
 
 import type { ReactNode } from "react";
-
 import { MotionMountDiv, MotionMountSection } from "@/components/ui/reveal";
 
 type BlogPageShellProps = {

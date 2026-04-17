@@ -8,7 +8,7 @@ import {
 } from "@/lib/data";
 import SectionHeading from "../ui/section-heading";
 import { useSectionInView } from "@/lib/hooks";
-import { MotionSection } from "@/components/ui/reveal";
+import { MotionMountSection } from "@/components/ui/reveal";
 
 function createSeededRandom(seed: number) {
   let value = seed;
@@ -185,7 +185,7 @@ export default function Skills() {
 
   /* ------------------ UI ------------------ */
   return (
-    <MotionSection
+    <MotionMountSection
       id="skills"
       ref={ref}
       delay={0.1}
@@ -272,7 +272,7 @@ export default function Skills() {
           Shuffle
         </button>
       </div>
-    </MotionSection>
+    </MotionMountSection>
   );
 }
 

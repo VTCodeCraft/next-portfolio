@@ -8,13 +8,13 @@ import { BsTwitter, BsTwitterX } from "react-icons/bs";
 import { SiLeetcode } from "react-icons/si";
 import { useSectionInView } from "@/lib/hooks";
 import TextType from "@/components/TextType";
-import { MotionMountDiv, MotionSection } from "@/components/ui/reveal";
+import { MotionMountDiv, MotionMountSection } from "@/components/ui/reveal";
 
 export default function Intro() {
   const ref = useSectionInView("Introduction", 0.75);
 
   return (
-    <MotionSection
+    <MotionMountSection
       id="introduction"
       ref={ref}
       delay={0.05}
@@ -146,6 +146,6 @@ export default function Intro() {
           </div>
         </div>
       </div>
-    </MotionSection>
+    </MotionMountSection>
   );
 }

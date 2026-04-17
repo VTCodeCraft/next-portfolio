@@ -6,13 +6,13 @@ import { useSectionInView } from "@/lib/hooks";
 import { sendEmail } from "@/actions/sendEmail";
 import SubmitBtn from "../ui/submit-btn";
 import toast from "react-hot-toast";
-import { MotionSection } from "@/components/ui/reveal";
+import { MotionMountSection } from "@/components/ui/reveal";
 
 export default function Contact() {
   const ref = useSectionInView("Contact", 0.5);
 
   return (
-    <MotionSection
+    <MotionMountSection
       id="contact"
       ref={ref}
       delay={0.14}
@@ -87,7 +87,7 @@ export default function Contact() {
       <p className="mt-3 text-center text-[0.7rem] text-muted-foreground">
         I usually reply within 24 hours
       </p>
-    </MotionSection>
+    </MotionMountSection>
   );
 }
 
