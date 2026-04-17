@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Sora } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import "@/styles/mdx.css";
@@ -65,6 +66,7 @@ export default function RootLayout({
             <Footer />
             <Toaster position="top-right" />
             <Analytics />
+            <SpeedInsights />
           </ActiveSectionContextProvider>
         </LenisProvider>
       </body>
