@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 html {
-  --line-color: #d1d5db;
+  --line-color: rgba(96, 165, 250, 0.14);
 }
 
 html,
@@ -17,12 +17,14 @@ body {
   display: none;
 }
 
+/* ── Light canvas now mirrors the dark bluish aesthetic ── */
 .light-canvas {
   background:
-    radial-gradient(circle at 20% 18%, rgba(167, 139, 250, 0.25) 0%, transparent 24%),
-    radial-gradient(circle at 50% 14%, rgba(196, 181, 253, 0.20) 0%, transparent 30%),
-    radial-gradient(circle at 84% 18%, rgba(221, 214, 254, 0.18) 0%, transparent 24%),
-    linear-gradient(135deg, #f5f3ff 0%, #faf5ff 52%, #ede9fe 100%);
+    radial-gradient(circle at 24% 18%, rgba(30, 64, 175, 0.14) 0%, transparent 20%),
+    radial-gradient(circle at 52% 14%, rgba(17, 24, 39, 0.22) 0%, transparent 24%),
+    radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.18) 0%, transparent 18%),
+    radial-gradient(circle at 50% 42%, rgba(8, 15, 28, 0.16) 0%, transparent 24%),
+    linear-gradient(180deg, #04070b 0%, #050911 52%, #03060a 100%);
 }
 
 .light-canvas::after {
@@ -30,18 +32,18 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.50) 0%, transparent 46%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.06) 55%, rgba(255, 255, 255, 0.12));
+    radial-gradient(circle at center, rgba(59, 130, 246, 0.025) 0%, transparent 44%),
+    linear-gradient(180deg, rgba(59, 130, 246, 0.018), rgba(255, 255, 255, 0) 44%, rgba(0, 0, 0, 0.16));
   pointer-events: none;
 }
 
 .dark-canvas {
   background:
-    radial-gradient(circle at 22% 18%, rgba(54, 34, 102, 0.24) 0%, transparent 20%),
-    radial-gradient(circle at 54% 16%, rgba(38, 22, 78, 0.2) 0%, transparent 22%),
-    radial-gradient(circle at 82% 20%, rgba(24, 12, 52, 0.18) 0%, transparent 18%),
-    radial-gradient(circle at 50% 42%, rgba(8, 4, 18, 0.18) 0%, transparent 24%),
-    linear-gradient(180deg, #130d1e 0%, #100a19 52%, #0c0714 100%);
+    radial-gradient(circle at 24% 18%, rgba(30, 64, 175, 0.14) 0%, transparent 20%),
+    radial-gradient(circle at 52% 14%, rgba(17, 24, 39, 0.22) 0%, transparent 24%),
+    radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.18) 0%, transparent 18%),
+    radial-gradient(circle at 50% 42%, rgba(8, 15, 28, 0.16) 0%, transparent 24%),
+    linear-gradient(180deg, #04070b 0%, #050911 52%, #03060a 100%);
 }
 
 .dark-canvas::before {
@@ -57,20 +59,23 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at center, rgba(167, 139, 250, 0.035) 0%, transparent 44%),
-    linear-gradient(180deg, rgba(196, 181, 253, 0.02), rgba(255, 255, 255, 0) 44%, rgba(0, 0, 0, 0.16));
+    radial-gradient(circle at center, rgba(59, 130, 246, 0.025) 0%, transparent 44%),
+    linear-gradient(180deg, rgba(59, 130, 246, 0.018), rgba(255, 255, 255, 0) 44%, rgba(0, 0, 0, 0.16));
   pointer-events: none;
 }
 
 :root {
-  --journey-card-bg: #f5f3ff;
-  --journey-card-border: rgba(109, 40, 217, 0.10);
-  --journey-card-arrow: #f5f3ff;
-  --journey-line-color: rgba(109, 40, 217, 0.15);
-  --journey-icon-bg: #ffffff;
-  --journey-icon-fg: #4c1d95;
-  --journey-icon-ring: rgba(109, 40, 217, 0.20);
-  --line-color: rgba(109, 40, 217, 0.18);
+  /* ── Journey / Timeline ── */
+  --journey-card-bg: rgba(9, 17, 26, 0.96);
+  --journey-card-border: rgba(96, 165, 250, 0.1);
+  --journey-card-arrow: rgba(9, 17, 26, 0.96);
+  --journey-line-color: rgba(96, 165, 250, 0.14);
+  --journey-icon-bg: rgba(5, 9, 13, 0.98);
+  --journey-icon-fg: #93c5fd;
+  --journey-icon-ring: rgba(96, 165, 250, 0.16);
+  --line-color: rgba(96, 165, 250, 0.14);
+
+  /* ── Surfaces ── */
   --surface-glass: color-mix(in oklab, var(--card) 80%, transparent);
   --surface-glass-strong: color-mix(in oklab, var(--card) 92%, transparent);
   --surface-muted: color-mix(in oklab, var(--background) 70%, var(--card) 30%);
@@ -81,27 +86,35 @@ body {
   --surface-available-border: rgba(16, 185, 129, 0.28);
   --surface-available-text: #86efac;
   --surface-available-dot: #34d399;
-  --shadow-soft: 0 16px 40px color-mix(in oklab, black 12%, transparent);
-  --shadow-card: 0 20px 60px color-mix(in oklab, black 18%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
-  --shadow-card-strong: 0 24px 80px color-mix(in oklab, black 18%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
-  --shadow-card-xl: 0 24px 70px color-mix(in oklab, black 18%, transparent);
+
+  /* ── Shadows ── */
+  --shadow-soft: 0 16px 40px color-mix(in oklab, black 32%, transparent);
+  --shadow-card: 0 20px 60px color-mix(in oklab, black 40%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
+  --shadow-card-strong: 0 24px 80px color-mix(in oklab, black 40%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
+  --shadow-card-xl: 0 24px 70px color-mix(in oklab, black 40%, transparent);
   --shadow-status: 0 0 24px color-mix(in oklab, var(--primary) 18%, transparent);
+
+  /* ── Project / Scene ── */
   --project-glow-primary: rgba(18, 12, 32, 0.28);
   --project-glow-secondary: rgba(10, 7, 20, 0.2);
   --project-grid-line: color-mix(in oklab, var(--foreground) 10%, transparent);
   --project-loader-track: color-mix(in oklab, var(--primary) 30%, transparent);
   --project-loader-backdrop: color-mix(in oklab, var(--background) 50%, transparent);
-  --canvas-loader-track: rgba(167, 139, 250, 0.2);
-  --canvas-loader-head: #a78bfa;
-  --canvas-loader-text: #c4b5fd;
-  --project-scene-accent: color-mix(in oklab, var(--primary) 80%, var(--accent) 20%);
-  --project-scene-ring: color-mix(in oklab, var(--accent) 70%, white 30%);
-  --project-scene-shadow: #120b20;
-  --project-scene-floor: radial-gradient(circle at 50% 24%, rgba(88, 28, 135, 0.22) 0%, rgba(49, 18, 88, 0.16) 34%, rgba(16, 10, 30, 0.5) 72%, rgba(9, 6, 18, 0.72) 100%);
-  --project-frame-border: rgba(167, 139, 250, 0.3);
+  --canvas-loader-track: rgba(96, 165, 250, 0.18);
+  --canvas-loader-head: #60a5fa;
+  --canvas-loader-text: #93c5fd;
+  --project-scene-accent: #2563eb;
+  --project-scene-ring: #93c5fd;
+  --project-scene-shadow: #08131d;
+  --project-scene-floor: radial-gradient(circle at 50% 24%, rgba(59, 130, 246, 0.18) 0%, rgba(37, 99, 235, 0.12) 34%, rgba(17, 24, 39, 0.46) 72%, rgba(3, 8, 14, 0.72) 100%);
+  --project-frame-border: rgba(96, 165, 250, 0.24);
   --project-progress-glow: color-mix(in oklab, var(--primary) 45%, transparent);
+
+  /* ── Text ── */
   --text-subtle: color-mix(in oklab, var(--muted-foreground) 72%, transparent);
   --text-faint: color-mix(in oklab, var(--muted-foreground) 50%, transparent);
+
+  /* ── Skill icons ── */
   --skill-icon-shadow-dark: drop-shadow(0 0 10px color-mix(in oklab, white 4%, transparent));
   --skill-icon-shadow-light: drop-shadow(0 0 6px color-mix(in oklab, black 30%, transparent));
 }
@@ -191,106 +204,167 @@ body {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ── Light mode ─────────────────────────────────────────────────────── */
+/* ── Default (bluish dark) theme — matches screenshot ───────────────── */
 :root {
-  --background: oklch(0.97 0.008 290);
-  --foreground: oklch(0.09 0.02 290);
+  --background: #05080c;
+  --foreground: oklch(0.96 0.005 245);
 
-  --card: oklch(0.99 0.005 290);
-  --card-foreground: oklch(0.09 0.02 290);
+  --card: #09111a;
+  --card-foreground: oklch(0.96 0.005 245);
 
-  --popover: oklch(0.99 0.005 290);
-  --popover-foreground: oklch(0.09 0.02 290);
+  --popover: #09111a;
+  --popover-foreground: oklch(0.96 0.005 245);
 
-  --primary: oklch(0.40 0.18 290);
-  --primary-foreground: oklch(0.99 0 0);
+  --primary: oklch(0.64 0.085 245);
+  --primary-foreground: oklch(0.12 0.018 245);
 
-  --secondary: oklch(0.93 0.015 290);
-  --secondary-foreground: oklch(0.25 0.05 290);
+  --secondary: #0c141d;
+  --secondary-foreground: oklch(0.82 0.02 240);
 
-  --muted: oklch(0.93 0.012 290);
-  --muted-foreground: oklch(0.52 0.03 290);
+  --muted: #0c141d;
+  --muted-foreground: oklch(0.62 0.015 240);
 
-  --accent: oklch(0.90 0.02 290);
-  --accent-foreground: oklch(0.20 0.08 290);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --border: oklch(0.86 0.018 290);
-  --input: oklch(0.86 0.018 290);
-  --ring: oklch(0.45 0.18 290);
-
-  --chart-1: oklch(0.40 0.18 290);
-  --chart-2: oklch(0.55 0.14 290);
-  --chart-3: oklch(0.65 0.09 290);
-  --chart-4: oklch(0.75 0.05 290);
-  --chart-5: oklch(0.86 0.02 290);
-
-  --radius: 0.625rem;
-
-  --sidebar: oklch(0.95 0.012 290);
-  --sidebar-foreground: oklch(0.09 0.02 290);
-  --sidebar-primary: oklch(0.40 0.18 290);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.90 0.02 290);
-  --sidebar-accent-foreground: oklch(0.20 0.05 290);
-  --sidebar-border: oklch(0.86 0.018 290);
-  --sidebar-ring: oklch(0.45 0.18 290);
-  --surface-available-text: #166534;
-}
-
-/* ── Dark mode ──────────────────────────────────────────────────────── */
-.dark {
-  --background: #0d0814;
-  --foreground: oklch(0.96 0.01 290);
-
-  --card: #130d1e;
-  --card-foreground: oklch(0.96 0.01 290);
-
-  --popover: #130d1e;
-  --popover-foreground: oklch(0.96 0.01 290);
-
-  --primary: oklch(0.72 0.18 290);
-  --primary-foreground: oklch(0.09 0.02 290);
-
-  --secondary: #1e1430;
-  --secondary-foreground: oklch(0.80 0.04 290);
-
-  --muted: #1e1430;
-  --muted-foreground: oklch(0.52 0.04 290);
-
-  --accent: #261a3a;
-  --accent-foreground: oklch(0.78 0.05 290);
+  --accent: #101a24;
+  --accent-foreground: oklch(0.82 0.02 235);
 
   --destructive: oklch(0.704 0.191 22.216);
 
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 13%);
-  --ring: oklch(0.68 0.18 290);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.64 0.085 245);
 
-  --chart-1: oklch(0.78 0.18 290);
-  --chart-2: oklch(0.65 0.14 290);
-  --chart-3: oklch(0.52 0.10 290);
-  --chart-4: oklch(0.38 0.07 290);
-  --chart-5: oklch(0.24 0.04 290);
+  --chart-1: oklch(0.66 0.09 240);
+  --chart-2: oklch(0.6 0.075 235);
+  --chart-3: oklch(0.52 0.055 235);
+  --chart-4: oklch(0.38 0.035 235);
+  --chart-5: oklch(0.24 0.02 235);
 
-  --sidebar: #130d1e;
-  --sidebar-foreground: oklch(0.96 0.01 290);
-  --sidebar-primary: oklch(0.72 0.18 290);
-  --sidebar-primary-foreground: oklch(0.09 0.02 290);
-  --sidebar-accent: #242424;
-  --sidebar-accent-foreground: oklch(0.75 0 0);
+  --radius: 0.625rem;
+
+  --sidebar: #09111a;
+  --sidebar-foreground: oklch(0.96 0.005 245);
+  --sidebar-primary: oklch(0.64 0.085 245);
+  --sidebar-primary-foreground: oklch(0.12 0.018 245);
+  --sidebar-accent: #111923;
+  --sidebar-accent-foreground: oklch(0.82 0.015 240);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.68 0.18 290);
+  --sidebar-ring: oklch(0.64 0.085 245);
 
-  --journey-card-bg: rgba(19, 13, 30, 0.96);
-  --journey-card-border: rgba(167, 139, 250, 0.12);
-  --journey-card-arrow: rgba(19, 13, 30, 0.96);
-  --journey-line-color: rgba(167, 139, 250, 0.18);
-  --journey-icon-bg: rgba(13, 8, 20, 0.98);
-  --journey-icon-fg: #c4b5fd;
-  --journey-icon-ring: rgba(167, 139, 250, 0.22);
-  --line-color: rgba(167, 139, 250, 0.18);
+  --surface-available-text: #86efac;
+}
+
+/* ── Light mode override (soft blue-tinted light) ───────────────────── */
+.light {
+  --background: oklch(0.97 0.005 245);
+  --foreground: oklch(0.11 0.014 250);
+
+  --card: oklch(0.99 0.003 245);
+  --card-foreground: oklch(0.11 0.014 250);
+
+  --popover: oklch(0.99 0.003 245);
+  --popover-foreground: oklch(0.11 0.014 250);
+
+  --primary: oklch(0.46 0.09 250);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.95 0.007 245);
+  --secondary-foreground: oklch(0.24 0.022 250);
+
+  --muted: oklch(0.95 0.006 245);
+  --muted-foreground: oklch(0.5 0.015 245);
+
+  --accent: oklch(0.93 0.008 245);
+  --accent-foreground: oklch(0.22 0.026 250);
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.88 0.009 245);
+  --input: oklch(0.88 0.009 245);
+  --ring: oklch(0.54 0.085 250);
+
+  --chart-1: oklch(0.46 0.09 250);
+  --chart-2: oklch(0.56 0.075 240);
+  --chart-3: oklch(0.66 0.055 230);
+  --chart-4: oklch(0.76 0.035 225);
+  --chart-5: oklch(0.86 0.015 220);
+
+  --sidebar: oklch(0.95 0.006 245);
+  --sidebar-foreground: oklch(0.11 0.014 250);
+  --sidebar-primary: oklch(0.46 0.09 250);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.93 0.008 245);
+  --sidebar-accent-foreground: oklch(0.2 0.02 250);
+  --sidebar-border: oklch(0.88 0.009 245);
+  --sidebar-ring: oklch(0.54 0.085 250);
+
+  --journey-card-bg: #eef4fb;
+  --journey-card-border: rgba(37, 99, 235, 0.08);
+  --journey-card-arrow: #eef4fb;
+  --journey-line-color: rgba(37, 99, 235, 0.12);
+  --journey-icon-bg: #ffffff;
+  --journey-icon-fg: #1e3a8a;
+  --journey-icon-ring: rgba(37, 99, 235, 0.16);
+  --line-color: rgba(37, 99, 235, 0.16);
+  --surface-available-text: #166534;
+
+  --shadow-soft: 0 16px 40px color-mix(in oklab, black 12%, transparent);
+  --shadow-card: 0 20px 60px color-mix(in oklab, black 18%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
+  --shadow-card-strong: 0 24px 80px color-mix(in oklab, black 18%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
+  --shadow-card-xl: 0 24px 70px color-mix(in oklab, black 18%, transparent);
+}
+
+/* ── Legacy .dark class support ─────────────────────────────────────── */
+.dark {
+  --background: #05080c;
+  --foreground: oklch(0.96 0.005 245);
+
+  --card: #09111a;
+  --card-foreground: oklch(0.96 0.005 245);
+
+  --popover: #09111a;
+  --popover-foreground: oklch(0.96 0.005 245);
+
+  --primary: oklch(0.64 0.085 245);
+  --primary-foreground: oklch(0.12 0.018 245);
+
+  --secondary: #0c141d;
+  --secondary-foreground: oklch(0.82 0.02 240);
+
+  --muted: #0c141d;
+  --muted-foreground: oklch(0.62 0.015 240);
+
+  --accent: #101a24;
+  --accent-foreground: oklch(0.82 0.02 235);
+
+  --destructive: oklch(0.704 0.191 22.216);
+
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.64 0.085 245);
+
+  --chart-1: oklch(0.66 0.09 240);
+  --chart-2: oklch(0.6 0.075 235);
+  --chart-3: oklch(0.52 0.055 235);
+  --chart-4: oklch(0.38 0.035 235);
+  --chart-5: oklch(0.24 0.02 235);
+
+  --sidebar: #09111a;
+  --sidebar-foreground: oklch(0.96 0.005 245);
+  --sidebar-primary: oklch(0.64 0.085 245);
+  --sidebar-primary-foreground: oklch(0.12 0.018 245);
+  --sidebar-accent: #111923;
+  --sidebar-accent-foreground: oklch(0.82 0.015 240);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.64 0.085 245);
+
+  --journey-card-bg: rgba(9, 17, 26, 0.96);
+  --journey-card-border: rgba(96, 165, 250, 0.1);
+  --journey-card-arrow: rgba(9, 17, 26, 0.96);
+  --journey-line-color: rgba(96, 165, 250, 0.14);
+  --journey-icon-bg: rgba(5, 9, 13, 0.98);
+  --journey-icon-fg: #93c5fd;
+  --journey-icon-ring: rgba(96, 165, 250, 0.16);
+  --line-color: rgba(96, 165, 250, 0.14);
   --surface-available-bg: rgba(16, 185, 129, 0.1);
   --surface-available-border: rgba(16, 185, 129, 0.28);
   --surface-available-text: #86efac;

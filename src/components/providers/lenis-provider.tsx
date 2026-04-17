@@ -119,7 +119,7 @@ export default function LenisProvider({
       <div className="pointer-events-none fixed inset-x-0 top-0 z-50 h-1 bg-transparent">
         <div
           ref={progressBarRef}
-          className="bar h-full w-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-[#a78bfa] shadow-[0_0_24px_var(--project-progress-glow)]"
+          className="bar h-full w-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-[#67e8f9] shadow-[0_0_24px_var(--project-progress-glow)]"
         />
       </div>
       {children}
