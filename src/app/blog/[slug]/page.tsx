@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { posts } from "#site/content";
 
+import { BlogPostShell } from "@/components/blog/blog-post-shell";
 import { MdxContent } from "@/components/blog/mdx-content";
 import { PostHeader } from "@/components/blog/post-header";
 
@@ -93,8 +94,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         }}
       />
 
-      <article className="mx-auto -mt-8 w-full max-w-6xl px-4 pb-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
+      <BlogPostShell
+        header={
           <PostHeader
             title={post.title}
             description={post.description}
@@ -103,14 +104,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             cover={post.cover}
             tags={post.tags}
           />
-
-          <div className="mx-auto mt-12 max-w-3xl rounded-[30px] border border-border bg-card/75 px-5 py-8 shadow-[0_24px_70px_rgba(0,0,0,0.18)] sm:px-8 lg:px-10">
-            <div className="mdx-content">
-              <MdxContent code={post.body} />
-            </div>
+        }
+        body={
+          <div className="mdx-content">
+            <MdxContent code={post.body} />
           </div>
-        </div>
-      </article>
+        }
+      />
     </>
   );
 }

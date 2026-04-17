@@ -34,7 +34,7 @@ export function Toc({ items }: TocProps) {
   if (items.length === 0) return null;
 
   return (
-    <aside className="rounded-2xl border border-border bg-card/80 p-5">
+    <aside className="rounded-2xl border border-border bg-[var(--surface-glass)] p-5">
       <p className="mb-4 text-xs font-semibold uppercase tracking-[0.24em] text-muted-foreground">
         On This Page
       </p>

@@ -20,9 +20,7 @@ export default function Header() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
           >
-            <div
-              className="absolute inset-0 rounded-full border border-border/70 bg-background/75 shadow-sm backdrop-blur-md"
-            />
+            <div className="absolute inset-0 rounded-full border border-border bg-[var(--surface-glass)] shadow-[var(--shadow-soft)] backdrop-blur-md" />
 
             <nav className="relative flex items-center gap-2 px-1.5 py-1.5 sm:gap-4 sm:px-3.5 sm:py-2.5">
               <ul className="flex items-center justify-center gap-0.5 whitespace-nowrap text-[10px] font-medium sm:gap-3 sm:text-[12px]">

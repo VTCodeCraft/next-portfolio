@@ -64,7 +64,7 @@ export function PostHeader({
       </div>
 
       {cover ? (
-        <div className="relative overflow-hidden rounded-[30px] border border-border bg-card shadow-[0_24px_70px_rgba(0,0,0,0.25)]">
+        <div className="relative overflow-hidden rounded-[30px] border border-border bg-card shadow-[var(--shadow-card-xl)]">
           <Image
             src={cover}
             alt=""

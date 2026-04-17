@@ -50,7 +50,7 @@ export default function RootLayout({
           <GalaxyDeferred />
         </div> */}
         {/* BACKGROUND BLOBS */}
-        <div className="light-only absolute top-[-7rem] right-[8rem] -z-10 h-[34rem] w-[34rem] rounded-full bg-primary/8 blur-[9rem] sm:w-[72rem]"></div>
+        <div className="light-only absolute top-[-7rem] right-[8rem] -z-10 h-[34rem] w-[34rem] rounded-full bg-[var(--project-glow-primary)] blur-[9rem] sm:w-[72rem]"></div>
         <div className="light-only absolute top-[-2rem] left-[-32rem] -z-10 h-[32rem] w-[54rem] rounded-full bg-secondary/70 blur-[9rem] sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
         <div className="light-only absolute left-[22%] top-[5rem] -z-10 h-[30rem] w-[46rem] rounded-full bg-accent/60 opacity-85 blur-[11rem]" />
 

@@ -28,6 +28,10 @@ export default function LenisProvider({
       maxScroll > 0 ? Math.min(Math.max(scrollTop / maxScroll, 0), 1) : 0;
 
     progressBar.style.width = `${Math.min(Math.max(progress, 0), 1) * 100}%`;
+    root.style.setProperty(
+      "--scroll-darkness",
+      `${(Math.min(Math.max(progress, 0), 1) * 0.18).toFixed(3)}`,
+    );
   });
 
   useEffect(() => {
@@ -90,6 +94,7 @@ export default function LenisProvider({
       if (document.documentElement.getAttribute("style") === "") {
         document.documentElement.removeAttribute("style");
       }
+      document.documentElement.style.removeProperty("--scroll-darkness");
       if (document.body.getAttribute("style") === "") {
         document.body.removeAttribute("style");
       }
@@ -114,7 +119,7 @@ export default function LenisProvider({
       <div className="pointer-events-none fixed inset-x-0 top-0 z-50 h-1 bg-transparent">
         <div
           ref={progressBarRef}
-          className="bar h-full w-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-primary/70 shadow-[0_0_24px_rgba(139,92,246,0.45)]"
+          className="bar h-full w-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-[#a78bfa] shadow-[0_0_24px_var(--project-progress-glow)]"
         />
       </div>
       {children}

@@ -7,7 +7,7 @@ type PostListProps = {
 export function PostList({ posts }: PostListProps) {
   if (posts.length === 0) {
     return (
-      <div className="rounded-2xl border border-dashed border-border bg-card/70 px-6 py-12 text-center text-sm text-muted-foreground">
+      <div className="rounded-2xl border border-dashed border-border bg-[var(--surface-glass)] px-6 py-12 text-center text-sm text-muted-foreground">
         No published posts match that search yet.
       </div>
     );

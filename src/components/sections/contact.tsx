@@ -6,14 +6,16 @@ import { useSectionInView } from "@/lib/hooks";
 import { sendEmail } from "@/actions/sendEmail";
 import SubmitBtn from "../ui/submit-btn";
 import toast from "react-hot-toast";
+import { MotionSection } from "@/components/ui/reveal";
 
 export default function Contact() {
   const ref = useSectionInView("Contact", 0.5);
 
   return (
-    <section
+    <MotionSection
       id="contact"
       ref={ref}
+      delay={0.14}
       className="relative w-full scroll-mt-28 max-w-[32rem] pb-2 text-center sm:mb-10 lg:mx-0 lg:text-left"
     >
       <p className="mb-0.5 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-primary">
@@ -34,10 +36,10 @@ export default function Contact() {
         or drop a message below.
       </p>
 
-      <div className="relative overflow-hidden rounded-xl border border-border bg-card/70 p-4 shadow-lg backdrop-blur-md">
+      <div className="relative overflow-hidden rounded-xl border border-border bg-[var(--surface-glass)] p-4 shadow-[var(--shadow-card)] backdrop-blur-md">
         <span
           aria-hidden
-          className="pointer-events-none absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-gradient-to-bl from-primary/10 to-transparent"
+          className="pointer-events-none absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-gradient-to-bl from-[var(--surface-accent-soft)] to-transparent"
         />
 
         <form
@@ -85,7 +87,7 @@ export default function Contact() {
       <p className="mt-3 text-center text-[0.7rem] text-muted-foreground">
         I usually reply within 24 hours
       </p>
-    </section>
+    </MotionSection>
   );
 }
 

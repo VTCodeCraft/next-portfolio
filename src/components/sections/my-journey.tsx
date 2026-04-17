@@ -9,14 +9,16 @@ import "react-vertical-timeline-component/style.min.css";
 import { experiencesData } from "@/lib/data";
 import { useSectionInView } from "@/lib/hooks";
 import SectionHeading from "../ui/section-heading";
+import { MotionSection } from "@/components/ui/reveal";
 
 export default function MyJourney() {
   const ref = useSectionInView("My Journey", 0.5);
 
   return (
-    <section
+    <MotionSection
       id="my-journey"
       ref={ref}
+      delay={0.12}
       className="w-full scroll-mt-28 lg:max-w-none"
     >
       <div className="w-full max-w-[720px] lg:mx-0">
@@ -32,7 +34,7 @@ export default function MyJourney() {
             key={`${item.title}-${index}`}
             contentStyle={{
               background: "var(--journey-card-bg)",
-              boxShadow: "0 16px 40px rgba(0, 0, 0, 0.16)",
+              boxShadow: "var(--shadow-soft)",
               border: "1px solid var(--journey-card-border)",
               textAlign: "left",
               padding: "1rem 1.25rem",
@@ -66,7 +68,7 @@ export default function MyJourney() {
           </VerticalTimelineElement>
         ))}
       </VerticalTimeline>
-    </section>
+    </MotionSection>
   );
 }
 

@@ -8,6 +8,7 @@ import {
 } from "@/lib/data";
 import SectionHeading from "../ui/section-heading";
 import { useSectionInView } from "@/lib/hooks";
+import { MotionSection } from "@/components/ui/reveal";
 
 function createSeededRandom(seed: number) {
   let value = seed;
@@ -17,7 +18,46 @@ function createSeededRandom(seed: number) {
   };
 }
 
+function shuffleTiles(
+  arr: Array<string | null>,
+  activeCols: number,
+  totalTiles: number,
+  random: () => number = Math.random,
+) {
+  const a = [...arr];
+  let empty = a.indexOf(null);
+
+  for (let i = 0; i < 200; i++) {
+    const moves = [-activeCols, activeCols, -1, 1];
+    const valid = moves
+      .map((m) => empty + m)
+      .filter((n) => n >= 0 && n < totalTiles);
+
+    const next = valid[Math.floor(random() * valid.length)];
+    [a[empty], a[next]] = [a[next], a[empty]];
+    empty = next;
+  }
+
+  return a;
+}
+
+function buildInitialTiles(nextCols: number) {
+  const total = nextCols * Math.floor(24 / nextCols);
+  const initialTiles = [
+    ...skillsData.slice(0, total - 1),
+    null,
+  ] as Array<string | null>;
+
+  return shuffleTiles(
+    initialTiles,
+    nextCols,
+    total,
+    createSeededRandom(42),
+  );
+}
+
 export default function Skills() {
+
   const getColsForViewport = () =>
     typeof window !== "undefined" && window.visualViewport
       ? window.visualViewport.width < 650
@@ -31,14 +71,25 @@ export default function Skills() {
   const rows = Math.floor(24 / cols);
   const TOTAL = cols * rows;
 
-  const [tiles, setTiles] = useState<Array<string | null>>([]);
+  const [tiles, setTiles] = useState<Array<string | null>>(() =>
+    buildInitialTiles(6),
+  );
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const handleResize = () => {
-      setCols(getColsForViewport());
+      const nextCols = getColsForViewport();
+
+      setCols((currentCols) => {
+        if (currentCols === nextCols) {
+          return currentCols;
+        }
+
+        setTiles(buildInitialTiles(nextCols));
+        return nextCols;
+      });
     };
 
     window.addEventListener("resize", handleResize);
@@ -78,28 +129,6 @@ export default function Skills() {
     return (dr === 1 && dc === 0) || (dr === 0 && dc === 1);
   };
 
-  //shuffle 
-  function shuffleTiles(
-    arr: Array<string | null>,
-    random: () => number = Math.random
-  ) {
-    const a = [...arr];
-    let empty = a.indexOf(null);
-
-    for (let i = 0; i < 200; i++) {
-      const moves = [-cols, cols, -1, 1];
-      const valid = moves
-        .map((m) => empty + m)
-        .filter((n) => n >= 0 && n < TOTAL);
-
-      const next = valid[Math.floor(random() * valid.length)];
-      [a[empty], a[next]] = [a[next], a[empty]];
-      empty = next;
-    }
-
-    return a;
-  }
-
   const darkSkillColors: Record<string, string> = {
     "Next.js": "#f8fafc",
     "GitHub": "#f8fafc",
@@ -107,21 +136,6 @@ export default function Skills() {
     "MySQL": "#93c5fd",
     "Java": "#67e8f9",
   };
-
-  // init
-  useEffect(() => {
-    const INITIAL_TILES = [
-      ...skillsData.slice(0, TOTAL - 1),
-      null,
-    ] as Array<string | null>;
-
-    const shuffled = shuffleTiles(
-      INITIAL_TILES,
-      createSeededRandom(42)
-    );
-
-    setTiles(shuffled);
-  }, [cols]);
 
   const ref = useSectionInView("Skills", 0.5);
   const emptyIndex = tiles.indexOf(null);
@@ -171,14 +185,15 @@ export default function Skills() {
 
   /* ------------------ UI ------------------ */
   return (
-    <section
+    <MotionSection
       id="skills"
       ref={ref}
+      delay={0.1}
       className="max-w-[60rem] scroll-mt-28 text-center"
     >
       <SectionHeading>Technical Skills</SectionHeading>
 
-      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-border bg-card/80 p-4 shadow-2xl backdrop-blur-xl lg:mx-0">
+      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-border bg-[var(--surface-glass)] p-4 shadow-[var(--shadow-card-strong)] backdrop-blur-xl lg:mx-0">
         <div
           className="grid gap-3"
           style={{
@@ -192,7 +207,7 @@ export default function Skills() {
               return (
                 <div
                   key="empty"
-                  className="h-16 rounded-lg border border-dashed border-border bg-background/60 sm:h-20"
+                  className="h-16 rounded-lg border border-dashed border-border bg-[var(--surface-muted)] sm:h-20"
                 />
               );
             }
@@ -205,12 +220,12 @@ export default function Skills() {
                 className={`relative flex ${isMobile ? "h-20" : "h-16"
                   } items-center justify-center rounded-lg border px-2 text-center transition-transform duration-200 ${canMove
                     ? "cursor-grab border-border bg-secondary shadow-lg active:cursor-grabbing hover:scale-[1.03] hover:shadow-xl text-secondary-foreground"
-                    : "border-border bg-background/70 text-muted-foreground"
+                    : "border-border bg-[var(--surface-muted)] text-muted-foreground"
                   }`}
               >
                 {/* GLOW EFFECT */}
                 {canMove && (
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/10 to-accent/40 opacity-0 transition hover:opacity-100" />
+                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-[var(--surface-accent-soft)] to-[var(--surface-accent-strong)] opacity-0 transition hover:opacity-100" />
                 )}
 
                 <div className="flex flex-col items-center justify-center gap-1 relative z-10">
@@ -221,8 +236,8 @@ export default function Skills() {
                         ? darkSkillColors[tile] ?? skillColors[tile]
                         : skillColors[tile],
                       filter: isDarkMode
-                        ? "drop-shadow(0 0 10px rgba(255,255,255,0.04))"
-                        : "drop-shadow(0 0 6px rgba(0,0,0,0.3))",
+                        ? "var(--skill-icon-shadow-dark)"
+                        : "var(--skill-icon-shadow-light)",
                     }}
                   >
                     {skillIconsData[tile]}
@@ -250,14 +265,14 @@ export default function Skills() {
               null,
             ] as Array<string | null>;
 
-            setTiles(shuffleTiles(INITIAL_TILES));
+            setTiles(shuffleTiles(INITIAL_TILES, cols, TOTAL));
           }}
           className="rounded-xl bg-primary px-6 py-2 text-sm text-primary-foreground shadow-lg transition hover:scale-110 hover:opacity-90 active:scale-95"
         >
           Shuffle
         </button>
       </div>
-    </section>
+    </MotionSection>
   );
 }
 

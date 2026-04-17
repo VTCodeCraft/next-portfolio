@@ -5,6 +5,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import { sections } from "@/lib/data";
 import { useActiveSectionContext } from "@/context/active-section-context";
+import { MotionMountDiv } from "@/components/ui/reveal";
 
 export default function Sidebar() {
   const { activeSection, setActiveSection } = useActiveSectionContext();
@@ -18,7 +19,11 @@ export default function Sidebar() {
   return (
     <>
       {/* MOBILE */}
-      <div className="fixed left-6 top-6 z-50 lg:hidden">
+      <MotionMountDiv
+        delay={0.08}
+        distance={20}
+        className="fixed left-6 top-6 z-50 lg:hidden"
+      >
         <button
           onClick={() => setIsOpen((v) => !v)}
           className="flex h-12 w-12 flex-col items-center justify-center gap-1 rounded-full border border-border bg-card shadow-md"
@@ -73,10 +78,14 @@ export default function Sidebar() {
             </nav>
           </aside>
         )}
-      </div>
+      </MotionMountDiv>
 
       {/* DESKTOP */}
-      <aside className="hidden text-muted-foreground lg:flex lg:flex-col lg:gap-8">
+      <MotionMountDiv
+        delay={0.1}
+        distance={24}
+        className="hidden text-muted-foreground lg:flex lg:flex-col lg:gap-8"
+      >
         {sections.map((item) => {
           const isActive = activeSection === item.name;
 
@@ -116,7 +125,7 @@ export default function Sidebar() {
             </a>
           );
         })}
-      </aside>
+      </MotionMountDiv>
     </>
   );
 }

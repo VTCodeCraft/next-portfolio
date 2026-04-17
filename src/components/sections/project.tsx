@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import {
   Center,
@@ -64,98 +64,127 @@ function LaptopRig() {
   );
 }
 
+function SceneReady({ onReady }: { onReady: () => void }) {
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
+
+  return null;
+}
+
 /* ─── 3-D scene ────────────────────────────────────────────────────── */
 function ProjectScene() {
+  const [isModelReady, setIsModelReady] = useState(false);
+
   return (
-    <Canvas
-      className="h-full w-full"
-      dpr={[1, 2]}
-      performance={{ min: 0.75 }}
-      shadows="soft"
-      camera={{ position: [0, 0.65, 4.2], fov: 30 }}
-      gl={{
-        antialias: true,
-        alpha: true,
-        powerPreference: "high-performance",
-      }}
-      onCreated={({ gl }) => {
-        gl.toneMapping = ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.0;
-        gl.shadowMap.enabled = true;
-        gl.shadowMap.type = PCFSoftShadowMap;
-      }}
-    >
-      {/* Lighting */}
-      <ambientLight intensity={0.06} />
-
-      <spotLight
-        position={[6, 5, 3]}
-        angle={0.28}
-        penumbra={0.95}
-        intensity={48}
-        castShadow
-        shadow-bias={-0.0001}
-        shadow-mapSize={[2048, 2048]}
+    <div className="relative h-full w-full">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 24%, rgba(139, 92, 246, 0.26) 0%, rgba(109, 40, 217, 0.18) 34%, rgba(49, 18, 88, 0.42) 72%, rgba(12, 8, 24, 0.68) 100%)",
+        }}
       />
+      <Canvas
+        className="relative z-[1] h-full w-full"
+        dpr={[1, 1.5]}
+        performance={{ min: 0.7 }}
+        shadows="soft"
+        camera={{ position: [0, 0.65, 4.2], fov: 30 }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+        }}
+        onCreated={({ gl }) => {
+          gl.toneMapping = ACESFilmicToneMapping;
+          gl.toneMappingExposure = 1.0;
+          gl.shadowMap.enabled = true;
+          gl.shadowMap.type = PCFSoftShadowMap;
+        }}
+      >
+        {/* Lighting */}
+        <ambientLight intensity={0.06} />
 
-      <directionalLight
-        position={[-5, 3.5, 2.5]}
-        intensity={1.6}
-        castShadow
-        shadow-bias={-0.00012}
-        shadow-mapSize={[1024, 1024]}
-      />
-
-      {/* Cool blue rim lights */}
-      <pointLight position={[3.5, 1.5, 2.5]} intensity={6} distance={7} color="#a5b4fc" />
-      <pointLight position={[-3.5, 1.2, 2.2]} intensity={5} distance={6.5} color="#818cf8" />
-      {/* Subtle warm backlight */}
-      <pointLight position={[0, 3, -3]} intensity={3} distance={8} color="#f0abfc" />
-
-      <Environment preset="city" resolution={512}>
-        <Lightformer form="rect" intensity={1.4} position={[6, 2, 2]} rotation={[0, -Math.PI / 4.5, 0]} scale={[4, 6, 1]} />
-        <Lightformer form="rect" intensity={1.1} position={[-6, 1.8, 2]} rotation={[0, Math.PI / 4.5, 0]} scale={[3.8, 5.5, 1]} />
-        <Lightformer form="ring" intensity={0.6} position={[0, 6, -4]} rotation={[Math.PI / 2.4, 0, 0]} scale={[8, 8, 1]} color="#c7d2fe" />
-      </Environment>
-
-      <Suspense fallback={<CanvasLoader />}>
-        <LaptopRig />
-
-        <ContactShadows
-          position={[0, -1.5, 0]}
-          opacity={0.65}
-          scale={10}
-          blur={3}
-          far={3.5}
-          resolution={512}
-          color="#0f0f1a"
+        <spotLight
+          position={[6, 5, 3]}
+          angle={0.28}
+          penumbra={0.95}
+          intensity={48}
+          castShadow
+          shadow-bias={-0.0001}
+          shadow-mapSize={[1024, 1024]}
         />
-      </Suspense>
 
-      {/* Post-processing */}
-      <EffectComposer enableNormalPass={false} multisampling={0}>
-        <Bloom intensity={0.45} luminanceThreshold={0.78} luminanceSmoothing={0.1} mipmapBlur />
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={new Vector2(0.0008, 0.0008)}
+        <directionalLight
+          position={[-5, 3.5, 2.5]}
+          intensity={1.6}
+          castShadow
+          shadow-bias={-0.00012}
+          shadow-mapSize={[1024, 1024]}
         />
-        <BrightnessContrast brightness={0.02} contrast={0.12} />
-        <HueSaturation saturation={0.18} />
-        <Vignette eskil={false} offset={0.28} darkness={0.65} />
-      </EffectComposer>
 
-      <OrbitControls
-        autoRotate
-        autoRotateSpeed={0.55}
-        enableDamping
-        dampingFactor={0.06}
-        enablePan={false}
-        enableZoom={false}
-        minPolarAngle={Math.PI / 3}
-        maxPolarAngle={Math.PI / 1.95}
-        target={[0, -0.1, 0]}
-      />
-    </Canvas>
+        {/* Subtle warm backlight */}
+        <pointLight position={[0, 3, -3]} intensity={3} distance={8} color="#8b5cf6" />
+
+        <Environment preset="city" resolution={256}>
+          <Lightformer form="rect" intensity={1.4} position={[6, 2, 2]} rotation={[0, -Math.PI / 4.5, 0]} scale={[4, 6, 1]} />
+          <Lightformer form="rect" intensity={1.1} position={[-6, 1.8, 2]} rotation={[0, Math.PI / 4.5, 0]} scale={[3.8, 5.5, 1]} />
+          <Lightformer form="ring" intensity={0.6} position={[0, 6, -4]} rotation={[Math.PI / 2.4, 0, 0]} scale={[6.5, 6.5, 1]} color="#c4b5fd" />
+        </Environment>
+
+        <Suspense fallback={<CanvasLoader />}>
+          <SceneReady onReady={() => setIsModelReady(true)} />
+          <LaptopRig />
+
+          <ContactShadows
+            position={[0, -1.5, 0]}
+            opacity={0.32}
+            scale={10}
+            blur={4.2}
+            far={3.5}
+            resolution={256}
+            color="#2f1b4d"
+          />
+        </Suspense>
+
+        {/* Post-processing */}
+        <EffectComposer enableNormalPass={false} multisampling={0}>
+          <Bloom intensity={0.4} luminanceThreshold={0.8} luminanceSmoothing={0.1} mipmapBlur />
+          <ChromaticAberration
+            blendFunction={BlendFunction.NORMAL}
+            offset={new Vector2(0.0006, 0.0006)}
+          />
+          <BrightnessContrast brightness={0.02} contrast={0.12} />
+          <HueSaturation saturation={0.18} />
+          <Vignette eskil={false} offset={0.28} darkness={0.65} />
+        </EffectComposer>
+
+        <OrbitControls
+          autoRotate
+          autoRotateSpeed={0.55}
+          enableDamping
+          dampingFactor={0.06}
+          enablePan={false}
+          enableZoom={false}
+          minPolarAngle={Math.PI / 3}
+          maxPolarAngle={Math.PI / 1.95}
+          target={[0, -0.1, 0]}
+        />
+      </Canvas>
+
+      {!isModelReady && (
+        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-[var(--project-loader-backdrop)] backdrop-blur-[2px]">
+          <div className="flex flex-col items-center gap-3">
+            <span className="h-10 w-10 animate-spin rounded-full border-2 border-[var(--project-loader-track)] border-t-primary" />
+            <p className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">
+              Loading Model
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -193,11 +222,11 @@ export default function Project() {
       {/* ── decorative background glow ── */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-0 -translate-x-1/2 -top-20 h-[420px] w-[420px] rounded-full bg-primary/8 blur-[96px]"
+        className="pointer-events-none absolute left-0 -translate-x-1/2 -top-20 h-[420px] w-[420px] rounded-full bg-[var(--project-glow-primary)] blur-[96px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute right-0 top-0 h-[320px] w-[320px] rounded-full bg-accent/10 blur-[80px]"
+        className="pointer-events-none absolute right-0 top-0 h-[320px] w-[320px] rounded-full bg-[var(--project-glow-secondary)] blur-[80px]"
       />
 
       <div className="relative w-full">
@@ -213,17 +242,17 @@ export default function Project() {
           {/* ── info card ── */}
           <motion.div
             {...fadeUp(0.1)}
-            className="order-2 group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border/70 bg-card/95 px-4 py-4 text-card-foreground shadow-[0_20px_60px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.04)] lg:order-1 lg:h-[386px] lg:w-[436px]"
+            className="order-2 group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-[var(--surface-glass-strong)] px-4 py-4 text-card-foreground shadow-[var(--shadow-card)] lg:order-1 lg:h-[386px] lg:w-[436px]"
           >
             {/* corner glow */}
-            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/10 blur-2xl transition-all duration-700 group-hover:bg-primary/16" />
+            <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[var(--surface-accent-soft)] blur-2xl transition-all duration-700 group-hover:bg-[var(--surface-accent-strong)]" />
 
             {/* featured badge */}
             {"featured" in currentProject && currentProject.featured && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-2.5 py-1 text-[9px] font-semibold uppercase tracking-widest text-primary"
+                className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full border border-[var(--surface-available-border)] bg-[var(--surface-available-bg)] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-widest text-primary"
               >
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
                 Featured
@@ -232,7 +261,7 @@ export default function Project() {
 
             {/* index indicator */}
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[0.6rem] tabular-nums text-muted-foreground/70">
+              <span className="font-mono text-[0.6rem] tabular-nums text-[var(--text-subtle)]">
                 {String(selectedProjectIndex + 1).padStart(2, "0")} /{" "}
                 {String(projectCount).padStart(2, "0")}
               </span>
@@ -283,7 +312,7 @@ export default function Project() {
                 return (
                   <div
                     key={tag.id}
-                    className="flex items-center gap-1.5 rounded-full border border-border/70 bg-secondary/50 px-2 py-0.5 text-[0.66rem] text-muted-foreground backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-primary/30 hover:bg-accent/60 hover:text-foreground"
+                    className="flex items-center gap-1.5 rounded-full border border-border bg-secondary px-2 py-0.5 text-[0.66rem] text-muted-foreground backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:border-primary hover:bg-accent hover:text-foreground"
                   >
                     <Icon style={{ fontSize: "0.68rem", color: iconColor }} />
                     {tag.name}
@@ -293,13 +322,13 @@ export default function Project() {
             </div>
 
             {/* actions */}
-            <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3">
+            <div className="mt-auto flex flex-wrap items-center justify-between gap-2 border-t border-border pt-3">
               <div className="flex items-center gap-3">
                 <a
                   href={currentProject.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/link inline-flex items-center gap-1.5 rounded-lg bg-primary/12 px-2.5 py-1.5 text-[0.72rem] font-medium text-primary ring-1 ring-primary/20 transition hover:bg-primary/18 hover:ring-primary/30"
+                  className="group/link inline-flex items-center gap-1.5 rounded-lg bg-[var(--surface-available-bg)] px-2.5 py-1.5 text-[0.72rem] font-medium text-primary ring-1 ring-[var(--surface-available-border)] transition hover:bg-[var(--surface-accent-soft)] hover:ring-primary"
                 >
                   <FaExternalLinkAlt className="text-[0.65rem] transition group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
                   Live Site
@@ -318,13 +347,13 @@ export default function Project() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleNavigation("previous")}
-                  className="flex h-7 w-7 items-center justify-center rounded-xl border border-border/70 bg-secondary/50 text-muted-foreground transition hover:border-primary/35 hover:bg-accent/60 hover:text-foreground"
+                  className="flex h-7 w-7 items-center justify-center rounded-xl border border-border bg-secondary text-muted-foreground transition hover:border-primary hover:bg-accent hover:text-foreground"
                 >
                   <FaArrowLeft style={{ fontSize: "0.72rem" }} />
                 </button>
                 <button
                   onClick={() => handleNavigation("next")}
-                  className="flex h-7 w-7 items-center justify-center rounded-xl border border-border/70 bg-secondary/50 text-muted-foreground transition hover:border-primary/35 hover:bg-accent/60 hover:text-foreground"
+                  className="flex h-7 w-7 items-center justify-center rounded-xl border border-border bg-secondary text-muted-foreground transition hover:border-primary hover:bg-accent hover:text-foreground"
                 >
                   <FaArrowRight style={{ fontSize: "0.72rem" }} />
                 </button>
@@ -335,7 +364,7 @@ export default function Project() {
           {/* ── canvas card ── */}
           <motion.div
             {...fadeUp(0.18)}
-            className="order-1 relative overflow-hidden rounded-lg border border-border/70 bg-card/90 shadow-[0_20px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.04)] sm:rounded-2xl lg:order-2 lg:h-[386px]"
+            className="order-1 relative overflow-hidden rounded-lg border border-border bg-[var(--surface-glass-strong)] shadow-[var(--shadow-card)] sm:rounded-2xl lg:order-2 lg:h-[386px]"
           >
             {/* grid overlay */}
             <div
@@ -343,24 +372,24 @@ export default function Project() {
               className="pointer-events-none absolute inset-0 opacity-[0.035]"
               style={{
                 backgroundImage:
-                  "linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px)",
+                  "linear-gradient(var(--project-grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--project-grid-line) 1px,transparent 1px)",
                 backgroundSize: "40px 40px",
               }}
             />
 
             {/* corner accents */}
-            <div className="pointer-events-none absolute left-3 top-3 h-4 w-4 border-l border-t border-primary/25" />
-            <div className="pointer-events-none absolute right-3 top-3 h-4 w-4 border-r border-t border-primary/25" />
-            <div className="pointer-events-none absolute bottom-3 left-3 h-4 w-4 border-b border-l border-primary/25" />
-            <div className="pointer-events-none absolute bottom-3 right-3 h-4 w-4 border-b border-r border-primary/25" />
+            <div className="pointer-events-none absolute left-3 top-3 h-4 w-4 border-l border-t border-[var(--project-frame-border)]" />
+            <div className="pointer-events-none absolute right-3 top-3 h-4 w-4 border-r border-t border-[var(--project-frame-border)]" />
+            <div className="pointer-events-none absolute bottom-3 left-3 h-4 w-4 border-b border-l border-[var(--project-frame-border)]" />
+            <div className="pointer-events-none absolute bottom-3 right-3 h-4 w-4 border-b border-r border-[var(--project-frame-border)]" />
 
             {/* bottom gradient fade */}
-            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-background/80 to-transparent" />
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--surface-overlay)] to-transparent" />
 
             <ProjectScene />
 
             {/* "drag to rotate" hint */}
-            <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[0.54rem] tracking-widest text-muted-foreground/50 uppercase">
+            <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[0.54rem] tracking-widest text-[var(--text-faint)] uppercase">
               Drag to explore
             </p>
           </motion.div>

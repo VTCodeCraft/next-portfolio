@@ -35,8 +35,8 @@ export default function BlogClient({ posts }: BlogClientProps) {
   };
 
   return (
-    <div className="mx-auto mt-8 max-w-5xl space-y-10">
-      <div className="max-w-md rounded-2xl border border-border bg-card/75 p-2.5 shadow-[0_20px_60px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.04)]">
+    <>
+      <div className="max-w-md rounded-2xl border border-border bg-[var(--surface-glass)] p-2.5 shadow-[var(--shadow-card)]">
         <label htmlFor="blog-search" className="sr-only">
           Search posts
         </label>
@@ -45,12 +45,12 @@ export default function BlogClient({ posts }: BlogClientProps) {
           value={search}
           onChange={(event) => updateSearch(event.target.value)}
           placeholder="Search the archive..."
-          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary/40"
+          className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary"
         />
       </div>
 
       <PostList posts={filteredPosts} />
-    </div>
+    </>
   );
 }
 

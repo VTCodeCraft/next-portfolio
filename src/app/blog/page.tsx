@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { posts } from "#site/content";
 
 import BlogClient from "@/app/blog/blog-client";
+import { BlogPageShell } from "@/components/blog/blog-page-shell";
 import type { PostCardData } from "@/components/blog/post-card";
 import SectionHeading from "@/components/ui/section-heading";
 
@@ -21,24 +22,28 @@ const publishedPosts = posts
 
 export default function BlogPage() {
   return (
-    <section className="mx-auto -mt-8 w-full max-w-5xl px-4 pb-20 sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-5xl flex-col items-start">
-        <SectionHeading className="mb-4 items-start lg:items-start">
-          My Blog
-        </SectionHeading>
+    <BlogPageShell
+      intro={
+        <>
+          <SectionHeading className="mb-4 items-start lg:items-start">
+            My Blog
+          </SectionHeading>
 
-        <div className="w-full rounded-[28px] border border-border bg-card/80 px-6 py-7 shadow-[0_24px_80px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.04)] sm:px-8">
-          <p className="max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-            Thoughts on interface design, frontend systems, performance, and
-            the small decisions that shape how a product feels in everyday use.
-          </p>
-        </div>
-      </div>
-
-      <Suspense>
-        <BlogClient posts={publishedPosts} />
-      </Suspense>
-    </section>
+          <div className="w-full rounded-[28px] border border-border bg-[var(--surface-glass)] px-6 py-7 shadow-[var(--shadow-card-strong)] sm:px-8">
+            <p className="max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
+              Thoughts on interface design, frontend systems, performance, and
+              the small decisions that shape how a product feels in everyday
+              use.
+            </p>
+          </div>
+        </>
+      }
+      content={
+        <Suspense>
+          <BlogClient posts={publishedPosts} />
+        </Suspense>
+      }
+    />
   );
 }
 

@@ -30,7 +30,7 @@ export function PostCard({ post }: PostCardProps) {
       href={`/blog/${post.slugAsParams}`}
       className="group relative flex h-full flex-col gap-5 text-card-foreground transition duration-300 hover:-translate-y-1"
     >
-      <div className="relative overflow-hidden rounded-[26px] border border-border bg-card shadow-[0_24px_80px_rgba(0,0,0,0.2)]">
+      <div className="relative overflow-hidden rounded-[26px] border border-border bg-card shadow-[var(--shadow-card-strong)]">
         {post.cover ? (
           <Image
             src={post.cover}
