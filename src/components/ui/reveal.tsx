@@ -6,7 +6,7 @@ import {
   m,
   type HTMLMotionProps,
 } from "framer-motion";
-import { forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 type RevealProps = {
   delay?: number;
@@ -19,6 +19,16 @@ type RevealProps = {
 type MotionSectionProps = HTMLMotionProps<"section"> & RevealProps;
 type MotionDivProps = HTMLMotionProps<"div"> & RevealProps;
 type MotionArticleProps = HTMLMotionProps<"article"> & RevealProps;
+
+const loadFeatures = () => Promise.resolve(domAnimation);
+
+export function MotionProvider({ children }: { children: ReactNode }) {
+  return (
+    <LazyMotion features={loadFeatures} strict>
+      {children}
+    </LazyMotion>
+  );
+}
 
 function getTransition(delay = 0, duration = 0.5) {
   return {
@@ -64,15 +74,13 @@ export const MotionSection = forwardRef<HTMLElement, MotionSectionProps>(
     ref,
   ) {
     return (
-      <LazyMotion features={domAnimation}>
-        <m.section
-          ref={ref}
-          {...getRevealProps({ delay, distance, duration, amount, once })}
-          {...props}
-        >
-          {children}
-        </m.section>
-      </LazyMotion>
+      <m.section
+        ref={ref}
+        {...getRevealProps({ delay, distance, duration, amount, once })}
+        {...props}
+      >
+        {children}
+      </m.section>
     );
   },
 );
@@ -83,15 +91,13 @@ export const MotionDiv = forwardRef<HTMLDivElement, MotionDivProps>(
     ref,
   ) {
     return (
-      <LazyMotion features={domAnimation}>
-        <m.div
-          ref={ref}
-          {...getRevealProps({ delay, distance, duration, amount, once })}
-          {...props}
-        >
-          {children}
-        </m.div>
-      </LazyMotion>
+      <m.div
+        ref={ref}
+        {...getRevealProps({ delay, distance, duration, amount, once })}
+        {...props}
+      >
+        {children}
+      </m.div>
     );
   },
 );
@@ -102,15 +108,13 @@ export const MotionArticle = forwardRef<HTMLElement, MotionArticleProps>(
     ref,
   ) {
     return (
-      <LazyMotion features={domAnimation}>
-        <m.article
-          ref={ref}
-          {...getRevealProps({ delay, distance, duration, amount, once })}
-          {...props}
-        >
-          {children}
-        </m.article>
-      </LazyMotion>
+      <m.article
+        ref={ref}
+        {...getRevealProps({ delay, distance, duration, amount, once })}
+        {...props}
+      >
+        {children}
+      </m.article>
     );
   },
 );
@@ -121,15 +125,13 @@ export const MotionMountSection = forwardRef<HTMLElement, MotionSectionProps>(
     ref,
   ) {
     return (
-      <LazyMotion features={domAnimation}>
-        <m.section
-          ref={ref}
-          {...getMountRevealProps({ delay, distance, duration })}
-          {...props}
-        >
-          {children}
-        </m.section>
-      </LazyMotion>
+      <m.section
+        ref={ref}
+        {...getMountRevealProps({ delay, distance, duration })}
+        {...props}
+      >
+        {children}
+      </m.section>
     );
   },
 );
@@ -140,15 +142,13 @@ export const MotionMountDiv = forwardRef<HTMLDivElement, MotionDivProps>(
     ref,
   ) {
     return (
-      <LazyMotion features={domAnimation}>
-        <m.div
-          ref={ref}
-          {...getMountRevealProps({ delay, distance, duration })}
-          {...props}
-        >
-          {children}
-        </m.div>
-      </LazyMotion>
+      <m.div
+        ref={ref}
+        {...getMountRevealProps({ delay, distance, duration })}
+        {...props}
+      >
+        {children}
+      </m.div>
     );
   },
 );
@@ -159,15 +159,13 @@ export const MotionMountArticle = forwardRef<HTMLElement, MotionArticleProps>(
     ref,
   ) {
     return (
-      <LazyMotion features={domAnimation}>
-        <m.article
-          ref={ref}
-          {...getMountRevealProps({ delay, distance, duration })}
-          {...props}
-        >
-          {children}
-        </m.article>
-      </LazyMotion>
+      <m.article
+        ref={ref}
+        {...getMountRevealProps({ delay, distance, duration })}
+        {...props}
+      >
+        {children}
+      </m.article>
     );
   },
 );

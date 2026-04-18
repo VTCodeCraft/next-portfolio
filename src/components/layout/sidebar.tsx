@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useState } from "react";
 import clsx from "clsx";
 import { sections } from "@/lib/data";
@@ -46,7 +46,7 @@ export default function Sidebar() {
                     onClick={() => handleClick(item.name)}
                     className="sidebar-link flex items-center gap-4 group"
                   >
-                    <motion.span
+                    <m.span
                       layout
                       className={clsx(
                         "h-px",
@@ -61,7 +61,7 @@ export default function Sidebar() {
                       }}
                     />
 
-                    <motion.span
+                    <m.span
                       layout
                       className={clsx(
                         isActive
@@ -71,7 +71,7 @@ export default function Sidebar() {
                       transition={{ type: "spring", stiffness: 200 }}
                     >
                       {item.name}
-                    </motion.span>
+                    </m.span>
                   </a>
                 );
               })}
@@ -96,7 +96,7 @@ export default function Sidebar() {
               onClick={() => handleClick(item.name)}
               className="sidebar-link flex items-center gap-4 group"
             >
-              <motion.span
+              <m.span
                 layout
                 className={clsx(
                   "h-px",
@@ -111,7 +111,7 @@ export default function Sidebar() {
                 }}
               />
 
-              <motion.span
+              <m.span
                 layout
                 className={clsx(
                   isActive
@@ -121,7 +121,7 @@ export default function Sidebar() {
                 transition={{ type: "spring", stiffness: 200 }}
               >
                 {item.name}
-              </motion.span>
+              </m.span>
             </a>
           );
         })}

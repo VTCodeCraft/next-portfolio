@@ -10,6 +10,7 @@ import Footer from "@/components/layout/footer";
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
 import LenisProvider from "@/components/providers/lenis-provider";
+import { MotionProvider } from "@/components/ui/reveal";
 // import GalaxyDeferred from "@/components/3d/GalaxyDeferred";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vtcodecraft.in";
@@ -56,19 +57,21 @@ export default function RootLayout({
         <div className="light-only absolute top-[-2rem] left-[-32rem] -z-10 h-[32rem] w-[54rem] rounded-full bg-secondary/70 blur-[9rem] sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
         <div className="light-only absolute left-[22%] top-[5rem] -z-10 h-[30rem] w-[46rem] rounded-full bg-accent/60 opacity-85 blur-[11rem]" />
 
-        <LenisProvider>
-          <ActiveSectionContextProvider>
-            <Header />
-            {/* CONTENT */}
-            <main className="w-full flex-1 pt-32 pb-24 sm:pb-10">
-              <div className="w-full">{children}</div>
-            </main>
-            <Footer />
-            <Toaster position="top-right" />
-            <Analytics />
-            <SpeedInsights />
-          </ActiveSectionContextProvider>
-        </LenisProvider>
+        <MotionProvider>
+          <LenisProvider>
+            <ActiveSectionContextProvider>
+              <Header />
+              {/* CONTENT */}
+              <main className="w-full flex-1 pt-32 pb-24 sm:pb-10">
+                <div className="w-full">{children}</div>
+              </main>
+              <Footer />
+              <Toaster position="top-right" />
+              <Analytics />
+              <SpeedInsights />
+            </ActiveSectionContextProvider>
+          </LenisProvider>
+        </MotionProvider>
       </body>
     </html>
   );

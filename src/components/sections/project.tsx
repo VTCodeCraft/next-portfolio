@@ -19,7 +19,7 @@ import {
   Vignette,
 } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { myProjects, skillColors } from "@/lib/data";
@@ -257,7 +257,7 @@ export default function Project() {
   }, [selectedProjectIndex]);
 
   return (
-    <motion.section
+    <m.section
       id="projects"
       className="relative mx-auto mb-5 w-full max-w-[1100px] px-2 py-1 sm:px-4 lg:px-6"
       initial={{ opacity: 0 }}
@@ -278,15 +278,15 @@ export default function Project() {
       <div className="relative w-full">
 
         {/* ── heading ── */}
-        <motion.div {...fadeUp(0)} className="mb-4 flex flex-col items-start">
+        <m.div {...fadeUp(0)} className="mb-4 flex flex-col items-start">
           <SectionHeading>My Projects</SectionHeading>
-        </motion.div>
+        </m.div>
 
         {/* ── grid ── */}
         <div className="grid w-full grid-cols-1 gap-4 lg:grid-cols-[minmax(0,436px)_1fr] lg:items-stretch">
 
           {/* ── info card ── */}
-          <motion.div
+          <m.div
             {...fadeUp(0.1)}
             className="order-2 group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-[var(--surface-glass-strong)] px-4 py-4 text-card-foreground shadow-[var(--shadow-card)] lg:order-1 lg:h-[386px] lg:w-[436px]"
           >
@@ -295,14 +295,14 @@ export default function Project() {
 
             {/* featured badge */}
             {"featured" in currentProject && currentProject.featured && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, scale: 0.85 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full border border-[var(--surface-available-border)] bg-[var(--surface-available-bg)] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-widest text-primary"
               >
                 <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
                 Featured
-              </motion.div>
+              </m.div>
             )}
 
             {/* index indicator */}
@@ -328,7 +328,7 @@ export default function Project() {
             {/* title + bullets */}
             <div className="flex flex-col gap-2.5">
               <AnimatePresence mode="wait">
-                <motion.p
+                <m.p
                   key={currentProject.title}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -337,7 +337,7 @@ export default function Project() {
                   className="animatedText max-w-[20rem] text-[1.16rem] font-bold leading-tight tracking-[-0.04em]"
                 >
                   {currentProject.title}
-                </motion.p>
+                </m.p>
               </AnimatePresence>
 
               <ul className="animatedText space-y-1.5">
@@ -405,10 +405,10 @@ export default function Project() {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* ── canvas card ── */}
-          <motion.div
+          <m.div
             {...fadeUp(0.18)}
             className="order-1 relative overflow-hidden rounded-lg border border-border bg-[var(--surface-glass-strong)] shadow-[var(--shadow-card)] sm:rounded-2xl lg:order-2 lg:h-[386px]"
           >
@@ -438,10 +438,10 @@ export default function Project() {
             <p className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[0.54rem] tracking-widest text-[var(--text-faint)] uppercase">
               Drag to explore
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </div>
-    </motion.section>
+    </m.section>
   );
 }
 
