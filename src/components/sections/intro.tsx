@@ -135,7 +135,7 @@ export default function Intro() {
             </Link>
 
             <a
-              href="https://drive.google.com/file/d/1-xtUGMoIuXq_9fDntOD4Cc0xmlwfKBHs/view?usp=sharing"
+              href="https://drive.google.com/file/d/1L0JW9W84QoYYAvtxf6RciUF9bjBD0hOm/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2.5 text-[0.95rem] text-card-foreground transition hover:scale-105 hover:bg-accent sm:px-5"
