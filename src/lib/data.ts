@@ -64,7 +64,7 @@ export const experiencesData = [
       "• Automated CRM workflows via data pipelines\n" +
       "• Built full-stack scheduling system with timezone-aware slots & conflict-free real-time booking (React, TS, PostgreSQL, TypeORM)\n",
     icon: React.createElement(CgWorkAlt),
-    date: "Jun 2025 - Jul 2025",
+    date: "Jun 2025 - Nov 2025",
   },
 ] as const;
 
