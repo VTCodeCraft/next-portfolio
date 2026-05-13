@@ -18,12 +18,12 @@ const siteName = "Vishesh Tripathi";
 const siteTitle = "Vishesh Tripathi | Full-Stack Developer";
 const siteDescription =
   "Building scalable web applications, API-driven systems, Chrome extensions, and modern digital experiences using Next.js, React, TypeScript, and backend technologies.";
-const ogImageUrl = `${siteUrl}/OG_image.png`;
+const ogImageUrl = `${siteUrl}/OG_image.png?v=2`;
 const ogImage = {
   url: ogImageUrl,
   secureUrl: ogImageUrl,
-  width: 1200,
-  height: 630,
+  width: 1731,
+  height: 909,
   alt: "Dark premium developer branding for Vishesh Tripathi, Full-Stack Developer at VTCodeCraft.",
   type: "image/png",
 };
