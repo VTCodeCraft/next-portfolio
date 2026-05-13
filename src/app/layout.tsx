@@ -13,7 +13,18 @@ import LenisProvider from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/ui/reveal";
 // import GalaxyDeferred from "@/components/3d/GalaxyDeferred";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://vtcodecraft.in";
+const siteUrl = "https://www.vtcodecraft.in";
+const siteName = "Vishesh Tripathi";
+const siteTitle = "Vishesh Tripathi | Full-Stack Developer";
+const siteDescription =
+  "Building scalable web applications, API-driven systems, Chrome extensions, and modern digital experiences using Next.js, React, TypeScript, and backend technologies.";
+const ogImage = {
+  url: `${siteUrl}/OG_image.png`,
+  width: 1731,
+  height: 909,
+  alt: "Dark premium developer branding for Vishesh Tripathi, Full-Stack Developer at VTCodeCraft.",
+  type: "image/png",
+};
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -27,8 +38,55 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Vishesh Tripathi - Portfolio",
-  description: "Vishesh Tripathi is a full-stack developer portfolio.",
+  title: {
+    default: siteTitle,
+    template: "%s | Vishesh Tripathi",
+  },
+  description: siteDescription,
+  applicationName: "VTCodeCraft",
+  keywords: [
+    "Full-Stack Developer",
+    "Vishesh Tripathi",
+    "VTCodeCraft",
+    "Next.js Developer",
+    "React Developer",
+    "TypeScript",
+    "Node.js",
+    "Portfolio Website",
+    "Software Engineer",
+  ],
+  authors: [{ name: siteName, url: siteUrl }],
+  creator: siteName,
+  publisher: siteName,
+  alternates: {
+    canonical: siteUrl,
+  },
+  openGraph: {
+    title: siteTitle,
+    description: siteDescription,
+    url: siteUrl,
+    siteName: "VTCodeCraft",
+    type: "website",
+    locale: "en_US",
+    images: [ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteTitle,
+    description: siteDescription,
+    images: [ogImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({
