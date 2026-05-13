@@ -207,7 +207,7 @@ Project cards and skills are driven from `src/lib/data.ts`. Update this file to 
 
 | Path | Purpose |
 | --- | --- |
-| `public/images/profile.jpg` | Profile image used on the home page and sidebar. |
+| `public/images/profile.png` | Profile image used on the home page and sidebar. |
 | `public/images/Vishesh Tripathi Resume.pdf` | Local resume asset. |
 | `public/images/blogs` | Blog cover images. |
 | `public/models/asus_tuf_f15.glb` | 3D laptop model used in the projects scene. |

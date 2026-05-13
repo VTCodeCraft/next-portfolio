@@ -11,7 +11,7 @@ export default function ProfileSidebar() {
     >
       <MotionMountDiv delay={0.18} distance={20}>
         <Image
-          src="/images/profile.jpg"
+          src="/images/profile.png"
           alt="Vishesh Tripathi"
           width={120}
           height={120}

@@ -25,7 +25,7 @@ export default function Intro() {
           <div className="mb-6 flex flex-col items-center gap-4 lg:hidden">
             <MotionMountDiv delay={0.08} distance={20}>
               <Image
-                src="/images/profile.jpg"
+                src="/images/profile.png"
                 alt="Vishesh Tripathi"
                 width={120}
                 height={120}
