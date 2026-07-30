@@ -1,6 +1,8 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
+
+const AUTO_ADVANCE_MS = 6000;
 import { Canvas, useThree } from "@react-three/fiber";
 import {
   Center,
@@ -237,6 +239,7 @@ function ProjectScene() {
 /* ─── main component ─────────────────────────────────────────────── */
 export default function Project() {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+  const [isAutoPaused, setIsAutoPaused] = useState(false);
   const projectCount = myProjects.length;
   const currentProject = myProjects[selectedProjectIndex];
 
@@ -247,6 +250,17 @@ export default function Project() {
         : prev === projectCount - 1 ? 0 : prev + 1
     );
   };
+
+  // auto-advance; timer resets on any index change, pauses while hovering the info card
+  useEffect(() => {
+    if (isAutoPaused) return;
+
+    const timer = setInterval(() => {
+      setSelectedProjectIndex((prev) => (prev === projectCount - 1 ? 0 : prev + 1));
+    }, AUTO_ADVANCE_MS);
+
+    return () => clearInterval(timer);
+  }, [isAutoPaused, selectedProjectIndex, projectCount]);
 
   useGSAP(() => {
     gsap.fromTo(
@@ -259,7 +273,7 @@ export default function Project() {
   return (
     <m.section
       id="projects"
-      className="relative mx-auto mb-5 w-full max-w-[1100px] px-2 py-1 sm:px-4 lg:px-6"
+      className="relative mx-auto mb-0 w-full max-w-[1100px] px-2 py-0 sm:px-4 lg:px-6"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -278,7 +292,7 @@ export default function Project() {
       <div className="relative w-full">
 
         {/* ── heading ── */}
-        <m.div {...fadeUp(0)} className="mb-4 flex flex-col items-start">
+        <m.div {...fadeUp(0)} className="mb-3 flex flex-col items-start">
           <SectionHeading>My Projects</SectionHeading>
         </m.div>
 
@@ -288,6 +302,8 @@ export default function Project() {
           {/* ── info card ── */}
           <m.div
             {...fadeUp(0.1)}
+            onMouseEnter={() => setIsAutoPaused(true)}
+            onMouseLeave={() => setIsAutoPaused(false)}
             className="order-2 group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-border bg-[var(--surface-glass-strong)] px-4 py-4 text-card-foreground shadow-[var(--shadow-card)] lg:order-1 lg:h-[386px] lg:w-[436px]"
           >
             {/* corner glow */}
@@ -327,14 +343,14 @@ export default function Project() {
 
             {/* title + bullets */}
             <div className="flex flex-col gap-2.5">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout" initial={false}>
                 <m.p
                   key={currentProject.title}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.35 }}
-                  className="animatedText max-w-[20rem] text-[1.16rem] font-bold leading-tight tracking-[-0.04em]"
+                  className="max-w-[20rem] text-[1.16rem] font-bold leading-tight tracking-[-0.04em]"
                 >
                   {currentProject.title}
                 </m.p>

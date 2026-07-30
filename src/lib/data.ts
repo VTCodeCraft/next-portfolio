@@ -13,21 +13,27 @@ import {
   FaReact,
 } from "react-icons/fa";
 import {
+  SiClerk,
   SiCplusplus,
   SiExpress,
   SiFastapi,
   SiFramer,
+  SiGooglecalendar,
+  SiGooglegemini,
   SiJavascript,
+  SiMediapipe,
   SiMongodb,
   SiMysql,
   SiNextdotjs,
   SiNodedotjs,
   SiPostgresql,
+  SiPrisma,
   SiReact,
   SiRedis,
   SiSupabase,
   SiTailwindcss,
   SiTypescript,
+  SiZoom,
 } from "react-icons/si";
 import { TbApi, TbBinaryTree } from "react-icons/tb";
 
@@ -70,6 +76,43 @@ export const experiencesData = [
 
 export const myProjects = [
   {
+    title: "Clutchly - AI Voice Interview Coach",
+    points: [
+      "AI voice interview coach with a full-duplex speech pipeline — Deepgram Voice Agent, Nova-3 STT, and Aura-2 TTS.",
+      "Real-time adaptive question generation via Gemini 2.5 with structured multi-dimensional answer evaluation.",
+      "Long-term semantic graph memory (Cognee Cloud) recalls past weaknesses to personalize sessions, plus per-stage token and cost observability.",
+    ],
+    href: "https://interview-memory-agent.vercel.app/",
+    repoHref: "https://github.com/VTCodeCraft/interview-memory-agent",
+    featured: true,
+    tags: [
+      { id: 1, name: "Next.js", icon: SiNextdotjs },
+      { id: 2, name: "TypeScript", icon: SiTypescript },
+      { id: 3, name: "Gemini 2.5", icon: SiGooglegemini },
+      { id: 4, name: "Prisma", icon: SiPrisma },
+      { id: 5, name: "PostgreSQL", icon: SiPostgresql },
+      { id: 6, name: "Clerk", icon: SiClerk },
+    ],
+  },
+  {
+    title: "HumanCaptcha",
+    points: [
+      "Browser-native CAPTCHA replacing mouse-and-keyboard verification with MediaPipe hand-gesture tracking and cognitive puzzles.",
+      "Live camera capture, pinch-based cursor control, and multi-step spatial interaction to resist bot automation.",
+      "Reusable embeddable SDK — a drop-in <HumanCaptcha /> React component with dynamically generated image puzzles.",
+    ],
+    href: "https://human-captcha.vercel.app/",
+    repoHref: "https://github.com/VTCodeCraft/human-captcha",
+    featured: true,
+    tags: [
+      { id: 1, name: "Next.js", icon: SiNextdotjs },
+      { id: 2, name: "TypeScript", icon: SiTypescript },
+      { id: 3, name: "MediaPipe", icon: SiMediapipe },
+      { id: 4, name: "Tailwind CSS", icon: SiTailwindcss },
+      { id: 5, name: "Framer Motion", icon: SiFramer },
+    ],
+  },
+  {
     title: "Finora - Finance Dashboard",
     points: [
       "Multi-route finance dashboard with analytics, transactions, and real-time currency conversion.",
@@ -91,18 +134,19 @@ export const myProjects = [
   {
     title: "EzMeet",
     points: [
-      "Full-stack scheduling platform with timezone-aware availability and booking links.",
-      "Google Calendar integration for conflict-free scheduling.",
-      "Scalable backend architecture focused on reliable booking flows.",
+      "Full-stack meeting scheduling platform productized from an internship prototype into a production-ready system.",
+      "Timezone-aware UTC slot management with conflict-resolution logic for zero scheduling conflicts across time zones.",
+      "Google Calendar, Google Meet, and Zoom integrations covering end-to-end event creation, availability, and booking.",
     ],
-    href: "#",
+    href: "https://ez-meet-xyz.vercel.app/",
     repoHref: "https://github.com/VTCodeCraft/EzMeet",
     tags: [
-      { id: 1, name: "Next.js", icon: SiNextdotjs },
+      { id: 1, name: "React", icon: SiReact },
       { id: 2, name: "Node.js", icon: SiNodedotjs },
-      { id: 3, name: "PostgreSQL", icon: SiPostgresql },
-      { id: 4, name: "Tailwind", icon: SiTailwindcss },
-      { id: 5, name: "TypeScript", icon: SiTypescript },
+      { id: 3, name: "Express.js", icon: SiExpress },
+      { id: 4, name: "Supabase", icon: SiSupabase },
+      { id: 5, name: "Google Calendar", icon: SiGooglecalendar },
+      { id: 6, name: "Zoom", icon: SiZoom },
     ],
   },
   {
@@ -216,4 +260,10 @@ export const skillColors: Record<string, string> = {
   Linux: "#FCC624",
   "Tailwind CSS": "#06B6D4",
   "Framer Motion": "#E10098",
+  "Gemini 2.5": "#8E75B2",
+  Prisma: "#5A67D8",
+  Clerk: "#6C47FF",
+  MediaPipe: "#0097A7",
+  "Google Calendar": "#4285F4",
+  Zoom: "#2D8CFF",
 };
