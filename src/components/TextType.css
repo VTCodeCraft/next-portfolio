@@ -7,6 +7,25 @@
   margin-left: 0.25rem;
   display: inline-block;
   opacity: 1;
+  /* CSS keyframes instead of a GSAP tween: same blink, runs on the
+     compositor, and keeps GSAP out of the home-page bundle. */
+  animation: text-type-blink var(--text-type-blink-duration, 0.5s) ease-in-out
+    infinite alternate;
+}
+
+@keyframes text-type-blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-type__cursor {
+    animation: none;
+  }
 }
 
 .text-type__cursor--hidden {

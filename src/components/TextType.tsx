@@ -1,7 +1,6 @@
 'use client';
 
 import { ElementType, useEffect, useRef, useState, createElement, useMemo, useCallback } from 'react';
-import { gsap } from 'gsap';
 import './TextType.css';
 
 interface TextTypeProps {
@@ -51,6 +50,9 @@ const TextType = ({
   const [isDeleting, setIsDeleting] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(!startOnVisible);
+  // Typing is a setState-per-character loop. Suspend it while the element is
+  // off-screen so it stops costing renders once the hero is scrolled past.
+  const [isOnScreen, setIsOnScreen] = useState(true);
   const cursorRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
 
@@ -86,20 +88,22 @@ const TextType = ({
   }, [startOnVisible]);
 
   useEffect(() => {
-    if (showCursor && cursorRef.current) {
-      gsap.set(cursorRef.current, { opacity: 1 });
-      gsap.to(cursorRef.current, {
-        opacity: 0,
-        duration: cursorBlinkDuration,
-        repeat: -1,
-        yoyo: true,
-        ease: 'power2.inOut'
-      });
-    }
-  }, [showCursor, cursorBlinkDuration]);
+    const element = containerRef.current;
+
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsOnScreen(entry.isIntersecting),
+      { rootMargin: '100px' }
+    );
+
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible || !isOnScreen) return;
 
     let timeout: ReturnType<typeof setTimeout>;
 
@@ -163,6 +167,7 @@ const TextType = ({
     loop,
     initialDelay,
     isVisible,
+    isOnScreen,
     reverseMode,
     variableSpeed,
     onSentenceComplete
@@ -184,6 +189,7 @@ const TextType = ({
     showCursor && (
       <span
         ref={cursorRef}
+        style={{ ['--text-type-blink-duration' as string]: `${cursorBlinkDuration}s` }}
         className={`text-type__cursor ${cursorClassName} ${shouldHideCursor ? 'text-type__cursor--hidden' : ''}`}
       >
         {cursorCharacter}
