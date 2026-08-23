@@ -426,7 +426,7 @@ export default function Project() {
           {/* ── canvas card ── */}
           <m.div
             {...fadeUp(0.18)}
-            className="order-1 relative overflow-hidden rounded-lg border border-border bg-[var(--surface-glass-strong)] shadow-[var(--shadow-card)] sm:rounded-2xl lg:order-2 lg:h-[386px]"
+            className="order-1 relative h-[280px] overflow-hidden rounded-lg border border-border bg-[var(--surface-glass-strong)] shadow-[var(--shadow-card)] sm:h-[340px] sm:rounded-2xl lg:order-2 lg:h-[386px]"
           >
             {/* grid overlay */}
             <div
