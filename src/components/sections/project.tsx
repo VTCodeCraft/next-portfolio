@@ -1,35 +1,26 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
-
-const AUTO_ADVANCE_MS = 6000;
-import { Canvas, useThree } from "@react-three/fiber";
-import {
-  Center,
-  ContactShadows,
-  Environment,
-  Lightformer,
-  OrbitControls,
-  Float,
-} from "@react-three/drei";
-import {
-  Bloom,
-  BrightnessContrast,
-  EffectComposer,
-  HueSaturation,
-  ChromaticAberration,
-  Vignette,
-} from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { m, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { myProjects, skillColors } from "@/lib/data";
 import { FaGithub, FaArrowLeft, FaArrowRight, FaExternalLinkAlt } from "react-icons/fa";
-import { ACESFilmicToneMapping, PCFSoftShadowMap, Vector2 } from "three";
-import CanvasLoader from "../ui/canvas-loader";
-import { DemoComputer } from "../3d/demo-computer";
 import SectionHeading from "../ui/section-heading";
+
+const AUTO_ADVANCE_MS = 6000;
+
+/*
+  three + @react-three + postprocessing is ~1.2 MB of the route's JS. Loading it
+  statically meant the whole bundle had to parse before the page could render.
+  It now ships as its own chunk, fetched once the canvas card is near the
+  viewport.
+*/
+const ProjectScene = dynamic(() => import("../3d/project-scene"), {
+  ssr: false,
+  loading: () => null,
+});
 
 /* ─── animation helpers ────────────────────────────────────────────── */
 const fadeUp = (delay = 0) => ({
@@ -45,196 +36,6 @@ const getTagColor = (tagName: string) => {
   if (tagName.startsWith("Tailwind")) return skillColors["Tailwind CSS"];
   return undefined;
 };
-
-/* ─── ambient particle ring (decorative mesh) ────────────────────── */
-function LaptopRig() {
-  const { size } = useThree();
-  const isSmallScreen = size.width < 650;
-
-  return (
-    <Float speed={1.2} rotationIntensity={0.06} floatIntensity={0.18}>
-      <Center>
-        <group
-          scale={isSmallScreen ? 1.05 : 1.42}
-          position={[0, isSmallScreen ? -1.34 : -1.52, 0]}
-          rotation={[0.01, 0, 0]}
-        >
-          <DemoComputer />
-        </group>
-      </Center>
-    </Float>
-  );
-}
-
-function SceneReady({ onReady }: { onReady: () => void }) {
-  useEffect(() => {
-    onReady();
-  }, [onReady]);
-
-  return null;
-}
-
-function getThemeColor(name: string, fallback: string) {
-  if (typeof window === "undefined") {
-    return fallback;
-  }
-
-  const value = getComputedStyle(document.documentElement)
-    .getPropertyValue(name)
-    .trim();
-
-  return value || fallback;
-}
-
-/* ─── 3-D scene ────────────────────────────────────────────────────── */
-function ProjectScene() {
-  const [isModelReady, setIsModelReady] = useState(false);
-  const [sceneColors, setSceneColors] = useState({
-    accent: "#2563eb",
-    ring: "#93c5fd",
-    shadow: "#08131d",
-  });
-
-  useEffect(() => {
-    const syncSceneColors = () => {
-      setSceneColors({
-        accent: getThemeColor("--project-scene-accent", "#2563eb"),
-        ring: getThemeColor("--project-scene-ring", "#93c5fd"),
-        shadow: getThemeColor("--project-scene-shadow", "#08131d"),
-      });
-    };
-
-    syncSceneColors();
-
-    const observer = new MutationObserver(syncSceneColors);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class", "style"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div className="relative h-full w-full">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{ background: "var(--project-scene-floor)" }}
-      />
-      <Canvas
-        className="relative z-[1] h-full w-full"
-        dpr={[1, 1.5]}
-        performance={{ min: 0.7 }}
-        shadows="soft"
-        camera={{ position: [0, 0.65, 4.2], fov: 30 }}
-        gl={{
-          antialias: true,
-          alpha: true,
-          powerPreference: "high-performance",
-        }}
-        onCreated={({ gl }) => {
-          gl.toneMapping = ACESFilmicToneMapping;
-          gl.toneMappingExposure = 1.0;
-          gl.shadowMap.enabled = true;
-          gl.shadowMap.type = PCFSoftShadowMap;
-        }}
-      >
-        {/* Lighting */}
-        <ambientLight intensity={0.06} />
-
-        <spotLight
-          position={[6, 5, 3]}
-          angle={0.28}
-          penumbra={0.95}
-          intensity={48}
-          castShadow
-          shadow-bias={-0.0001}
-          shadow-mapSize={[1024, 1024]}
-        />
-
-        <directionalLight
-          position={[-5, 3.5, 2.5]}
-          intensity={1.6}
-          castShadow
-          shadow-bias={-0.00012}
-          shadow-mapSize={[1024, 1024]}
-        />
-
-        {/* Subtle warm backlight */}
-        <pointLight
-          position={[0, 3, -3]}
-          intensity={3}
-          distance={8}
-          color={sceneColors.accent}
-        />
-
-        <Environment preset="city" resolution={256}>
-          <Lightformer form="rect" intensity={1.4} position={[6, 2, 2]} rotation={[0, -Math.PI / 4.5, 0]} scale={[4, 6, 1]} />
-          <Lightformer form="rect" intensity={1.1} position={[-6, 1.8, 2]} rotation={[0, Math.PI / 4.5, 0]} scale={[3.8, 5.5, 1]} />
-          <Lightformer
-            form="ring"
-            intensity={0.6}
-            position={[0, 6, -4]}
-            rotation={[Math.PI / 2.4, 0, 0]}
-            scale={[6.5, 6.5, 1]}
-            color={sceneColors.ring}
-          />
-        </Environment>
-
-        <Suspense fallback={<CanvasLoader />}>
-          <SceneReady onReady={() => setIsModelReady(true)} />
-          <LaptopRig />
-
-          <ContactShadows
-            position={[0, -1.5, 0]}
-            opacity={0.32}
-            scale={10}
-            blur={4.2}
-            far={3.5}
-            resolution={256}
-            color={sceneColors.shadow}
-          />
-        </Suspense>
-
-        {/* Post-processing */}
-        <EffectComposer enableNormalPass={false} multisampling={0}>
-          <Bloom intensity={0.4} luminanceThreshold={0.8} luminanceSmoothing={0.1} mipmapBlur />
-          <ChromaticAberration
-            blendFunction={BlendFunction.NORMAL}
-            offset={new Vector2(0.0006, 0.0006)}
-          />
-          <BrightnessContrast brightness={0.02} contrast={0.12} />
-          <HueSaturation saturation={0.18} />
-          <Vignette eskil={false} offset={0.28} darkness={0.65} />
-        </EffectComposer>
-
-        <OrbitControls
-          autoRotate
-          autoRotateSpeed={0.55}
-          enableDamping
-          dampingFactor={0.06}
-          enablePan={false}
-          enableZoom={false}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI / 1.95}
-          target={[0, -0.1, 0]}
-        />
-      </Canvas>
-
-      {!isModelReady && (
-        <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-[var(--project-loader-backdrop)] backdrop-blur-[2px]">
-          <div className="flex flex-col items-center gap-3">
-            <span className="h-10 w-10 animate-spin rounded-full border-2 border-[var(--project-loader-track)] border-t-primary" />
-            <p className="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-muted-foreground">
-              Loading Model
-            </p>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 /* ─── main component ─────────────────────────────────────────────── */
 export default function Project() {
