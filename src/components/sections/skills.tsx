@@ -68,6 +68,7 @@ export default function Skills() {
         : 6;
 
   const [cols, setCols] = useState(6);
+  const colsRef = useRef(6);
   const rows = Math.floor(24 / cols);
   const TOTAL = cols * rows;
 
@@ -79,24 +80,33 @@ export default function Skills() {
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    const handleResize = () => {
+    let frame: number | null = null;
+
+    const applyCols = () => {
+      frame = null;
       const nextCols = getColsForViewport();
 
-      setCols((currentCols) => {
-        if (currentCols === nextCols) {
-          return currentCols;
-        }
+      // Compared against a ref rather than inside a setCols updater: updaters
+      // must be pure, and this one rebuilt the whole board as a side effect.
+      if (nextCols === colsRef.current) return;
 
-        setTiles(buildInitialTiles(nextCols));
-        return nextCols;
-      });
+      colsRef.current = nextCols;
+      setCols(nextCols);
+      setTiles(buildInitialTiles(nextCols));
     };
 
-    window.addEventListener("resize", handleResize);
+    // Coalesce the resize burst into one measurement per frame.
+    const handleResize = () => {
+      if (frame !== null) return;
+      frame = window.requestAnimationFrame(applyCols);
+    };
+
+    window.addEventListener("resize", handleResize, { passive: true });
     window.visualViewport?.addEventListener("resize", handleResize);
-    handleResize();
+    applyCols();
 
     return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
       window.removeEventListener("resize", handleResize);
       window.visualViewport?.removeEventListener("resize", handleResize);
     };
