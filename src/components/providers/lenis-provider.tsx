@@ -12,7 +12,9 @@ export default function LenisProvider({
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
   const progressBarRef = useRef<HTMLDivElement | null>(null);
+  const darknessRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
+  const lastDarknessRef = useRef(-1);
 
   const syncProgressBar = useEffectEvent(() => {
     const progressBar = progressBarRef.current;
@@ -28,11 +30,23 @@ export default function LenisProvider({
     const progress =
       maxScroll > 0 ? Math.min(Math.max(scrollTop / maxScroll, 0), 1) : 0;
 
-    progressBar.style.width = `${progress * 100}%`;
-    root.style.setProperty(
-      "--scroll-darkness",
-      `${(progress * 0.18).toFixed(3)}`,
-    );
+    // scaleX instead of width: compositor-only, no layout pass per frame
+    progressBar.style.transform = `scaleX(${progress})`;
+
+    // Darkness is its own fixed, viewport-sized layer driven by opacity.
+    // Writing a custom property on <html> instead would invalidate style for
+    // the whole document and repaint the full-height background layer.
+    const darkness = darknessRef.current;
+
+    if (darkness) {
+      const next = Math.round(progress * 0.18 * 200) / 200;
+
+      if (next !== lastDarknessRef.current) {
+        darkness.style.opacity = `${next}`;
+        lastDarknessRef.current = next;
+      }
+    }
+
     frameRef.current = null;
   });
 
@@ -72,7 +86,6 @@ export default function LenisProvider({
         frameRef.current = null;
       }
 
-      document.documentElement.style.removeProperty("--scroll-darkness");
       lenis.destroy();
       lenisRef.current = null;
     };
@@ -91,10 +104,17 @@ export default function LenisProvider({
 
   return (
     <>
+      <div
+        ref={darknessRef}
+        aria-hidden
+        className="pointer-events-none fixed inset-0 -z-20 hidden bg-[rgb(3,2,8)] opacity-0 dark:block"
+        style={{ willChange: "opacity" }}
+      />
       <div className="pointer-events-none fixed inset-x-0 top-0 z-[100] h-1 bg-transparent">
         <div
           ref={progressBarRef}
-          className="h-full w-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-[var(--project-scene-ring)] shadow-[0_0_24px_var(--project-progress-glow)]"
+          className="h-full w-full origin-left scale-x-0 rounded-r-full bg-gradient-to-r from-primary via-primary to-[var(--project-scene-ring)] shadow-[0_0_24px_var(--project-progress-glow)]"
+          style={{ willChange: "transform" }}
         />
       </div>
       {children}

@@ -46,13 +46,9 @@ body {
     linear-gradient(180deg, #04070b 0%, #050911 52%, #03060a 100%);
 }
 
-.dark-canvas::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(3, 2, 8, var(--scroll-darkness, 0));
-  pointer-events: none;
-}
+/* Scroll-darkness lives in LenisProvider as a fixed, opacity-driven layer.
+   Driving it from a custom property here forced a full-document style
+   invalidation plus a full-height repaint on every scroll frame. */
 
 .dark-canvas::after {
   content: "";
