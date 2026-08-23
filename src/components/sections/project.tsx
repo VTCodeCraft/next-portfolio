@@ -94,7 +94,7 @@ export default function Project() {
 
         {/* ── heading ── */}
         <m.div {...fadeUp(0)} className="mb-3 flex flex-col items-start">
-          <SectionHeading>My Projects</SectionHeading>
+          <SectionHeading as="h1">My Projects</SectionHeading>
         </m.div>
 
         {/* ── grid ── */}

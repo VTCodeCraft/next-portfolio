@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Contact from "@/components/sections/contact";
 import Intro from "@/components/sections/intro";
 import MyJourney from "@/components/sections/my-journey";
@@ -6,9 +7,48 @@ import SectionDivider from "@/components/ui/section-divider";
 import Sidebar from "@/components/layout/sidebar";
 import Skills from "@/components/sections/skills";
 
+const siteUrl = "https://www.vtcodecraft.in";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Vishesh Tripathi",
+  url: siteUrl,
+  image: `${siteUrl}/images/profile.png`,
+  jobTitle: "Full-Stack Engineer",
+  email: "mailto:work.vishesh12.05@gmail.com",
+  sameAs: [
+    "https://github.com/VTCodeCraft",
+    "https://x.com/VTCodeCraft_",
+    "https://linkedin.com/in/vishesh-tripathi-6b6a41213",
+    "https://leetcode.com/u/VTCodeCraft/",
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "VTCodeCraft",
+  url: siteUrl,
+  author: { "@type": "Person", name: "Vishesh Tripathi" },
+};
+
 export default function Home() {
   return (
     <div className="flex w-full flex-col lg:flex-row">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([personJsonLd, websiteJsonLd]).replace(
+            /</g,
+            "\\u003c",
+          ),
+        }}
+      />
       {/* LEFT SIDEBAR */}
       <aside className="w-full lg:w-[10rem] lg:flex-none lg:pl-0 lg:sticky lg:top-24 lg:flex lg:min-h-[calc(100vh-16rem)] lg:items-center lg:self-start">
         <Sidebar />
@@ -23,7 +63,8 @@ export default function Home() {
             </div>
 
             {/* RIGHT CONTENT AREA */}
-            <main className="min-w-0 max-w-full lg:pl-4 xl:pl-6">
+            {/* Not <main>: the root layout already provides the single main landmark. */}
+            <div className="min-w-0 max-w-full lg:pl-4 xl:pl-6">
               <div className="space-y-24 sm:space-y-28 lg:space-y-32">
                 <Intro />
                 <div className="deferred-section">
@@ -39,7 +80,7 @@ export default function Home() {
                   <Contact />
                 </div>
               </div>
-            </main>
+            </div>
           </div>
         </div>
       </div>

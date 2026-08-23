@@ -9,9 +9,18 @@ import type { PostCardData } from "@/components/blog/post-card";
 import SectionHeading from "@/components/ui/section-heading";
 
 export const metadata: Metadata = {
-  title: "Blog | Vishesh Tripathi",
+  // Just "Blog": the root layout's title template appends the name, so
+  // spelling it out here produced "Blog | Vishesh Tripathi | Vishesh Tripathi".
+  title: "Blog",
   description:
     "Notes on design systems, frontend craft, and the implementation details behind polished products.",
+  alternates: { canonical: "/blog" },
+  openGraph: {
+    title: "Blog | Vishesh Tripathi",
+    description:
+      "Notes on design systems, frontend craft, and the implementation details behind polished products.",
+    url: "/blog",
+  },
 };
 
 const publishedPosts = posts
@@ -25,7 +34,7 @@ export default function BlogPage() {
     <BlogPageShell
       intro={
         <>
-          <SectionHeading className="mb-4 items-start lg:items-start">
+          <SectionHeading as="h1" className="mb-4 items-start lg:items-start">
             My Blog
           </SectionHeading>
 

@@ -60,9 +60,9 @@ export const metadata: Metadata = {
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
   publisher: siteName,
-  alternates: {
-    canonical: siteUrl,
-  },
+  // No canonical here on purpose: a canonical set on the root layout is
+  // inherited by every route, so /projects and /blog both declared the
+  // homepage as their canonical URL. Each route sets its own.
   openGraph: {
     title: siteTitle,
     description: siteDescription,
@@ -122,9 +122,15 @@ export default function RootLayout({
         <MotionProvider>
           <LenisProvider>
             <ActiveSectionContextProvider>
+              <a
+                href="#main-content"
+                className="sr-only rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200]"
+              >
+                Skip to content
+              </a>
               <Header />
               {/* CONTENT */}
-              <main className="w-full flex-1 pt-32 pb-24 sm:pb-10">
+              <main id="main-content" className="w-full flex-1 pt-32 pb-24 sm:pb-10">
                 <div className="w-full">{children}</div>
               </main>
               <Footer />

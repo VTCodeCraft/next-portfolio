@@ -42,7 +42,7 @@ export function PostHeader({
           </Link>
         </div>
 
-        <SectionHeading className="mb-2 items-center lg:items-center">
+        <SectionHeading as="h1" className="mb-2 items-center lg:items-center">
           {title}
         </SectionHeading>
 
@@ -67,7 +67,7 @@ export function PostHeader({
         <div className="relative overflow-hidden rounded-[30px] border border-border bg-card shadow-[var(--shadow-card-xl)]">
           <Image
             src={cover}
-            alt=""
+            alt={`Cover image for ${title}`}
             width={1600}
             height={900}
             priority

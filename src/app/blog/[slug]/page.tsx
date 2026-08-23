@@ -11,7 +11,8 @@ type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-const siteUrl = "https://vtcodecraft.in";
+// www is canonical; the bare host 301s to it, so JSON-LD must not point there.
+const siteUrl = "https://www.vtcodecraft.in";
 
 const getPost = (slug: string) =>
   posts.find((post) => post.slugAsParams === slug && post.published);
@@ -31,16 +32,15 @@ export async function generateMetadata({
   const post = getPost(slug);
 
   if (!post) {
-    return {
-      title: "Post Not Found | Vishesh Tripathi",
-    };
+    // Bare titles only — the root layout's template appends the site name.
+    return { title: "Post not found" };
   }
 
   const url = `/blog/${post.slugAsParams}`;
   const images = post.cover ? [post.cover] : [];
 
   return {
-    title: `${post.title} | Vishesh Tripathi`,
+    title: post.title,
     description: post.description,
     alternates: {
       canonical: url,

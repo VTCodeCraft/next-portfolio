@@ -42,19 +42,31 @@ export default function Intro() {
             </MotionMountDiv>
           </div>
 
-          <TextType
-            as="h1"
-            text="Vishesh Tripathi"
-            typingSpeed={50}
-            pauseDuration={2000}
-            showCursor
-            cursorCharacter="_"
-            deletingSpeed={50}
-            loop={true}
-            variableSpeed={{ min: 60, max: 120 }}
-            cursorBlinkDuration={0.5}
-            className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]"
-          />
+          {/*
+            The typing effect starts from an empty string, so using it directly
+            as the h1 shipped an empty h1 in the SSR HTML and gave assistive
+            tech a moving fragment. The real heading text is always present;
+            the animation is decorative.
+          */}
+          <h1 className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
+            <span className="sr-only">
+              Vishesh Tripathi — Full-Stack Engineer
+            </span>
+            <span aria-hidden="true">
+              <TextType
+                as="span"
+                text="Vishesh Tripathi"
+                typingSpeed={50}
+                pauseDuration={2000}
+                showCursor
+                cursorCharacter="_"
+                deletingSpeed={50}
+                loop={true}
+                variableSpeed={{ min: 60, max: 120 }}
+                cursorBlinkDuration={0.5}
+              />
+            </span>
+          </h1>
 
           <p className="mt-1.5 text-lg text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
             Full-Stack Developer
