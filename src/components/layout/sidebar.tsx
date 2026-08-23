@@ -47,13 +47,13 @@ export default function Sidebar() {
                     className="sidebar-link flex items-center gap-4 group"
                   >
                     <m.span
-                      layout
                       className={clsx(
-                        "h-px",
+                        "h-px w-6 origin-left",
                         isActive
-                          ? "w-6 bg-foreground"
-                          : "w-4 bg-border group-hover:bg-foreground"
+                          ? "bg-foreground"
+                          : "bg-border group-hover:bg-foreground"
                       )}
+                      animate={{ scaleX: isActive ? 1 : 2 / 3 }}
                       transition={{
                         type: "spring",
                         stiffness: 300,
@@ -61,17 +61,16 @@ export default function Sidebar() {
                       }}
                     />
 
-                    <m.span
-                      layout
+                    <span
                       className={clsx(
+                        "transition-colors duration-200",
                         isActive
                           ? "font-semibold text-foreground"
                           : "group-hover:text-foreground"
                       )}
-                      transition={{ type: "spring", stiffness: 200 }}
                     >
                       {item.name}
-                    </m.span>
+                    </span>
                   </a>
                 );
               })}
@@ -97,13 +96,13 @@ export default function Sidebar() {
               className="sidebar-link flex items-center gap-4 group"
             >
               <m.span
-                layout
                 className={clsx(
-                  "h-px",
+                  "h-px w-6 origin-left",
                   isActive
-                    ? "w-6 bg-foreground"
-                    : "w-4 bg-border group-hover:bg-foreground"
+                    ? "bg-foreground"
+                    : "bg-border group-hover:bg-foreground"
                 )}
+                animate={{ scaleX: isActive ? 1 : 2 / 3 }}
                 transition={{
                   type: "spring",
                   stiffness: 300,
@@ -111,17 +110,16 @@ export default function Sidebar() {
                 }}
               />
 
-              <m.span
-                layout
+              <span
                 className={clsx(
+                  "transition-colors duration-200",
                   isActive
                     ? "font-semibold text-foreground"
                     : "group-hover:text-foreground"
                 )}
-                transition={{ type: "spring", stiffness: 200 }}
               >
                 {item.name}
-              </m.span>
+              </span>
             </a>
           );
         })}

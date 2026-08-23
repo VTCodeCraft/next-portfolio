@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState , createContext, useContext} from 'react'
+import React, { useState, useMemo, createContext, useContext} from 'react'
 import type { SectionName } from '@/lib/types';
 
 
@@ -17,12 +17,16 @@ export const ActiveSectionContext = createContext<ActiveSectionContextType | nul
 
 export default function ActiveSectionContextProvider({children}: ActiveSectionContextProviderProps) {
          const [activeSection, setActiveSection] = useState<SectionName>("Introduction");
+
+         // Without this the value object is new on every render, so every
+         // consumer re-renders whenever anything above the provider renders.
+         const value = useMemo(
+                  () => ({ activeSection, setActiveSection }),
+                  [activeSection],
+         );
+
          return (
-                  <ActiveSectionContext.Provider 
-                  value={{ 
-                           activeSection,
-                           setActiveSection 
-                  }}>
+                  <ActiveSectionContext.Provider value={value}>
                     {children}
                   </ActiveSectionContext.Provider>
          )
