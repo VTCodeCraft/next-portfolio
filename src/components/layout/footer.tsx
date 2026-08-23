@@ -31,7 +31,10 @@ export default function Footer() {
   return (
     <footer className="px-4 pb-[max(5rem,env(safe-area-inset-bottom))] pt-2 text-center sm:pb-6">
       <div className="mx-auto max-w-lg border-t border-border pt-5">
-        <small className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted-foreground">
+        <small
+          data-numeric
+          className="mb-3 block text-xs font-medium uppercase tracking-widest text-muted-foreground"
+        >
           &copy; {new Date().getFullYear()} Vishesh Tripathi
         </small>
         <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-[11px] text-muted-foreground">

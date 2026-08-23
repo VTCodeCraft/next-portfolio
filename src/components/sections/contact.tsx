@@ -18,7 +18,7 @@ export default function Contact() {
       delay={0.14}
       className="relative w-full scroll-mt-28 max-w-[32rem] pb-2 text-center sm:mb-10 lg:mx-0 lg:text-left"
     >
-      <p className="mb-0.5 font-mono text-[0.65rem] uppercase tracking-[0.2em] text-primary">
+      <p className="type-eyebrow mb-0.5 text-primary">
         &nbsp;Let&apos;s talk
       </p>
 

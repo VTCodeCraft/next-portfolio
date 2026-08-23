@@ -43,7 +43,7 @@ export default function MyJourney() {
               borderRight: "0.4rem solid var(--journey-card-arrow)",
             }}
             date={item.date}
-            dateClassName="!text-sm !font-medium !text-muted-foreground"
+            dateClassName="!text-sm !font-medium !tabular-nums !text-muted-foreground"
             icon={item.icon}
             iconStyle={{
               background: "var(--journey-icon-bg)",

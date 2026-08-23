@@ -377,6 +377,41 @@ body {
   html {
     @apply font-sans;
   }
+
+  /* ── Type system ──────────────────────────────────────────────────
+     Sora carries display, Manrope carries body and UI. Headings balance
+     their last line so a single orphaned word cannot sit alone; prose
+     avoids orphans without reflowing the whole block. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Dates, durations, counts and indices should not shift width as they
+     change, so figures are tabular wherever numbers are the content. */
+  time,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* Small uppercase label above a heading. Positive tracking, weight 500 —
+     the weight the scale was missing. */
+  .type-eyebrow {
+    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em];
+  }
+
+  /* Long-form reading measure. ~65ch is the readable ceiling. */
+  .type-prose {
+    @apply max-w-[65ch] leading-relaxed;
+  }
 }
 
 .deferred-section {

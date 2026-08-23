@@ -20,7 +20,7 @@ export default function SectionHeading({
         className,
       )}
     >
-      <Heading className="font-[family:var(--font-heading)] text-center text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl lg:text-left">
+      <Heading className="font-heading text-center text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl lg:text-left">
         {children}
       </Heading>
 

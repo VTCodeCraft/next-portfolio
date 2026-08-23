@@ -15,11 +15,9 @@ const destinations = [
 export default function NotFound() {
   return (
     <section className="mx-auto flex w-full max-w-[940px] flex-col px-4 sm:px-6">
-      <p className="font-mono text-[0.7rem] uppercase tracking-[0.28em] text-primary">
-        Error 404
-      </p>
+      <p className="type-eyebrow text-primary">Error 404</p>
 
-      <h1 className="mt-3 font-[family:var(--font-heading)] text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-5xl">
+      <h1 className="mt-3 font-heading text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-5xl">
         This page doesn&apos;t exist.
       </h1>
 

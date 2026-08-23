@@ -45,15 +45,15 @@ export function PostCard({ post }: PostCardProps) {
       </div>
 
       <div className="relative flex flex-1 flex-col gap-4 px-0.5">
-        <div className="flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.24em] text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-2 text-[11px] font-medium uppercase tracking-[0.24em] text-muted-foreground">
           <span>{post.tags[0] ?? "Journal"}</span>
           <time dateTime={post.date}>{formatDate(post.date)}</time>
           <span aria-hidden>•</span>
-          <span>{post.readingTime}</span>
+          <span data-numeric>{post.readingTime}</span>
         </div>
 
         <div className="space-y-2">
-          <h2 className="font-[family:var(--font-heading)] text-2xl font-semibold leading-tight tracking-[-0.05em] text-foreground transition group-hover:text-primary sm:text-[2rem]">
+          <h2 className="font-heading text-2xl font-semibold leading-tight tracking-[-0.05em] text-foreground transition group-hover:text-primary sm:text-[2rem]">
             {post.title}
           </h2>
           <p className="line-clamp-3 text-sm leading-7 text-muted-foreground">

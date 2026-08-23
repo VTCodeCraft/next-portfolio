@@ -53,6 +53,9 @@ const TextType = ({
   // Typing is a setState-per-character loop. Suspend it while the element is
   // off-screen so it stops costing renders once the hero is scrolled past.
   const [isOnScreen, setIsOnScreen] = useState(true);
+  // Typing is decorative. Under reduced motion the full string is rendered
+  // immediately and the loop never starts.
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const cursorRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLElement>(null);
 
@@ -103,7 +106,17 @@ const TextType = ({
   }, []);
 
   useEffect(() => {
-    if (!isVisible || !isOnScreen) return;
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setPrefersReducedMotion(query.matches);
+
+    sync();
+    query.addEventListener('change', sync);
+
+    return () => query.removeEventListener('change', sync);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible || !isOnScreen || prefersReducedMotion) return;
 
     let timeout: ReturnType<typeof setTimeout>;
 
@@ -173,8 +186,15 @@ const TextType = ({
     onSentenceComplete
   ]);
 
+  // Derived, not stored: avoids a second source of truth for the same string.
+  const visibleText = prefersReducedMotion
+    ? textArray[currentTextIndex]
+    : displayedText;
+
   const shouldHideCursor =
-    hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
+    prefersReducedMotion ||
+    (hideCursorWhileTyping &&
+      (currentCharIndex < textArray[currentTextIndex].length || isDeleting));
 
   return createElement(
     Component,
@@ -184,7 +204,7 @@ const TextType = ({
       ...props
     },
     <span className="text-type__content" style={{ color: getCurrentTextColor() || 'inherit' }}>
-      {displayedText}
+      {visibleText}
     </span>,
     showCursor && (
       <span

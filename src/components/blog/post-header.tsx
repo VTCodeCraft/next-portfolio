@@ -49,10 +49,10 @@ export function PostHeader({
         <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-medium uppercase tracking-[0.28em] text-muted-foreground">
           <time dateTime={date}>{formatDate(date)}</time>
           <span aria-hidden>•</span>
-          <span>{readingTime}</span>
+          <span data-numeric>{readingTime}</span>
         </div>
 
-        <p className="text-base leading-7 text-muted-foreground sm:text-lg">
+        <p className="mx-auto max-w-[65ch] text-base leading-7 text-muted-foreground sm:text-lg">
           {description}
         </p>
 

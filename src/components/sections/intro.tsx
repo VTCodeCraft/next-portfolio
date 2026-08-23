@@ -48,7 +48,7 @@ export default function Intro() {
             tech a moving fragment. The real heading text is always present;
             the animation is decorative.
           */}
-          <h1 className="font-[family:var(--font-heading)] text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
+          <h1 className="font-heading text-3xl font-bold tracking-[-0.04em] text-foreground sm:text-5xl lg:text-[3.6rem] xl:text-[4rem]">
             <span className="sr-only">
               Vishesh Tripathi — Full-Stack Engineer
             </span>
@@ -68,7 +68,7 @@ export default function Intro() {
             </span>
           </h1>
 
-          <p className="mt-1.5 text-lg text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
+          <p className="mt-1.5 text-lg font-medium text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
             Full-Stack Developer
           </p>
 
@@ -111,7 +111,7 @@ export default function Intro() {
             </Link>
           </div>
 
-          <p className="mt-6 w-full max-w-none text-base leading-relaxed text-muted-foreground sm:text-lg lg:text-[1.08rem]">
+          <p className="type-prose mt-6 w-full text-base text-muted-foreground sm:text-lg lg:text-[1.08rem]">
             <span className="font-semibold text-foreground">Hey, I&apos;m a Full-Stack Developer</span> with experience building{" "}
             <span className="font-semibold text-foreground">web applications, API-driven systems, Chrome extensions, and scalable backend features</span>.
             <br />
