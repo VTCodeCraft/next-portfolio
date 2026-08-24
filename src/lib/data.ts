@@ -1,6 +1,4 @@
 import React from "react";
-import { CgWorkAlt } from "react-icons/cg";
-import { LuGraduationCap } from "react-icons/lu";
 import {
   FaCss3Alt,
   FaDocker,
@@ -50,33 +48,50 @@ export const sections = [
   { name: "Contact", hash: "#contact" },
 ] as const;
 
+/** Compact proof shown directly under the hero. Every figure is verifiable. */
+export const proofData = [
+  { value: "255+", label: "DSA solved", href: "https://leetcode.com/u/VTCodeCraft/" },
+  { value: "Top 0.2%", label: "of 25,000+", accent: true },
+  { value: "Shipped", label: "Chrome store" },
+  { value: "+20%", label: "Qualified leads" },
+] as const;
+
 export const experiencesData = [
   {
-    title: "B.Tech in Information Technology",
-    location: "New Delhi, India",
+    role: "Software Engineer Intern",
+    company: "Hyperion Future Tech",
+    date: "2026 — Now",
+    current: true,
     description:
-      "• CGPA: 8.93 | (GGSIPU)\n" +
-      "• Relevant Coursework: Data Structures, OOP, DBMS, Machine Learning, Web Programming, Introduction to CS\n" +
-      "• Developed multiple full-stack applications using modern web technologies\n",
-    icon: React.createElement(LuGraduationCap),
-    date: "2023 - 2027",
+      "Real-time object detection running on smart glasses — ONNX Runtime and YOLO11 on React Native with native Android, plus custom model training for domain-specific detection.",
   },
   {
-    title: "Software Developer Intern",
-    location: "New Delhi (Hybrid)",
+    role: "Software Developer Intern",
+    company: "FoundersCart",
+    date: "2025",
+    current: false,
     description:
-      "• Built monday.com integrations using OAuth & GraphQL APIs\n" +
-      "• Developed Chrome softphone extension for IVR-based click-to-call\n" +
-      "• Automated CRM workflows via data pipelines\n" +
-      "• Built full-stack scheduling system with timezone-aware slots & conflict-free real-time booking (React, TS, PostgreSQL, TypeORM)\n",
-    icon: React.createElement(CgWorkAlt),
-    date: "Jun 2025 - Nov 2025",
+      "Two monday.com CRM extensions and a WebRTC softphone published to the Chrome Web Store, letting sales teams call straight from a lead. Qualified leads rose 20%.",
   },
 ] as const;
+
+export const educationData = {
+  degree: "B.Tech, Information Technology",
+  school: "Bharati Vidyapeeth's College of Engineering, GGSIPU",
+  date: "2023 — 2027",
+  detail: "CGPA 8.95 · Minor in CSE and Advanced Technologies, IIT Mandi",
+} as const;
 
 export const myProjects = [
   {
     title: "Clutchly - AI Voice Interview Coach",
+    shortTitle: "Clutchly",
+    summary:
+      "An AI interview coach you talk to out loud. It listens, adapts its next question, and remembers what you struggled with last time.",
+    stack: "Deepgram Voice Agent · Gemini 2.5 · Cognee · Prisma",
+    outcome:
+      "Full-duplex speech pipeline with per-stage token and cost tracking.",
+    flagship: 1,
     points: [
       "AI voice interview coach with a full-duplex speech pipeline — Deepgram Voice Agent, Nova-3 STT, and Aura-2 TTS.",
       "Real-time adaptive question generation via Gemini 2.5 with structured multi-dimensional answer evaluation.",
@@ -96,6 +111,12 @@ export const myProjects = [
   },
   {
     title: "HumanCaptcha",
+    shortTitle: "HumanCaptcha",
+    summary:
+      "A CAPTCHA you solve with your hands instead of your mouse — hand tracking plus a spatial puzzle a script cannot fake.",
+    stack: "MediaPipe · Canvas API · Zustand · Framer Motion",
+    outcome: "Ships as a drop-in <HumanCaptcha /> React component.",
+    flagship: 2,
     points: [
       "Browser-native CAPTCHA replacing mouse-and-keyboard verification with MediaPipe hand-gesture tracking and cognitive puzzles.",
       "Live camera capture, pinch-based cursor control, and multi-step spatial interaction to resist bot automation.",
@@ -133,6 +154,13 @@ export const myProjects = [
   },
   {
     title: "EzMeet",
+    shortTitle: "EzMeet",
+    summary:
+      "Scheduling that survives timezones. Grew out of an internship prototype into something people actually book on.",
+    stack: "React · Express · Supabase · TypeORM · Zoom API",
+    outcome:
+      "UTC slot management with conflict resolution across three calendar providers.",
+    flagship: 3,
     points: [
       "Full-stack meeting scheduling platform productized from an internship prototype into a production-ready system.",
       "Timezone-aware UTC slot management with conflict-resolution logic for zero scheduling conflicts across time zones.",

@@ -7,7 +7,6 @@ import {
   skillColors,
 } from "@/lib/data";
 import SectionHeading from "../ui/section-heading";
-import { useSectionInView } from "@/lib/hooks";
 import { MotionMountSection } from "@/components/ui/reveal";
 
 function createSeededRandom(seed: number) {
@@ -129,7 +128,6 @@ export default function Skills() {
     "Java": "#67e8f9",
   };
 
-  const ref = useSectionInView("Skills", 0.5);
   const emptyIndex = tiles.indexOf(null);
   const isMobile = cols === 4;
 
@@ -179,12 +177,11 @@ export default function Skills() {
   return (
     <MotionMountSection
       id="skills"
-      ref={ref}
       delay={0.1}
-      className="w-full scroll-mt-32"
+      className="page-column scroll-mt-32"
     >
-      <SectionHeading index="01" rule>
-        Technical Skills
+      <SectionHeading index="02" rule>
+        What I work with
       </SectionHeading>
 
       <div className="w-full rounded-2xl border border-border bg-[var(--surface-glass)] p-4 shadow-[var(--shadow-card-strong)] backdrop-blur-xl">
@@ -247,7 +244,15 @@ export default function Skills() {
       </div>
 
       {/* BUTTON */}
-      <div className="mt-6 flex w-full justify-start">
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+        {["Frontend", "Backend", "Databases", "Infra", "Languages"].map((c) => (
+          <span key={c} className="type-eyebrow tracking-[0.14em]">
+            {c}
+          </span>
+        ))}
+      </div>
+
+      <div className="mt-6 flex w-full justify-center">
         <button
           onClick={() => {
             const INITIAL_TILES = [
@@ -257,7 +262,7 @@ export default function Skills() {
 
             setTiles(shuffleTiles(INITIAL_TILES, cols, TOTAL));
           }}
-          className="rounded-xl bg-primary px-6 py-2 text-sm text-primary-foreground shadow-lg transition hover:scale-110 hover:opacity-90 active:scale-95"
+          className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 text-[0.78rem] font-medium text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
         >
           Shuffle
         </button>

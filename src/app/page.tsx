@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
+import { posts } from "#site/content";
+
+import BuildNotes from "@/components/sections/build-notes";
 import Contact from "@/components/sections/contact";
+import LaptopBand from "@/components/sections/laptop-band";
+import Proof from "@/components/sections/proof";
+import SelectedWork from "@/components/sections/selected-work";
 import Intro from "@/components/sections/intro";
 import MyJourney from "@/components/sections/my-journey";
-import ProfileSidebar from "@/components/layout/profile-sidebar";
-import Sidebar from "@/components/layout/sidebar";
 import Skills from "@/components/sections/skills";
 
 const siteUrl = "https://www.vtcodecraft.in";
@@ -37,6 +41,16 @@ const websiteJsonLd = {
 };
 
 export default function Home() {
+  const notes = posts
+    .filter((post) => post.published)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3)
+    .map((post) => ({
+      title: post.title,
+      slugAsParams: post.slugAsParams,
+      readingTime: post.readingTime,
+    }));
+
   return (
     <>
       <script
@@ -48,39 +62,23 @@ export default function Home() {
           ),
         }}
       />
-      <div className="page-shell">
-        <div className="page-grid">
-          {/* Section index. Desktop only — on small screens the top nav is the
-              single navigation system and a second one would compete with it. */}
-          <aside
-            aria-label="Sections"
-            className="col-rail hidden lg:sticky lg:top-32 lg:block lg:self-start"
-          >
-            <Sidebar />
-          </aside>
 
-          {/* Not <main>: the root layout already provides the single main landmark. */}
-          <div className="col-main section-rhythm">
-            <Intro />
-            <div className="deferred-section">
-              <Skills />
-            </div>
-            <div className="deferred-section">
-              <MyJourney />
-            </div>
-            <div className="deferred-section">
-              <Contact />
-            </div>
-          </div>
+      <div className="page-shell section-rhythm">
+        <Intro />
+        <Proof />
+      </div>
 
-          {/* Margin column: metadata, not navigation. Fills the wide-screen
-              gutter that previously sat empty. */}
-          <aside className="col-margin hidden xl:sticky xl:top-32 xl:block xl:self-start">
-            <ProfileSidebar />
-          </aside>
-        </div>
+      <div className="mt-20 sm:mt-24 lg:mt-28">
+        <LaptopBand />
+      </div>
+
+      <div className="page-shell section-rhythm mt-20 sm:mt-24 lg:mt-28">
+        <SelectedWork />
+        <Skills />
+        <MyJourney />
+        <BuildNotes notes={notes} />
+        <Contact />
       </div>
     </>
   );
 }
-

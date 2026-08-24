@@ -90,36 +90,6 @@ body {
   --skill-icon-shadow-dark: drop-shadow(0 0 10px color-mix(in oklab, white 4%, transparent));
 }
 
-.journey-timeline.vertical-timeline {
-  width: 100%;
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.journey-timeline .vertical-timeline-element-content {
-  max-width: 36rem;
-  margin-left: 68px;
-}
-
-@media only screen and (max-width: 767px) {
-  .journey-timeline.vertical-timeline {
-    padding-left: 0.5rem;
-  }
-
-  .journey-timeline.vertical-timeline::before {
-    left: 24px;
-  }
-
-  .journey-timeline .vertical-timeline-element-icon {
-    left: 6px;
-  }
-
-  .journey-timeline .vertical-timeline-element-content {
-    margin-left: 72px;
-  }
-}
-
 @theme inline {
   --font-heading: var(--font-display);
   --font-sans: var(--font-body);
@@ -319,28 +289,25 @@ body {
     @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-10;
   }
 
-  .page-grid {
-    @apply grid grid-cols-1 items-start gap-y-0
-           lg:grid-cols-[7rem_minmax(0,1fr)] lg:gap-x-12
-           xl:grid-cols-[8rem_minmax(0,42rem)_1fr] xl:gap-x-14;
-  }
-
-  /* Every section body sits in the main column. This is the visual spine. */
-  .col-main {
-    @apply min-w-0 lg:col-start-2 lg:col-end-3;
-  }
-
-  .col-rail {
-    @apply lg:col-start-1 lg:col-end-2;
-  }
-
-  .col-margin {
-    @apply xl:col-start-3 xl:col-end-4;
+  /*
+    Reading column. Everything on the homepage sits inside this, centered —
+    one width, one axis, no rail. Narrower than page-shell on purpose: the
+    shell sets the gutters, this sets the measure.
+  */
+  .page-column {
+    @apply mx-auto w-full max-w-[46rem];
   }
 
   /* Consistent vertical rhythm. Optically larger at the bottom. */
   .section-rhythm > * + * {
-    @apply mt-24 sm:mt-28 lg:mt-32;
+    @apply mt-20 sm:mt-24 lg:mt-28;
+  }
+
+  /* Full-bleed band that escapes the shell gutters, for the 3D scene. */
+  .full-bleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
   }
 
   /* Small uppercase label above a heading. Positive tracking, weight 500 —

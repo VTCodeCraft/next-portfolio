@@ -1,74 +1,66 @@
-"use client";
+import SectionHeading from "@/components/ui/section-heading";
+import { educationData, experiencesData } from "@/lib/data";
 
-import React from "react";
-import {
-  VerticalTimeline,
-  VerticalTimelineElement,
-} from "react-vertical-timeline-component";
-import "react-vertical-timeline-component/style.min.css";
-import { experiencesData } from "@/lib/data";
-import { useSectionInView } from "@/lib/hooks";
-import SectionHeading from "../ui/section-heading";
-import { MotionMountSection } from "@/components/ui/reveal";
-
+/**
+ * Experience as scannable rows rather than a decorated timeline.
+ *
+ * Each entry answers what was built, with what, and why it mattered. Replaces
+ * react-vertical-timeline-component, which shipped its own stylesheet and an
+ * observer to render two items.
+ */
 export default function MyJourney() {
-  const ref = useSectionInView("My Journey", 0.5);
-
   return (
-    <MotionMountSection
-      id="my-journey"
-      ref={ref}
-      delay={0.12}
-      className="w-full scroll-mt-32"
-    >
-      <SectionHeading index="02" rule>
-        My Journey
+    <section id="experience" className="page-column scroll-mt-32">
+      <SectionHeading index="03" rule>
+        Where I&apos;ve built
       </SectionHeading>
-      <VerticalTimeline
-        className="journey-timeline"
-        layout="1-column-left"
-        lineColor="var(--journey-line-color)"
-      >
-        {experiencesData.map((item, index) => (
-          <VerticalTimelineElement
-            key={`${item.title}-${index}`}
-            contentStyle={{
-              background: "var(--journey-card-bg)",
-              boxShadow: "var(--shadow-soft)",
-              border: "1px solid var(--journey-card-border)",
-              textAlign: "left",
-              padding: "1rem 1.25rem",
-            }}
-            contentArrowStyle={{
-              borderRight: "0.4rem solid var(--journey-card-arrow)",
-            }}
-            date={item.date}
-            dateClassName="!text-sm !font-medium !tabular-nums !text-muted-foreground"
-            icon={item.icon}
-            iconStyle={{
-              background: "var(--journey-icon-bg)",
-              color: "var(--journey-icon-fg)",
-              boxShadow: "0 0 0 4px var(--journey-icon-ring)",
-            }}
-          >
-            <h3 className="text-lg font-semibold capitalize leading-snug text-foreground">
-              {item.title}
-            </h3>
-            <p className="!mt-0 text-base font-normal text-muted-foreground">{item.location}</p>
-            <ul className="!mt-3 space-y-1.5 text-sm leading-6 text-muted-foreground">
-              {item.description.split("\n").map((line, lineIndex) => (
-                <li
-                  key={`${item.title}-line-${lineIndex}`}
-                  className={line.startsWith(" - ") ? "ml-4 list-none" : ""}
-                >
-                  {line}
-                </li>
-              ))}
-            </ul>
-          </VerticalTimelineElement>
+
+      <ol className="m-0 list-none p-0">
+        {experiencesData.map((item) => (
+          <li key={item.company} className="border-t border-border">
+            <div className="grid gap-x-5 gap-y-1.5 py-5 sm:grid-cols-[6.5rem_minmax(0,1fr)]">
+              <p
+                className={`type-eyebrow tabular-nums tracking-[0.12em] ${
+                  item.current ? "text-primary" : ""
+                }`}
+              >
+                {item.date}
+              </p>
+
+              <div>
+                <h3 className="text-[0.88rem] font-medium text-foreground">
+                  {item.role}
+                </h3>
+                <p className="type-eyebrow mt-1 tracking-[0.14em]">
+                  {item.company}
+                </p>
+                <p className="mt-2.5 text-[0.78rem] leading-relaxed text-muted-foreground">
+                  {item.description}
+                </p>
+              </div>
+            </div>
+          </li>
         ))}
-      </VerticalTimeline>
-    </MotionMountSection>
+
+        <li className="border-y border-border">
+          <div className="grid gap-x-5 gap-y-1.5 py-5 sm:grid-cols-[6.5rem_minmax(0,1fr)]">
+            <p className="type-eyebrow tabular-nums tracking-[0.12em]">
+              {educationData.date}
+            </p>
+            <div>
+              <h3 className="text-[0.88rem] font-medium text-foreground">
+                {educationData.degree}
+              </h3>
+              <p className="type-eyebrow mt-1 tracking-[0.14em]">
+                {educationData.school}
+              </p>
+              <p className="mt-2.5 text-[0.78rem] leading-relaxed text-muted-foreground">
+                {educationData.detail}
+              </p>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
   );
 }
-

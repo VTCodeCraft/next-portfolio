@@ -1,8 +1,17 @@
 import Link from "next/link";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { SiLeetcode } from "react-icons/si";
 import { RiNextjsFill, RiTailwindCssFill } from "react-icons/ri";
 import { SiTypescript, SiResend } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
+
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/VTCodeCraft", icon: FaGithub },
+  { label: "LinkedIn", href: "https://linkedin.com/in/vishesh-tripathi-6b6a41213", icon: FaLinkedin },
+  { label: "X", href: "https://x.com/VTCodeCraft_", icon: FaXTwitter },
+  { label: "LeetCode", href: "https://leetcode.com/u/VTCodeCraft/", icon: SiLeetcode },
+] as const;
 
 const techStack = [
   {
@@ -53,15 +62,21 @@ export default function Footer() {
             );
           })}
         </div>
-        <Link
-          href="https://github.com/VTCodeCraft/next-portfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center gap-2 text-[11px] text-muted-foreground transition hover:text-foreground"
-        >
-          <FaGithub className="text-sm opacity-45" />
-          <span>View repository</span>
-        </Link>
+        {/* The hero no longer carries social links, so they live here. */}
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-border pt-4">
+          {socialLinks.map((social) => (
+            <Link
+              key={social.label}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 text-[11px] text-muted-foreground transition hover:text-foreground"
+            >
+              <social.icon className="text-sm opacity-55" />
+              <span>{social.label}</span>
+            </Link>
+          ))}
+        </div>
       </div>
     </footer>
   );

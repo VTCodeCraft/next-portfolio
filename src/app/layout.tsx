@@ -7,7 +7,6 @@ import "./globals.css";
 import "@/styles/mdx.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
 import LenisProvider from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/ui/reveal";
@@ -112,7 +111,6 @@ export default function RootLayout({
 
         <MotionProvider>
           <LenisProvider>
-            <ActiveSectionContextProvider>
               <a
                 href="#main-content"
                 className="sr-only rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200]"
@@ -128,7 +126,6 @@ export default function RootLayout({
               <Toaster position="top-right" />
               <Analytics />
               <SpeedInsights />
-            </ActiveSectionContextProvider>
           </LenisProvider>
         </MotionProvider>
       </body>
