@@ -16,15 +16,15 @@ export default function Contact() {
       id="contact"
       ref={ref}
       delay={0.14}
-      className="relative w-full scroll-mt-28 max-w-[32rem] pb-2 text-center sm:mb-10 lg:mx-0 lg:text-left"
+      className="relative w-full scroll-mt-32 pb-2 text-left sm:mb-10"
     >
-      <p className="type-eyebrow mb-0.5 text-primary">
-        &nbsp;Let&apos;s talk
-      </p>
+      <SectionHeading index="03" rule>
+        Contact Me
+      </SectionHeading>
 
-      <SectionHeading>&nbsp;Contact Me</SectionHeading>
+      <p className="type-eyebrow mb-3 text-primary">Let&apos;s talk</p>
 
-      <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+      <p className="type-prose mb-6 text-sm text-muted-foreground">
         Have a project in mind or just want to say hello? Reach me at{" "}
         <a
           href="mailto:work.vishesh12.05@gmail.com"
@@ -36,7 +36,9 @@ export default function Contact() {
         or drop a message below.
       </p>
 
-      <div className="relative overflow-hidden rounded-xl border border-border bg-[var(--surface-glass)] p-4 shadow-[var(--shadow-card)] backdrop-blur-md">
+      {/* Deliberately narrower than the column and left-aligned: a form does
+          not want a 42rem measure, and the offset keeps the page asymmetric. */}
+      <div className="relative max-w-[34rem] overflow-hidden rounded-xl border border-border bg-[var(--surface-glass)] p-4 shadow-[var(--shadow-card)] backdrop-blur-md">
         <span
           aria-hidden
           className="pointer-events-none absolute right-0 top-0 h-16 w-16 rounded-bl-full bg-gradient-to-bl from-[var(--surface-accent-soft)] to-transparent"
@@ -84,7 +86,7 @@ export default function Contact() {
         </form>
       </div>
 
-      <p className="mt-3 text-center text-[0.7rem] text-muted-foreground">
+      <p className="mt-3 max-w-[34rem] text-center text-[0.7rem] text-muted-foreground">
         I usually reply within 24 hours
       </p>
     </MotionMountSection>

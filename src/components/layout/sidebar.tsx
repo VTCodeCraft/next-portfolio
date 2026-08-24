@@ -1,129 +1,74 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useState } from "react";
 import clsx from "clsx";
 import { sections } from "@/lib/data";
 import { useActiveSectionContext } from "@/context/active-section-context";
 import { MotionMountDiv } from "@/components/ui/reveal";
 
+/**
+ * Section index for the homepage spine.
+ *
+ * Desktop only. The header already owns route navigation, so rendering a
+ * second navigation system on small screens put two competing menus on the
+ * same page; below lg the homepage is a linear scroll and does not need one.
+ *
+ * Deliberately quiet: monospace, small, muted, sitting against a hairline. It
+ * should read as an index of the page, not as a control surface competing with
+ * the content.
+ */
 export default function Sidebar() {
   const { activeSection, setActiveSection } = useActiveSectionContext();
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = (name: (typeof sections)[number]["name"]) => {
-    setActiveSection(name);
-    setIsOpen(false);
-  };
 
   return (
-    <>
-      {/* MOBILE */}
-      <MotionMountDiv
-        delay={0.08}
-        distance={20}
-        className="fixed left-6 top-6 z-50 lg:hidden"
-      >
-        <button
-          onClick={() => setIsOpen((v) => !v)}
-          className="flex h-12 w-12 flex-col items-center justify-center gap-1 rounded-full border border-border bg-card shadow-md"
-        >
-          <span className="h-px w-5 bg-foreground" />
-          <span className="h-px w-5 bg-foreground" />
-          <span className="h-px w-5 bg-foreground" />
-        </button>
+    <MotionMountDiv
+      delay={0.1}
+      distance={24}
+      className="relative flex flex-col gap-5 border-l border-border pl-5"
+    >
+      {sections.map((item, itemIndex) => {
+        const isActive = activeSection === item.name;
 
-        {isOpen && (
-          <aside className="mt-4 w-60 rounded-3xl border border-border bg-card p-6 shadow-xl">
-            <nav className="flex flex-col gap-6 text-muted-foreground">
-              {sections.map((item) => {
-                const isActive = activeSection === item.name;
+        return (
+          <a
+            key={item.hash}
+            href={item.hash}
+            onClick={() => setActiveSection(item.name)}
+            aria-current={isActive ? "true" : undefined}
+            className="sidebar-link group relative flex items-baseline gap-2.5"
+          >
+            {/* Active marker sits on the rail itself, replacing the previous
+                free-floating dash. */}
+            <m.span
+              aria-hidden
+              className={clsx(
+                "absolute -left-5 top-1/2 h-px w-3 origin-left -translate-y-1/2",
+                isActive ? "bg-foreground" : "bg-border group-hover:bg-muted-foreground",
+              )}
+              animate={{ scaleX: isActive ? 1 : 0.45 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            />
 
-                return (
-                  <a
-                    key={item.hash}
-                    href={item.hash}
-                    onClick={() => handleClick(item.name)}
-                    className="sidebar-link flex items-center gap-4 group"
-                  >
-                    <m.span
-                      className={clsx(
-                        "h-px w-6 origin-left",
-                        isActive
-                          ? "bg-foreground"
-                          : "bg-border group-hover:bg-foreground"
-                      )}
-                      animate={{ scaleX: isActive ? 1 : 2 / 3 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 300,
-                        damping: 20,
-                      }}
-                    />
-
-                    <span
-                      className={clsx(
-                        "transition-colors duration-200",
-                        isActive
-                          ? "font-semibold text-foreground"
-                          : "group-hover:text-foreground"
-                      )}
-                    >
-                      {item.name}
-                    </span>
-                  </a>
-                );
-              })}
-            </nav>
-          </aside>
-        )}
-      </MotionMountDiv>
-
-      {/* DESKTOP */}
-      <MotionMountDiv
-        delay={0.1}
-        distance={24}
-        className="hidden text-muted-foreground lg:flex lg:flex-col lg:gap-8"
-      >
-        {sections.map((item) => {
-          const isActive = activeSection === item.name;
-
-          return (
-            <a
-              key={item.hash}
-              href={item.hash}
-              onClick={() => handleClick(item.name)}
-              className="sidebar-link flex items-center gap-4 group"
+            <span
+              aria-hidden
+              className="font-mono text-[0.62rem] tabular-nums text-[var(--text-faint)]"
             >
-              <m.span
-                className={clsx(
-                  "h-px w-6 origin-left",
-                  isActive
-                    ? "bg-foreground"
-                    : "bg-border group-hover:bg-foreground"
-                )}
-                animate={{ scaleX: isActive ? 1 : 2 / 3 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
-                }}
-              />
+              {String(itemIndex + 1).padStart(2, "0")}
+            </span>
 
-              <span
-                className={clsx(
-                  "transition-colors duration-200",
-                  isActive
-                    ? "font-semibold text-foreground"
-                    : "group-hover:text-foreground"
-                )}
-              >
-                {item.name}
-              </span>
-            </a>
-          );
-        })}
-      </MotionMountDiv>
-    </>
+            <span
+              className={clsx(
+                "font-mono text-[0.68rem] uppercase tracking-[0.14em] transition-colors duration-200",
+                isActive
+                  ? "text-foreground"
+                  : "text-muted-foreground group-hover:text-foreground",
+              )}
+            >
+              {item.name}
+            </span>
+          </a>
+        );
+      })}
+    </MotionMountDiv>
   );
 }

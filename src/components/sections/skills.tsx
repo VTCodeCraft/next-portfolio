@@ -75,7 +75,6 @@ export default function Skills() {
   const [tiles, setTiles] = useState<Array<string | null>>(() =>
     buildInitialTiles(6),
   );
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const dragStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -112,23 +111,6 @@ export default function Skills() {
     };
   }, []);
 
-  useEffect(() => {
-    const root = document.documentElement;
-
-    const syncTheme = () => {
-      setIsDarkMode(root.classList.contains("dark"));
-    };
-
-    syncTheme();
-
-    const observer = new MutationObserver(syncTheme);
-    observer.observe(root, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   const getRow = (i: number) => Math.floor(i / cols);
   const getCol = (i: number) => i % cols;
@@ -199,11 +181,13 @@ export default function Skills() {
       id="skills"
       ref={ref}
       delay={0.1}
-      className="max-w-[60rem] scroll-mt-28 text-center"
+      className="w-full scroll-mt-32"
     >
-      <SectionHeading>Technical Skills</SectionHeading>
+      <SectionHeading index="01" rule>
+        Technical Skills
+      </SectionHeading>
 
-      <div className="mx-auto mt-10 w-full max-w-[720px] rounded-2xl border border-border bg-[var(--surface-glass)] p-4 shadow-[var(--shadow-card-strong)] backdrop-blur-xl lg:mx-0">
+      <div className="w-full rounded-2xl border border-border bg-[var(--surface-glass)] p-4 shadow-[var(--shadow-card-strong)] backdrop-blur-xl">
         <div
           className="grid gap-3"
           style={{
@@ -242,12 +226,8 @@ export default function Skills() {
                   <span
                     className={`${isMobile ? "text-[1.35rem]" : "text-[1.15rem]"}`}
                     style={{
-                      color: isDarkMode
-                        ? darkSkillColors[tile] ?? skillColors[tile]
-                        : skillColors[tile],
-                      filter: isDarkMode
-                        ? "var(--skill-icon-shadow-dark)"
-                        : "var(--skill-icon-shadow-light)",
+                      color: darkSkillColors[tile] ?? skillColors[tile],
+                      filter: "var(--skill-icon-shadow-dark)",
                     }}
                   >
                     {skillIconsData[tile]}
@@ -267,7 +247,7 @@ export default function Skills() {
       </div>
 
       {/* BUTTON */}
-      <div className="mx-auto mt-6 flex w-full max-w-[720px] justify-center lg:mx-0">
+      <div className="mt-6 flex w-full justify-start">
         <button
           onClick={() => {
             const INITIAL_TILES = [

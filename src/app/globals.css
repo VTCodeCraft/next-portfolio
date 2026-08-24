@@ -13,30 +13,6 @@ body {
   min-height: 100%;
 }
 
-.dark .light-only {
-  display: none;
-}
-
-/* ── Light canvas now mirrors the dark bluish aesthetic ── */
-.light-canvas {
-  background:
-    radial-gradient(circle at 24% 18%, rgba(30, 64, 175, 0.14) 0%, transparent 20%),
-    radial-gradient(circle at 52% 14%, rgba(17, 24, 39, 0.22) 0%, transparent 24%),
-    radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.18) 0%, transparent 18%),
-    radial-gradient(circle at 50% 42%, rgba(8, 15, 28, 0.16) 0%, transparent 24%),
-    linear-gradient(180deg, #04070b 0%, #050911 52%, #03060a 100%);
-}
-
-.light-canvas::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at center, rgba(59, 130, 246, 0.025) 0%, transparent 44%),
-    linear-gradient(180deg, rgba(59, 130, 246, 0.018), rgba(255, 255, 255, 0) 44%, rgba(0, 0, 0, 0.16));
-  pointer-events: none;
-}
-
 .dark-canvas {
   background:
     radial-gradient(circle at 24% 18%, rgba(30, 64, 175, 0.14) 0%, transparent 20%),
@@ -112,19 +88,6 @@ body {
 
   /* ── Skill icons ── */
   --skill-icon-shadow-dark: drop-shadow(0 0 10px color-mix(in oklab, white 4%, transparent));
-  --skill-icon-shadow-light: drop-shadow(0 0 6px color-mix(in oklab, black 30%, transparent));
-}
-
-@keyframes aurora-float {
-  0% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(3rem, 1.5rem, 0) scale(1.05);
-  }
-  100% {
-    transform: translate3d(-2rem, 3rem, 0) scale(0.98);
-  }
 }
 
 .journey-timeline.vertical-timeline {
@@ -249,66 +212,6 @@ body {
   --surface-available-text: #86efac;
 }
 
-/* ── Light mode override (soft blue-tinted light) ───────────────────── */
-.light {
-  --background: oklch(0.97 0.005 245);
-  --foreground: oklch(0.11 0.014 250);
-
-  --card: oklch(0.99 0.003 245);
-  --card-foreground: oklch(0.11 0.014 250);
-
-  --popover: oklch(0.99 0.003 245);
-  --popover-foreground: oklch(0.11 0.014 250);
-
-  --primary: oklch(0.46 0.09 250);
-  --primary-foreground: oklch(0.99 0 0);
-
-  --secondary: oklch(0.95 0.007 245);
-  --secondary-foreground: oklch(0.24 0.022 250);
-
-  --muted: oklch(0.95 0.006 245);
-  --muted-foreground: oklch(0.5 0.015 245);
-
-  --accent: oklch(0.93 0.008 245);
-  --accent-foreground: oklch(0.22 0.026 250);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --border: oklch(0.88 0.009 245);
-  --input: oklch(0.88 0.009 245);
-  --ring: oklch(0.54 0.085 250);
-
-  --chart-1: oklch(0.46 0.09 250);
-  --chart-2: oklch(0.56 0.075 240);
-  --chart-3: oklch(0.66 0.055 230);
-  --chart-4: oklch(0.76 0.035 225);
-  --chart-5: oklch(0.86 0.015 220);
-
-  --sidebar: oklch(0.95 0.006 245);
-  --sidebar-foreground: oklch(0.11 0.014 250);
-  --sidebar-primary: oklch(0.46 0.09 250);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent: oklch(0.93 0.008 245);
-  --sidebar-accent-foreground: oklch(0.2 0.02 250);
-  --sidebar-border: oklch(0.88 0.009 245);
-  --sidebar-ring: oklch(0.54 0.085 250);
-
-  --journey-card-bg: #eef4fb;
-  --journey-card-border: rgba(37, 99, 235, 0.08);
-  --journey-card-arrow: #eef4fb;
-  --journey-line-color: rgba(37, 99, 235, 0.12);
-  --journey-icon-bg: #ffffff;
-  --journey-icon-fg: #1e3a8a;
-  --journey-icon-ring: rgba(37, 99, 235, 0.16);
-  --line-color: rgba(37, 99, 235, 0.16);
-  --surface-available-text: #166534;
-
-  --shadow-soft: 0 16px 40px color-mix(in oklab, black 12%, transparent);
-  --shadow-card: 0 20px 60px color-mix(in oklab, black 18%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
-  --shadow-card-strong: 0 24px 80px color-mix(in oklab, black 18%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
-  --shadow-card-xl: 0 24px 70px color-mix(in oklab, black 18%, transparent);
-}
-
 /* ── Legacy .dark class support ─────────────────────────────────────── */
 .dark {
   --background: #05080c;
@@ -402,6 +305,44 @@ body {
 }
 
 @layer components {
+  /* ── Page spine ───────────────────────────────────────────────────
+     One container and one grid for the whole site, so sections cannot
+     each invent their own width, left edge or horizontal padding.
+
+       <lg   single column
+       lg    [rail] [main]
+       xl    [rail] [main] [margin]
+
+     The margin column carries metadata (portrait, availability) so the
+     wide-screen gutter stops being dead space. */
+  .page-shell {
+    @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-10;
+  }
+
+  .page-grid {
+    @apply grid grid-cols-1 items-start gap-y-0
+           lg:grid-cols-[7rem_minmax(0,1fr)] lg:gap-x-12
+           xl:grid-cols-[8rem_minmax(0,42rem)_1fr] xl:gap-x-14;
+  }
+
+  /* Every section body sits in the main column. This is the visual spine. */
+  .col-main {
+    @apply min-w-0 lg:col-start-2 lg:col-end-3;
+  }
+
+  .col-rail {
+    @apply lg:col-start-1 lg:col-end-2;
+  }
+
+  .col-margin {
+    @apply xl:col-start-3 xl:col-end-4;
+  }
+
+  /* Consistent vertical rhythm. Optically larger at the bottom. */
+  .section-rhythm > * + * {
+    @apply mt-24 sm:mt-28 lg:mt-32;
+  }
+
   /* Small uppercase label above a heading. Positive tracking, weight 500 —
      the weight the scale was missing. */
   .type-eyebrow {

@@ -3,7 +3,6 @@ import Contact from "@/components/sections/contact";
 import Intro from "@/components/sections/intro";
 import MyJourney from "@/components/sections/my-journey";
 import ProfileSidebar from "@/components/layout/profile-sidebar";
-import SectionDivider from "@/components/ui/section-divider";
 import Sidebar from "@/components/layout/sidebar";
 import Skills from "@/components/sections/skills";
 
@@ -39,7 +38,7 @@ const websiteJsonLd = {
 
 export default function Home() {
   return (
-    <div className="flex w-full flex-col lg:flex-row">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -49,42 +48,39 @@ export default function Home() {
           ),
         }}
       />
-      {/* LEFT SIDEBAR */}
-      <aside className="w-full lg:w-[10rem] lg:flex-none lg:pl-0 lg:sticky lg:top-24 lg:flex lg:min-h-[calc(100vh-16rem)] lg:items-center lg:self-start">
-        <Sidebar />
-      </aside>
+      <div className="page-shell">
+        <div className="page-grid">
+          {/* Section index. Desktop only — on small screens the top nav is the
+              single navigation system and a second one would compete with it. */}
+          <aside
+            aria-label="Sections"
+            className="col-rail hidden lg:sticky lg:top-32 lg:block lg:self-start"
+          >
+            <Sidebar />
+          </aside>
 
-      <div className="w-full min-w-0 px-4 sm:px-6 lg:flex-1">
-        <div className="mx-auto w-full max-w-[940px]">
-          <div className="flex w-full flex-col gap-8 lg:grid lg:grid-cols-[20%_80%] lg:gap-0">
-            {/* PROFILE IMAGE SECTION */}
-            <div className="hidden lg:flex lg:justify-center lg:self-start lg:sticky lg:top-28 lg:pt-2">
-              <ProfileSidebar />
+          {/* Not <main>: the root layout already provides the single main landmark. */}
+          <div className="col-main section-rhythm">
+            <Intro />
+            <div className="deferred-section">
+              <Skills />
             </div>
-
-            {/* RIGHT CONTENT AREA */}
-            {/* Not <main>: the root layout already provides the single main landmark. */}
-            <div className="min-w-0 max-w-full lg:pl-4 xl:pl-6">
-              <div className="space-y-24 sm:space-y-28 lg:space-y-32">
-                <Intro />
-                <div className="deferred-section">
-                  <SectionDivider />
-                  <Skills />
-                </div>
-                <div className="deferred-section">
-                  <SectionDivider />
-                  <MyJourney />
-                </div>
-                <div className="deferred-section">
-                  <SectionDivider />
-                  <Contact />
-                </div>
-              </div>
+            <div className="deferred-section">
+              <MyJourney />
+            </div>
+            <div className="deferred-section">
+              <Contact />
             </div>
           </div>
+
+          {/* Margin column: metadata, not navigation. Fills the wide-screen
+              gutter that previously sat empty. */}
+          <aside className="col-margin hidden xl:sticky xl:top-32 xl:block xl:self-start">
+            <ProfileSidebar />
+          </aside>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

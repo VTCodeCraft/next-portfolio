@@ -18,11 +18,13 @@ export default function Intro() {
       id="introduction"
       ref={ref}
       delay={0.05}
-      className="relative isolate -mx-4 -mt-14 flex w-auto scroll-mt-28 justify-center px-4 pt-14 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+      className="relative isolate scroll-mt-32"
     >
-      <div className="flex w-full max-w-3xl flex-col items-center justify-center gap-10 lg:items-start lg:justify-start lg:gap-10">
-        <div className="flex w-full max-w-[48rem] flex-col items-center text-center lg:items-start lg:text-left">
-          <div className="mb-6 flex flex-col items-center gap-4 lg:hidden">
+      <div className="flex w-full flex-col">
+        <div className="flex w-full flex-col items-center text-center lg:items-start lg:text-left">
+          {/* Shown until the margin column appears at xl, so the portrait is
+              never absent in the 1024-1279 range. */}
+          <div className="mb-8 flex flex-col items-center gap-4 lg:items-start xl:hidden">
             <MotionMountDiv delay={0.08} distance={20}>
               <Image
                 src="/images/profile.png"
@@ -68,50 +70,11 @@ export default function Intro() {
             </span>
           </h1>
 
-          <p className="mt-1.5 text-lg font-medium text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
+          <p className="mt-3 text-lg font-medium text-muted-foreground sm:text-2xl lg:text-[1.7rem]">
             Full-Stack Developer
           </p>
 
-          <div className="mt-4 flex flex-wrap justify-center gap-2.5 lg:justify-start">
-            <Link
-              href="https://github.com/VTCodeCraft"
-              target="_blank"
-              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
-            >
-              <FaGithub />
-              GitHub
-            </Link>
-
-            <Link
-              href="https://x.com/VTCodeCraft_"
-              target="_blank"
-              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
-            >
-              <BsTwitter />
-              X
-            </Link>
-
-            <Link
-              href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
-              target="_blank"
-              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
-            >
-              <FaLinkedin />
-              LinkedIn
-            </Link>
-
-            <Link
-              href="https://leetcode.com/u/VTCodeCraft/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
-            >
-              <SiLeetcode />
-              LeetCode
-            </Link>
-          </div>
-
-          <p className="type-prose mt-6 w-full text-base text-muted-foreground sm:text-lg lg:text-[1.08rem]">
+          <p className="type-prose mt-8 w-full text-base text-muted-foreground sm:text-lg lg:text-[1.08rem]">
             <span className="font-semibold text-foreground">Hey, I&apos;m a Full-Stack Developer</span> with experience building{" "}
             <span className="font-semibold text-foreground">web applications, API-driven systems, Chrome extensions, and scalable backend features</span>.
             <br />
@@ -155,6 +118,45 @@ export default function Intro() {
               Resume
               <HiDownload className="opacity-60 transition group-hover:translate-y-1" />
             </a>
+          </div>
+
+          <div className="mt-10 flex w-full flex-wrap items-center justify-center gap-2.5 border-t border-border pt-6 lg:justify-start">
+            <Link
+              href="https://github.com/VTCodeCraft"
+              target="_blank"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
+            >
+              <FaGithub />
+              GitHub
+            </Link>
+
+            <Link
+              href="https://x.com/VTCodeCraft_"
+              target="_blank"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
+            >
+              <BsTwitter />
+              X
+            </Link>
+
+            <Link
+              href="https://linkedin.com/in/vishesh-tripathi-6b6a41213"
+              target="_blank"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
+            >
+              <FaLinkedin />
+              LinkedIn
+            </Link>
+
+            <Link
+              href="https://leetcode.com/u/VTCodeCraft/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-[0.9rem] text-card-foreground shadow-md transition hover:scale-105 hover:bg-accent sm:px-4"
+            >
+              <SiLeetcode />
+              LeetCode
+            </Link>
           </div>
         </div>
       </div>

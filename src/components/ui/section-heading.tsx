@@ -6,25 +6,63 @@ type SectionHeadingProps = {
   className?: string;
   /** Every route needs exactly one h1; sections below it stay h2. */
   as?: "h1" | "h2";
+  /** Monospace section index, e.g. "01". Sits outside the heading. */
+  index?: string;
+  /**
+   * Runs a hairline from the heading to the right edge of the column. Used on
+   * the homepage to tie every section to the same spine; replaces the short
+   * gradient underline rather than stacking with it.
+   */
+  rule?: boolean;
 };
 
 export default function SectionHeading({
   children,
   className,
   as: Heading = "h2",
+  index,
+  rule = false,
 }: SectionHeadingProps) {
   return (
     <div
       className={clsx(
-        "mx-auto mb-7 flex w-full flex-col items-center lg:items-start",
+        "flex w-full flex-col",
+        rule ? "mb-8 items-start" : "mx-auto mb-7 items-center lg:items-start",
         className,
       )}
     >
-      <Heading className="font-heading text-center text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl lg:text-left">
-        {children}
-      </Heading>
+      <div
+        className={clsx(
+          "flex w-full gap-4",
+          rule ? "items-baseline" : "flex-col items-center lg:items-start",
+        )}
+      >
+        {index ? (
+          <span
+            aria-hidden
+            className="type-eyebrow shrink-0 tabular-nums text-[var(--text-subtle)]"
+          >
+            {index}
+          </span>
+        ) : null}
 
-      <div className="mt-3 h-px w-[95px] rounded-full bg-gradient-to-r from-primary via-muted-foreground to-transparent" />
+        <Heading
+          className={clsx(
+            "font-heading text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl",
+            rule ? "shrink-0 text-left" : "text-center lg:text-left",
+          )}
+        >
+          {children}
+        </Heading>
+
+        {rule ? (
+          <span aria-hidden className="h-px min-w-8 flex-1 translate-y-[-0.35em] bg-border" />
+        ) : null}
+      </div>
+
+      {rule ? null : (
+        <div className="mt-3 h-px w-[95px] rounded-full bg-gradient-to-r from-primary via-muted-foreground to-transparent" />
+      )}
     </div>
   );
 }

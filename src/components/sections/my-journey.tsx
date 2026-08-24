@@ -19,11 +19,11 @@ export default function MyJourney() {
       id="my-journey"
       ref={ref}
       delay={0.12}
-      className="w-full scroll-mt-28 lg:max-w-none"
+      className="w-full scroll-mt-32"
     >
-      <div className="w-full max-w-[720px] lg:mx-0">
-        <SectionHeading>&nbsp;My Journey</SectionHeading>
-      </div>
+      <SectionHeading index="02" rule>
+        My Journey
+      </SectionHeading>
       <VerticalTimeline
         className="journey-timeline"
         layout="1-column-left"

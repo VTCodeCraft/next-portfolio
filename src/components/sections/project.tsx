@@ -74,7 +74,7 @@ export default function Project() {
   return (
     <m.section
       id="projects"
-      className="relative mx-auto mb-0 w-full max-w-[1100px] px-2 py-0 sm:px-4 lg:px-6"
+      className="page-shell relative mb-0 py-0"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

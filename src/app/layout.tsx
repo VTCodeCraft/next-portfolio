@@ -11,7 +11,6 @@ import ActiveSectionContextProvider from "@/context/active-section-context";
 import { Toaster } from "react-hot-toast";
 import LenisProvider from "@/components/providers/lenis-provider";
 import { MotionProvider } from "@/components/ui/reveal";
-// import GalaxyDeferred from "@/components/3d/GalaxyDeferred";
 
 const siteUrl = "https://www.vtcodecraft.in";
 const siteName = "Vishesh Tripathi";
@@ -109,15 +108,7 @@ export default function RootLayout({
         className={`${manrope.className} ${manrope.variable} ${sora.variable} relative flex min-h-screen min-h-dvh flex-col overflow-x-hidden bg-background text-foreground transition-colors duration-300`}
         suppressHydrationWarning
       >
-        <div className="light-canvas light-only absolute inset-0 -z-20" />
         <div className="dark-canvas absolute inset-0 -z-20 hidden dark:block" />
-        {/* <div className="pointer-events-none absolute inset-0 -z-10 hidden dark:block">
-          <GalaxyDeferred />
-        </div> */}
-        {/* BACKGROUND BLOBS */}
-        <div className="light-only absolute top-[-7rem] right-[8rem] -z-10 h-[34rem] w-[34rem] rounded-full bg-[var(--project-glow-primary)] blur-[9rem] sm:w-[72rem]"></div>
-        <div className="light-only absolute top-[-2rem] left-[-32rem] -z-10 h-[32rem] w-[54rem] rounded-full bg-secondary/70 blur-[9rem] sm:w-[72rem] md:left-[-30rem] lg:left-[-24rem] xl:left-[-12rem] 2xl:left-[-4rem]"></div>
-        <div className="light-only absolute left-[22%] top-[5rem] -z-10 h-[30rem] w-[46rem] rounded-full bg-accent/60 opacity-85 blur-[11rem]" />
 
         <MotionProvider>
           <LenisProvider>
