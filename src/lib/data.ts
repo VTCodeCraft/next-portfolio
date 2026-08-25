@@ -48,12 +48,20 @@ export const sections = [
   { name: "Contact", hash: "#contact" },
 ] as const;
 
-/** Compact proof shown directly under the hero. Every figure is verifiable. */
-export const proofData = [
-  { value: "255+", label: "DSA solved", href: "https://leetcode.com/u/VTCodeCraft/" },
-  { value: "Top 0.2%", label: "of 25,000+", accent: true },
-  { value: "Shipped", label: "Chrome store" },
-  { value: "+20%", label: "Qualified leads" },
+/** Compact identity metadata beside the hero. */
+export const identityMeta = [
+  { label: "Based in", value: "New Delhi, India" },
+  { label: "Timezone", value: "IST · UTC+5:30", mono: true },
+  { label: "Now", value: "Hyperion Future Tech" },
+] as const;
+
+export const socialLinks = [
+  { label: "GitHub", href: "https://github.com/VTCodeCraft" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/vishesh-tripathi-6b6a41213" },
+  { label: "Peerlist", href: "https://peerlist.io/vtcodecraft" },
+  { label: "X", href: "https://x.com/VTCodeCraft_" },
+  { label: "LeetCode", href: "https://leetcode.com/u/VTCodeCraft/" },
+  { label: "Email", href: "mailto:work.vishesh12.05@gmail.com" },
 ] as const;
 
 export const experiencesData = [
@@ -154,13 +162,6 @@ export const myProjects = [
   },
   {
     title: "EzMeet",
-    shortTitle: "EzMeet",
-    summary:
-      "Scheduling that survives timezones. Grew out of an internship prototype into something people actually book on.",
-    stack: "React · Express · Supabase · TypeORM · Zoom API",
-    outcome:
-      "UTC slot management with conflict resolution across three calendar providers.",
-    flagship: 3,
     points: [
       "Full-stack meeting scheduling platform productized from an internship prototype into a production-ready system.",
       "Timezone-aware UTC slot management with conflict-resolution logic for zero scheduling conflicts across time zones.",

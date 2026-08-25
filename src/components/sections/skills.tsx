@@ -55,6 +55,15 @@ function buildInitialTiles(nextCols: number) {
   );
 }
 
+const SKILL_GROUPS = [
+  { label: "Languages", items: "TypeScript · Java · Python · C/C++ · SQL" },
+  { label: "Frontend", items: "React · Next.js · Tailwind · R3F · Framer Motion" },
+  { label: "Backend", items: "Node · Express · GraphQL · REST · FastAPI" },
+  { label: "Database", items: "PostgreSQL · MongoDB · Redis · Supabase" },
+  { label: "Infra", items: "AWS · Docker · Vercel · CI/CD · Linux" },
+  { label: "Tools", items: "Git · Postman · Figma · Chrome extensions" },
+] as const;
+
 export default function Skills() {
 
   const getColsForViewport = () =>
@@ -178,9 +187,9 @@ export default function Skills() {
     <MotionMountSection
       id="skills"
       delay={0.1}
-      className="page-column scroll-mt-32"
+      className="scroll-mt-32"
     >
-      <SectionHeading index="02" rule>
+      <SectionHeading index="03" rule meta="24 tools">
         What I work with
       </SectionHeading>
 
@@ -244,15 +253,25 @@ export default function Skills() {
       </div>
 
       {/* BUTTON */}
-      <div className="mt-5 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-        {["Frontend", "Backend", "Databases", "Infra", "Languages"].map((c) => (
-          <span key={c} className="type-eyebrow tracking-[0.14em]">
-            {c}
-          </span>
+      {/* Category index around the interaction: names the shape of the stack
+          without turning it into a spreadsheet of every tool. */}
+      <dl className="mt-6 m-0 grid gap-x-6 gap-y-3 sm:grid-cols-2">
+        {SKILL_GROUPS.map((group) => (
+          <div
+            key={group.label}
+            className="flex items-baseline gap-3 border-t border-border pt-2.5"
+          >
+            <dt className="type-eyebrow w-[5.5rem] shrink-0 tracking-[0.14em]">
+              {group.label}
+            </dt>
+            <dd className="m-0 text-[0.76rem] leading-relaxed text-muted-foreground">
+              {group.items}
+            </dd>
+          </div>
         ))}
-      </div>
+      </dl>
 
-      <div className="mt-6 flex w-full justify-center">
+      <div className="mt-7 flex w-full justify-center">
         <button
           onClick={() => {
             const INITIAL_TILES = [

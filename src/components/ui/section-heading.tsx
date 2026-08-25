@@ -14,6 +14,11 @@ type SectionHeadingProps = {
    * gradient underline rather than stacking with it.
    */
   rule?: boolean;
+  /**
+   * Small metadata sitting at the far end of the rule — counts, ranges, links.
+   * Keeps section-level context on the spine instead of in a side rail.
+   */
+  meta?: React.ReactNode;
 };
 
 export default function SectionHeading({
@@ -22,6 +27,7 @@ export default function SectionHeading({
   as: Heading = "h2",
   index,
   rule = false,
+  meta,
 }: SectionHeadingProps) {
   return (
     <div
@@ -57,6 +63,10 @@ export default function SectionHeading({
 
         {rule ? (
           <span aria-hidden className="h-px min-w-8 flex-1 translate-y-[-0.35em] bg-border" />
+        ) : null}
+
+        {rule && meta ? (
+          <span className="type-eyebrow shrink-0 tracking-[0.12em]">{meta}</span>
         ) : null}
       </div>
 

@@ -3,8 +3,7 @@ import { posts } from "#site/content";
 
 import BuildNotes from "@/components/sections/build-notes";
 import Contact from "@/components/sections/contact";
-import LaptopBand from "@/components/sections/laptop-band";
-import Proof from "@/components/sections/proof";
+import Contributions from "@/components/sections/contributions";
 import SelectedWork from "@/components/sections/selected-work";
 import Intro from "@/components/sections/intro";
 import MyJourney from "@/components/sections/my-journey";
@@ -49,6 +48,7 @@ export default function Home() {
       title: post.title,
       slugAsParams: post.slugAsParams,
       readingTime: post.readingTime,
+      date: post.date,
     }));
 
   return (
@@ -65,14 +65,7 @@ export default function Home() {
 
       <div className="page-shell section-rhythm">
         <Intro />
-        <Proof />
-      </div>
-
-      <div className="mt-20 sm:mt-24 lg:mt-28">
-        <LaptopBand />
-      </div>
-
-      <div className="page-shell section-rhythm mt-20 sm:mt-24 lg:mt-28">
+        <Contributions />
         <SelectedWork />
         <Skills />
         <MyJourney />

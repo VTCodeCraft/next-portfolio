@@ -10,8 +10,8 @@ import { educationData, experiencesData } from "@/lib/data";
  */
 export default function MyJourney() {
   return (
-    <section id="experience" className="page-column scroll-mt-32">
-      <SectionHeading index="03" rule>
+    <section id="experience" className="scroll-mt-32">
+      <SectionHeading index="04" rule meta="2 roles">
         Where I&apos;ve built
       </SectionHeading>
 
