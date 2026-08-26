@@ -38,10 +38,15 @@ function LaptopRig() {
   return (
     <Float speed={1.2} rotationIntensity={0.06} floatIntensity={0.18}>
       <Center>
+        {/*
+          Slight yaw so the screen is angled toward the camera rather than
+          edge-on. With autorotate removed the view is fixed, so this is the
+          one angle a visitor sees.
+        */}
         <group
           scale={isSmallScreen ? 1.05 : 1.42}
           position={[0, isSmallScreen ? -1.34 : -1.52, 0]}
-          rotation={[0.01, 0, 0]}
+          rotation={[0.01, -0.35, 0]}
         >
           <DemoComputer />
         </group>
@@ -71,7 +76,7 @@ function getThemeColor(name: string, fallback: string) {
 }
 
 /**
- * The scene animates continuously (Float + OrbitControls autoRotate), so
+ * The scene still animates continuously (Float keeps a slow drift), so
  * frameloop="demand" is not an option. Instead the loop is suspended whenever
  * the canvas is scrolled out of view or the tab is hidden.
  */
@@ -350,8 +355,6 @@ export default function ProjectScene() {
         </Suspense>
 
         <OrbitControls
-          autoRotate
-          autoRotateSpeed={0.55}
           enableDamping
           dampingFactor={0.06}
           enablePan={false}

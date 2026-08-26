@@ -7,8 +7,14 @@ Title: LAPTOP 3D MODEL (Asus Tuf Dash F15 2022)
 */
 
 import React, { JSX, useEffect } from "react";
-import { useGLTF } from "@react-three/drei";
-import { Material, Mesh, MeshStandardMaterial } from "three";
+import { useGLTF, useTexture } from "@react-three/drei";
+import {
+  Material,
+  Mesh,
+  MeshStandardMaterial,
+  SRGBColorSpace,
+  type Texture,
+} from "three";
 
 type GLTFResult = {
   nodes: Record<string, Mesh>;
@@ -19,6 +25,47 @@ type DemoComputerProps = JSX.IntrinsicElements["group"];
 
 export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
   const { nodes, materials } = useGLTF("/models/asus_tuf_f15.glb") as unknown as GLTFResult;
+
+  /*
+    The laptop screen carries the portrait, so the page needs no separate
+    avatar. Suspends with the model inside the existing Suspense boundary.
+
+    Deliberately a dedicated 512px asset: useTexture fetches the raw file and
+    bypasses next/image, so pointing this at the 1254px source downloaded
+    1.9 MB for a screen a couple of hundred pixels wide.
+  */
+  const screenTexture = useTexture("/images/profile-screen.jpg") as Texture;
+
+  useEffect(() => {
+    /*
+      material_13 is the wallpaper surface — the only material in the GLB that
+      ships a baseColorTexture. display_sqr is the glass panel sitting over it,
+      so texturing that one lights up the screen without showing any image.
+    */
+    const wallpaper = materials.material_13;
+
+    if (!(wallpaper instanceof MeshStandardMaterial)) return;
+
+    screenTexture.colorSpace = SRGBColorSpace;
+    // Match the glTF UV convention the original wallpaper was authored against.
+    screenTexture.flipY = false;
+    screenTexture.needsUpdate = true;
+
+    wallpaper.map = screenTexture;
+    // White base so the portrait's own colours come through unmodulated.
+    wallpaper.color.setScalar(1);
+    /*
+      Lit from within so it reads as a powered display, kept under Bloom's 0.8
+      luminance threshold — higher values clip the panel to solid white.
+    */
+    wallpaper.emissiveMap = screenTexture;
+    wallpaper.emissive.setScalar(0.35);
+    wallpaper.emissiveIntensity = 0.6;
+    wallpaper.metalness = 0;
+    wallpaper.roughness = 0.5;
+    wallpaper.toneMapped = true;
+    wallpaper.needsUpdate = true;
+  }, [materials, screenTexture]);
 
   useEffect(() => {
     const applyPbrTuning = (materialName: string, material: Material) => {
@@ -53,6 +100,9 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
           material.roughness = 0.22;
           material.envMapIntensity = 0.12;
           material.emissive.setScalar(0.03);
+          break;
+        case "material_13":
+          // Owned by the portrait texture effect above.
           break;
         case "tuf_logo":
         case "ASUS_LOGO":

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import IdentityPanel from "@/components/sections/identity-panel";
@@ -17,24 +16,15 @@ export default function Intro() {
     >
       <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12">
         <div>
+          {/* No avatar here: the portrait lives on the laptop screen in the
+              identity panel, so a second copy would compete with it. */}
           <MotionMountDiv delay={0.08} distance={16}>
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/profile.png"
-                alt="Vishesh Tripathi"
-                width={144}
-                height={144}
-                quality={75}
-                priority
-                className="h-10 w-10 shrink-0 rounded-lg border border-border bg-card object-cover"
-              />
-              <p className="flex items-center gap-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-[var(--surface-available-dot)]" />
-                <span className="type-eyebrow tracking-[0.16em] text-[var(--surface-available-text)]">
-                  Open to work
-                </span>
-              </p>
-            </div>
+            <p className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--surface-available-dot)]" />
+              <span className="type-eyebrow tracking-[0.16em] text-[var(--surface-available-text)]">
+                Open to work
+              </span>
+            </p>
           </MotionMountDiv>
 
           <MotionMountDiv delay={0.12} distance={20}>
