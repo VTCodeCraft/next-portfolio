@@ -195,9 +195,17 @@ export default function ProjectScene() {
     }
   }, [canvasGeneration]);
 
-  // dpr can be changed on a live renderer, so it stays responsive.
+  /*
+    dpr can be changed on a live renderer, so it stays responsive.
+
+    Capped at 2 rather than clamped to 1 on narrow viewports. That clamp dated
+    from when this scene was a full-width band; in the hero panel the canvas is
+    only a few hundred pixels across, so rendering at 1x was the single biggest
+    cause of the screen looking soft — far more than texture resolution. At
+    this size the extra fill rate is negligible.
+  */
   const dpr = useMemo<[number, number]>(
-    () => (isMobile ? [1, 1] : [1, 1.5]),
+    () => (isMobile ? [1, 1.75] : [1, 2]),
     [isMobile],
   );
 

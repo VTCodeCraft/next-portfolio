@@ -25,7 +25,9 @@ export default function IdentityPanel() {
   return (
     <aside aria-label="At a glance" className="w-full">
       <div className="overflow-hidden rounded-2xl border border-border bg-[var(--surface-glass)] shadow-[var(--shadow-card)]">
-        <div className="h-[168px] w-full sm:h-[190px]">
+        {/* Taller than the original 168px: the screen carries a portrait and a
+            clock now, and both need pixels to stay legible. */}
+        <div className="h-[220px] w-full sm:h-[260px] lg:h-[240px]">
           <ProjectScene />
         </div>
 

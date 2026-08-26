@@ -6,15 +6,33 @@ Source: https://sketchfab.com/3d-models/laptop-3d-model-asus-tuf-dash-f15-2022-4
 Title: LAPTOP 3D MODEL (Asus Tuf Dash F15 2022)
 */
 
-import React, { JSX, useEffect } from "react";
+import React, { JSX, useEffect, useMemo, useState } from "react";
 import { useGLTF, useTexture } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 import {
+  CanvasTexture,
+  LinearFilter,
+  LinearMipmapLinearFilter,
   Material,
   Mesh,
   MeshStandardMaterial,
   SRGBColorSpace,
   type Texture,
 } from "three";
+
+/** Formats as a desktop clock does — 24h, zero-padded, minute resolution. */
+function formatClock(date: Date) {
+  return {
+    time: `${String(date.getHours()).padStart(2, "0")}:${String(
+      date.getMinutes(),
+    ).padStart(2, "0")}`,
+    day: new Intl.DateTimeFormat("en", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    }).format(date),
+  };
+}
 
 type GLTFResult = {
   nodes: Record<string, Mesh>;
@@ -30,11 +48,99 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
     The laptop screen carries the portrait, so the page needs no separate
     avatar. Suspends with the model inside the existing Suspense boundary.
 
-    Deliberately a dedicated 512px asset: useTexture fetches the raw file and
-    bypasses next/image, so pointing this at the 1254px source downloaded
-    1.9 MB for a screen a couple of hundred pixels wide.
+    A dedicated asset rather than the 1254px source: useTexture fetches the raw
+    file and bypasses next/image, so pointing this at the original downloaded
+    1.9 MB for one screen.
   */
-  const screenTexture = useTexture("/images/profile-screen.jpg") as Texture;
+  const baseTexture = useTexture("/images/profile-screen.jpg") as Texture;
+  const maxAnisotropy = useThree((state) => state.gl.capabilities.getMaxAnisotropy());
+
+  // Minute resolution, like an OS clock. Ticking per second would mean a full
+  // texture upload every second for a digit almost nobody reads.
+  const [now, setNow] = useState<Date | null>(null);
+
+  useEffect(() => {
+    setNow(new Date());
+
+    let timeout: ReturnType<typeof setTimeout>;
+
+    const scheduleNextMinute = () => {
+      const date = new Date();
+      const msToNextMinute =
+        (60 - date.getSeconds()) * 1000 - date.getMilliseconds();
+
+      timeout = setTimeout(() => {
+        setNow(new Date());
+        scheduleNextMinute();
+      }, msToNextMinute);
+    };
+
+    scheduleNextMinute();
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  /*
+    The wallpaper is composited rather than loaded flat: the portrait sits on
+    the right of the source, so the empty left half carries a live clock. Baking
+    a time into the JPEG would freeze it at whatever moment the file was made.
+  */
+  const screenTexture = useMemo(() => {
+    const image = baseTexture.image as HTMLImageElement | undefined;
+
+    if (!image?.width) return baseTexture;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) return baseTexture;
+
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    if (now) {
+      const { time, day } = formatClock(now);
+      const cx = canvas.width * 0.26;
+      const cy = canvas.height * 0.46;
+
+      ctx.textAlign = "center";
+      ctx.textBaseline = "alphabetic";
+
+      ctx.fillStyle = "rgba(238, 242, 246, 0.94)";
+      ctx.font = `300 ${Math.round(canvas.height * 0.19)}px "Segoe UI", Helvetica, Arial, sans-serif`;
+      ctx.fillText(time, cx, cy);
+
+      ctx.fillStyle = "rgba(238, 242, 246, 0.58)";
+      ctx.font = `400 ${Math.round(canvas.height * 0.042)}px "Segoe UI", Helvetica, Arial, sans-serif`;
+      ctx.fillText(day, cx, cy + canvas.height * 0.075);
+    }
+
+    const texture = new CanvasTexture(canvas);
+    texture.colorSpace = SRGBColorSpace;
+    // Matches the source image orientation, which is already drawn top-left.
+    texture.flipY = false;
+    /*
+      The screen is viewed at a yaw, so without anisotropic filtering the
+      texture smears along the viewing angle and reads as blurry regardless of
+      how large the source is.
+    */
+    texture.anisotropy = maxAnisotropy;
+    texture.minFilter = LinearMipmapLinearFilter;
+    texture.magFilter = LinearFilter;
+    texture.generateMipmaps = true;
+    texture.needsUpdate = true;
+
+    return texture;
+  }, [baseTexture, now, maxAnisotropy]);
+
+  // Release the previous composite; without this each minute leaks a texture.
+  useEffect(() => {
+    return () => {
+      if (screenTexture !== baseTexture) screenTexture.dispose();
+    };
+  }, [screenTexture, baseTexture]);
 
   useEffect(() => {
     /*
@@ -46,11 +152,7 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
 
     if (!(wallpaper instanceof MeshStandardMaterial)) return;
 
-    screenTexture.colorSpace = SRGBColorSpace;
-    // Match the glTF UV convention the original wallpaper was authored against.
-    screenTexture.flipY = false;
-    screenTexture.needsUpdate = true;
-
+    // Colour space, orientation and filtering are set on the composite itself.
     wallpaper.map = screenTexture;
     // White base so the portrait's own colours come through unmodulated.
     wallpaper.color.setScalar(1);
