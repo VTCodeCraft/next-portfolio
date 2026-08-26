@@ -59,11 +59,14 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
       luminance threshold — higher values clip the panel to solid white.
     */
     wallpaper.emissiveMap = screenTexture;
-    wallpaper.emissive.setScalar(0.35);
-    wallpaper.emissiveIntensity = 0.6;
-    wallpaper.metalness = 0;
-    wallpaper.roughness = 0.5;
+    // Nudged up to hold readability against the lower tone-mapping exposure —
+    // the display is now the brightest thing in the scene, which is how a
+    // powered screen should behave in a dark room.
+    wallpaper.emissive.setScalar(0.45);
+    wallpaper.emissiveIntensity = 0.7;
     wallpaper.toneMapped = true;
+    // roughness, metalness and envMapIntensity are set in the material_13 case
+    // of applyPbrTuning, which runs after this effect and would overwrite them.
     wallpaper.needsUpdate = true;
   }, [materials, screenTexture]);
 
@@ -73,7 +76,9 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
         return;
       }
 
-      material.envMapIntensity = 1.45;
+      // Baseline environment response. Was 1.45, which made the HDR read as a
+      // bank of studio lights across every glossy surface.
+      material.envMapIntensity = 0.6;
       material.roughness ??= 0.7;
       material.metalness ??= 0.15;
 
@@ -102,14 +107,29 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
           material.emissive.setScalar(0.03);
           break;
         case "material_13":
-          // Owned by the portrait texture effect above.
+          /*
+            Screen panel. The map and emissive are owned by the portrait effect
+            above; the optical response is set here because the block before
+            this switch applies envMapIntensity 1.45 to every material, which
+            let the HDR reflect across the display at full strength.
+
+            Near-matte on purpose: at roughness 0.5 the 48-intensity key light
+            landed as a blown specular hotspot. A real matte LCD scatters that
+            into a faint even sheen instead of a mirror highlight.
+          */
+          material.envMapIntensity = 0.06;
+          material.roughness = 0.94;
+          material.metalness = 0;
           break;
         case "tuf_logo":
         case "ASUS_LOGO":
         case "outer_logo":
           material.metalness = 0.82;
-          material.roughness = 0.24;
-          material.envMapIntensity = 1.9;
+          // Still the most reflective parts of the model, but roughened and
+          // pulled down from 1.9 so they read as brushed metal rather than
+          // mirrors picking up the environment.
+          material.roughness = 0.38;
+          material.envMapIntensity = 0.85;
           break;
         case "keyLight":
           material.metalness = 0;

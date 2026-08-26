@@ -264,37 +264,37 @@ export default function ProjectScene() {
         gl={glOptions}
         onCreated={({ gl }) => {
           gl.toneMapping = ACESFilmicToneMapping;
-          gl.toneMappingExposure = 1.0;
+          // Pulled back from 1.0: with the key light gone the scene no longer
+          // needs headroom, and a lower exposure keeps highlights off the
+          // glossy shell.
+          gl.toneMappingExposure = 0.72;
           gl.shadowMap.enabled = true;
           gl.shadowMap.type = PCFSoftShadowMap;
           gl.domElement.addEventListener("webglcontextlost", handleContextLost);
           setIsGlReady(true);
         }}
       >
-        {/* Lighting */}
-        <ambientLight intensity={0.06} />
-
-        <spotLight
-          position={[6, 5, 3]}
-          angle={0.28}
-          penumbra={0.95}
-          intensity={48}
-          castShadow
-          shadow-bias={-0.0001}
-          shadow-mapSize={isMobile ? [512, 512] : [1024, 1024]}
-        />
-
         {/*
-          Fill light. Previously also cast shadows, which meant a second full
-          shadow-map render every frame for a contribution hidden under the
-          key light's shadow and the contact shadows.
-        */}
-        <directionalLight position={[-5, 3.5, 2.5]} intensity={1.6} />
+          Lighting is image-based rather than lamp-based.
 
-        {/* Subtle warm backlight */}
+          There used to be an intensity-48 spotlight aimed at the laptop, which
+          read as a bare bulb parked in front of the screen — a hard white
+          hotspot with a sharp falloff. It is gone. Shading now comes from the
+          HDR environment, which wraps the model and keeps it three-dimensional
+          without any single direction dominating.
+
+          Removing it also means no light casts shadow maps any more, so the
+          per-frame shadow pass is gone; ContactShadows still grounds the model.
+        */}
+        <ambientLight intensity={0.35} />
+
+        {/* Soft directional shaping only — enough to define edges, far too low
+            to produce a specular hotspot. */}
+        <directionalLight position={[-5, 3.5, 2.5]} intensity={0.45} />
+
         <pointLight
           position={[0, 3, -3]}
-          intensity={3}
+          intensity={1.2}
           distance={8}
           color={sceneColors.accent}
         />
@@ -303,13 +303,16 @@ export default function ProjectScene() {
           preset="city" resolved to a 1.5 MB HDR fetched from raw.githack.com
           on every visit. Same asset, self-hosted: identical lighting, no
           third-party CDN in the critical path for the scene.
+
+          Lightformer intensities are low: these are emissive panels, so at
+          higher values they reflect off the glossy shell as bright rectangles.
         */}
         <Environment files="/hdri/potsdamer_platz_1k.hdr" resolution={256}>
-          <Lightformer form="rect" intensity={1.4} position={[6, 2, 2]} rotation={[0, -Math.PI / 4.5, 0]} scale={[4, 6, 1]} />
-          <Lightformer form="rect" intensity={1.1} position={[-6, 1.8, 2]} rotation={[0, Math.PI / 4.5, 0]} scale={[3.8, 5.5, 1]} />
+          <Lightformer form="rect" intensity={0.35} position={[6, 2, 2]} rotation={[0, -Math.PI / 4.5, 0]} scale={[4, 6, 1]} />
+          <Lightformer form="rect" intensity={0.28} position={[-6, 1.8, 2]} rotation={[0, Math.PI / 4.5, 0]} scale={[3.8, 5.5, 1]} />
           <Lightformer
             form="ring"
-            intensity={0.6}
+            intensity={0.2}
             position={[0, 6, -4]}
             rotation={[Math.PI / 2.4, 0, 0]}
             scale={[6.5, 6.5, 1]}
