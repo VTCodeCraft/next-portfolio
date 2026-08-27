@@ -29,6 +29,22 @@ import { ACESFilmicToneMapping, PCFSoftShadowMap, Vector2 } from "three";
 import CanvasLoader from "../ui/canvas-loader";
 import { DemoComputer } from "./demo-computer";
 
+/*
+  Default 3/4 angle of the laptop, in radians. This is the only value that
+  controls how side-on the machine reads, so it lives here rather than inline.
+
+  Negative turns the keyboard toward the bottom-right of the frame.
+
+    -0.26  ≈ 15°  nearly face-on, base reads flat
+    -0.42  ≈ 24°  balanced 3/4 — screen wide, keyboard clearly visible
+    -0.52  ≈ 30°
+    -0.62  ≈ 35°  too side-on; screen narrows and the base skews steeply
+
+  Pitch stays near zero so the screen remains upright; the camera's own
+  elevation supplies the downward angle.
+*/
+const LAPTOP_YAW = -0.42;
+
 /* ─── ambient particle ring (decorative mesh) ────────────────────── */
 function LaptopRig() {
   const { size } = useThree();
@@ -56,7 +72,7 @@ function LaptopRig() {
         <group
           scale={isSmallScreen ? 1.2 : 1.42}
           position={[0, -0.15, 0]}
-          rotation={[0.02, -0.62, 0]}
+          rotation={[0.02, LAPTOP_YAW, 0]}
         >
           <DemoComputer />
         </group>
