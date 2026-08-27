@@ -11,7 +11,6 @@ import {
 import { Canvas, useThree } from "@react-three/fiber";
 import {
   Center,
-  ContactShadows,
   Environment,
   Lightformer,
   OrbitControls,
@@ -39,14 +38,19 @@ function LaptopRig() {
     <Float speed={1.2} rotationIntensity={0.06} floatIntensity={0.18}>
       <Center>
         {/*
-          Slight yaw so the screen is angled toward the camera rather than
-          edge-on. With autorotate removed the view is fixed, so this is the
-          one angle a visitor sees.
+          One framing at every width. The scale and offset used to differ
+          between breakpoints, which changed where the model sat relative to
+          the camera and made it read as a different rotation on narrow
+          screens than on wide ones.
+
+          With autorotate removed this is the single angle a visitor sees, so
+          it is set close to front-on: enough yaw to show the machine has
+          depth, not so much that the screen turns away.
         */}
         <group
-          scale={isSmallScreen ? 1.05 : 1.42}
-          position={[0, isSmallScreen ? -1.34 : -1.52, 0]}
-          rotation={[0.01, -0.35, 0]}
+          scale={isSmallScreen ? 1.2 : 1.42}
+          position={[0, -0.15, 0]}
+          rotation={[0.02, -0.62, 0]}
         >
           <DemoComputer />
         </group>
@@ -332,15 +336,6 @@ export default function ProjectScene() {
           <SceneReady onReady={handleSceneReady} />
           <LaptopRig />
 
-          <ContactShadows
-            position={[0, -1.5, 0]}
-            opacity={0.32}
-            scale={10}
-            blur={4.2}
-            far={3.5}
-            resolution={isMobile ? 128 : 256}
-            color={sceneColors.shadow}
-          />
 
           {/*
             Kept inside the Suspense boundary. EffectComposer.setRenderer()
