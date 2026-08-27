@@ -34,8 +34,14 @@ function LaptopRig() {
   const { size } = useThree();
   const isSmallScreen = size.width < 650;
 
+  /*
+    rotationIntensity is 0 on purpose. Float oscillates rotation continuously,
+    so with a fixed camera the model settled at a different yaw on every load —
+    the angle looked inconsistent between reloads. Only the vertical drift
+    remains, which keeps the scene alive without moving the framing.
+  */
   return (
-    <Float speed={1.2} rotationIntensity={0.06} floatIntensity={0.18}>
+    <Float speed={1.1} rotationIntensity={0} floatIntensity={0.22}>
       <Center>
         {/*
           One framing at every width. The scale and offset used to differ

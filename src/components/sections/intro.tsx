@@ -14,7 +14,9 @@ export default function Intro() {
       delay={0.05}
       className="scroll-mt-32"
     >
-      <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12">
+      {/* Rail widened from 16rem: the laptop is a landscape object and needs
+          width to sit in the panel without crowding the edges. */}
+      <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-12">
         <div>
           {/* No avatar here: the portrait lives on the laptop screen in the
               identity panel, so a second copy would compete with it. */}
