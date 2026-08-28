@@ -33,22 +33,38 @@ import { DemoComputer } from "./demo-computer";
   Default 3/4 angle of the laptop, in radians. This is the only value that
   controls how side-on the machine reads, so it lives here rather than inline.
 
-  Negative turns the keyboard toward the bottom-right of the frame.
-
-    -0.26  ≈ 15°  nearly face-on, base reads flat
-    -0.42  ≈ 24°  balanced 3/4 — screen wide, keyboard clearly visible
-    -0.52  ≈ 30°
-    -0.62  ≈ 35°  too side-on; screen narrows and the base skews steeply
+  4 rad ≈ 229°, i.e. -131° once wrapped: the screen faces the camera and the
+  keyboard runs toward the bottom-left. Small values do not work here — the
+  model's own forward axis is not the scene's, so the useful range sits around
+  a half turn rather than near zero.
 
   Pitch stays near zero so the screen remains upright; the camera's own
   elevation supplies the downward angle.
 */
-const LAPTOP_YAW = -1.05;
+const LAPTOP_YAW = 4;
 
 /* ─── ambient particle ring (decorative mesh) ────────────────────── */
 function LaptopRig() {
   const { size } = useThree();
   const isSmallScreen = size.width < 650;
+
+  /*
+    Between the sm and lg breakpoints the identity panel is full-width but the
+    page is not yet tall-stacked, so the canvas goes from roughly 1.5:1 to over
+    3:1. Center normalises the model's 3-D bounding box, but under perspective
+    the projected silhouette is not centred on that point, and the error grows
+    with the frame's aspect: in the wide frame the laptop reads high.
+
+    Both numbers were read off the rendered pixels rather than guessed — the
+    model's bounding box was measured from the framebuffer at each layout and
+    the offset solved so its centre lands on the canvas centre.
+
+    Vertical only. The wide frame also drifts a few per cent to the right, but
+    Bloom and Vignette attenuate the silhouette's edge alpha differently as it
+    moves, so a horizontal correction could not be measured reliably enough to
+    be worth the risk of over-correcting.
+  */
+  const liftY = size.width / size.height > 2.2 ? -0.08 : 0.06;
 
   /*
     rotationIntensity is 0 on purpose. Float oscillates rotation continuously,
@@ -61,7 +77,7 @@ function LaptopRig() {
       speed={1.1}
       rotationIntensity={0}
       floatIntensity={0.22}
-      position={[0, -0.55, 0]}
+      position={[0, liftY, 0]}
     >
       {/* Vertical placement lives on Float above: Center re-centres its own
           children, so an offset here or on the inner group is normalised out. */}
@@ -77,8 +93,8 @@ function LaptopRig() {
           depth, not so much that the screen turns away.
         */}
         <group
-          scale={isSmallScreen ? 2.6 : 2.85}
-          position={[0, 0, 0]}
+          scale={isSmallScreen ? 1.2 : 1.45}
+          position={[0, 0.15, 0]}
           rotation={[0.02, LAPTOP_YAW, 0]}
         >
           <DemoComputer />
