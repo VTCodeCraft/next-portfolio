@@ -43,7 +43,7 @@ import { DemoComputer } from "./demo-computer";
   Pitch stays near zero so the screen remains upright; the camera's own
   elevation supplies the downward angle.
 */
-const LAPTOP_YAW = -0.78;
+const LAPTOP_YAW = -1.05;
 
 /* ─── ambient particle ring (decorative mesh) ────────────────────── */
 function LaptopRig() {
@@ -57,7 +57,14 @@ function LaptopRig() {
     remains, which keeps the scene alive without moving the framing.
   */
   return (
-    <Float speed={1.1} rotationIntensity={0} floatIntensity={0.22}>
+    <Float
+      speed={1.1}
+      rotationIntensity={0}
+      floatIntensity={0.22}
+      position={[0, -0.55, 0]}
+    >
+      {/* Vertical placement lives on Float above: Center re-centres its own
+          children, so an offset here or on the inner group is normalised out. */}
       <Center>
         {/*
           One framing at every width. The scale and offset used to differ
@@ -70,8 +77,8 @@ function LaptopRig() {
           depth, not so much that the screen turns away.
         */}
         <group
-          scale={isSmallScreen ? 1.2 : 1.42}
-          position={[0, -0.15, 0]}
+          scale={isSmallScreen ? 2.6 : 2.85}
+          position={[0, 0, 0]}
           rotation={[0.02, LAPTOP_YAW, 0]}
         >
           <DemoComputer />
