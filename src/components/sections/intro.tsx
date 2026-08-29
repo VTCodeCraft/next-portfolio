@@ -77,7 +77,15 @@ export default function Intro() {
               <p className="type-prose text-muted-foreground">
                 <span className="text-foreground">Open to work:</span>{" "}
                 Internships, full-time roles, freelance work, and
-                collaborations. Let&rsquo;s talk.
+                collaborations.{" "}
+                {/* Same decoration treatment as inline links in long-form
+                    posts (see styles/mdx.css), so the two read as one system. */}
+                <a
+                  href="mailto:work.vishesh12.05@gmail.com"
+                  className="text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-primary hover:decoration-primary"
+                >
+                  Let&rsquo;s talk.
+                </a>
               </p>
             </div>
           </MotionMountDiv>
