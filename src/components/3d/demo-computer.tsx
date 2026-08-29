@@ -20,19 +20,27 @@ import {
   type Texture,
 } from "three";
 
-/** Formats as a desktop clock does — 24h, zero-padded, minute resolution. */
+/**
+ * Formats as a desktop clock does — 24h, zero-padded, minute resolution.
+ *
+ * The date is abbreviated rather than spelled out: it is drawn a few pixels
+ * tall on the rendered screen, so a shorter string buys proportionally larger
+ * glyphs in the same strip of wallpaper.
+ */
 function formatClock(date: Date) {
   return {
     time: `${String(date.getHours()).padStart(2, "0")}:${String(
       date.getMinutes(),
     ).padStart(2, "0")}`,
     day: new Intl.DateTimeFormat("en", {
-      weekday: "long",
+      weekday: "short",
       day: "numeric",
-      month: "long",
+      month: "short",
     }).format(date),
   };
 }
+
+const FALLBACK_FONT = '"Segoe UI", Helvetica, Arial, sans-serif';
 
 type GLTFResult = {
   nodes: Record<string, Mesh>;
@@ -81,6 +89,38 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
   }, []);
 
   /*
+    Canvas 2D resolves its font string against the document's loaded faces and
+    silently falls back to the generic stack if the face is not ready yet. The
+    composite below is memoised, so a fallback drawn on the first pass would
+    stay on the screen for the life of the page — hence waiting for the face
+    and letting the change of this value trigger a redraw.
+
+    next/font sets --font-display on <body>, not on <html>: reading it off the
+    documentElement returns an empty string.
+  */
+  const [fontFamily, setFontFamily] = useState(FALLBACK_FONT);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const resolve = () => {
+      if (cancelled) return;
+
+      const family = getComputedStyle(document.body)
+        .getPropertyValue("--font-display")
+        .trim();
+
+      if (family) setFontFamily(family);
+    };
+
+    document.fonts.ready.then(resolve, resolve);
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  /*
     The wallpaper is composited rather than loaded flat: the portrait sits on
     the right of the source, so the empty left half carries a live clock. Baking
     a time into the JPEG would freeze it at whatever moment the file was made.
@@ -108,13 +148,41 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
       ctx.textAlign = "center";
       ctx.textBaseline = "alphabetic";
 
-      ctx.fillStyle = "rgba(238, 242, 246, 0.94)";
-      ctx.font = `300 ${Math.round(canvas.height * 0.19)}px "Segoe UI", Helvetica, Arial, sans-serif`;
+      /*
+        Everything here is sized against a hard constraint: this canvas is
+        1536x960, but the screen it lands on renders at roughly 100x75 CSS
+        pixels — a ~13x downscale, then mipmapped. Light weights and small type
+        do not survive that. The previous 300-weight clock reduced to hairlines
+        and the 0.042 date to about three pixels tall, which is why it read as
+        missing rather than small.
+      */
+      ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
+      ctx.shadowBlur = Math.round(canvas.height * 0.02);
+      ctx.shadowOffsetY = Math.round(canvas.height * 0.004);
+
+      ctx.fillStyle = "rgba(255, 255, 255, 0.98)";
+      ctx.font = `700 ${Math.round(canvas.height * 0.2)}px ${fontFamily}`;
       ctx.fillText(time, cx, cy);
 
-      ctx.fillStyle = "rgba(238, 242, 246, 0.58)";
-      ctx.font = `400 ${Math.round(canvas.height * 0.042)}px "Segoe UI", Helvetica, Arial, sans-serif`;
-      ctx.fillText(day, cx, cy + canvas.height * 0.075);
+      /*
+        Uppercase with tracking. At this size the lowercase x-height lands under
+        three device pixels and adjacent glyphs merge into a smear; caps use the
+        full em box and the letter-spacing keeps them from touching.
+      */
+      const spaced = ctx as CanvasRenderingContext2D & { letterSpacing?: string };
+      const hasSpacing = "letterSpacing" in spaced;
+
+      if (hasSpacing) spaced.letterSpacing = "0.1em";
+
+      ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+      ctx.font = `600 ${Math.round(canvas.height * 0.085)}px ${fontFamily}`;
+      ctx.fillText(day.toUpperCase(), cx, cy + canvas.height * 0.1);
+
+      if (hasSpacing) spaced.letterSpacing = "0px";
+
+      ctx.shadowColor = "transparent";
+      ctx.shadowBlur = 0;
+      ctx.shadowOffsetY = 0;
     }
 
     const texture = new CanvasTexture(canvas);
@@ -133,7 +201,7 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
     texture.needsUpdate = true;
 
     return texture;
-  }, [baseTexture, now, maxAnisotropy]);
+  }, [baseTexture, now, maxAnisotropy, fontFamily]);
 
   // Release the previous composite; without this each minute leaks a texture.
   useEffect(() => {
