@@ -59,11 +59,27 @@ export default function Intro() {
               Full-stack engineer
             </p>
 
-            <p className="type-prose mt-6 text-[0.95rem] text-foreground sm:text-base">
-              I build real-time and AI-powered products — voice pipelines,
-              computer vision, browser SDKs — and ship them to people who
-              actually use them.
-            </p>
+            <div className="mt-6 space-y-3 text-[0.95rem] text-foreground sm:text-base">
+              <p className="type-prose">
+                Hey, I&rsquo;m a Full-Stack AI Developer with experience
+                building web applications, API-driven systems, Chrome
+                extensions, and scalable backend features.
+              </p>
+              <p className="type-prose">
+                I work primarily with Next.js, React, TypeScript, and modern
+                backend technologies, with a strong focus on performance, clean
+                architecture, and user-friendly products.
+              </p>
+              <p className="type-prose">
+                I also strengthen my problem-solving foundation through Data
+                Structures and Algorithms in Java.
+              </p>
+              <p className="type-prose text-muted-foreground">
+                <span className="text-foreground">Open to work:</span>{" "}
+                Internships, full-time roles, freelance work, and
+                collaborations. Let&rsquo;s talk.
+              </p>
+            </div>
           </MotionMountDiv>
 
           <MotionMountDiv delay={0.18} distance={16}>
