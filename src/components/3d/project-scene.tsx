@@ -41,7 +41,7 @@ import { DemoComputer } from "./demo-computer";
   Pitch stays near zero so the screen remains upright; the camera's own
   elevation supplies the downward angle.
 */
-const LAPTOP_YAW = 4;
+const LAPTOP_YAW = 4.25;
 
 /* ─── ambient particle ring (decorative mesh) ────────────────────── */
 function LaptopRig() {
@@ -93,9 +93,9 @@ function LaptopRig() {
           depth, not so much that the screen turns away.
         */}
         <group
-          scale={isSmallScreen ? 1.2 : 1.45}
+          scale={isSmallScreen ? 1.2 : 1.35}
           position={[0, 0.15, 0]}
-          rotation={[0.02, LAPTOP_YAW, 0]}
+          rotation={[0.02, LAPTOP_YAW, -0.25]}
         >
           <DemoComputer />
         </group>
@@ -277,10 +277,11 @@ export default function ProjectScene() {
   );
 
 
+  // `shadow` was dropped with ContactShadows: nothing read it, and its token
+  // no longer exists, so it was resolving to a hard-coded fallback each sync.
   const [sceneColors, setSceneColors] = useState({
     accent: "#2563eb",
     ring: "#93c5fd",
-    shadow: "#08131d",
   });
 
   useEffect(() => {
@@ -288,7 +289,6 @@ export default function ProjectScene() {
       setSceneColors({
         accent: getThemeColor("--project-scene-accent", "#2563eb"),
         ring: getThemeColor("--project-scene-ring", "#93c5fd"),
-        shadow: getThemeColor("--project-scene-shadow", "#08131d"),
       });
     };
 

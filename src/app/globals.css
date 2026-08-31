@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 html {
-  --line-color: rgba(96, 165, 250, 0.14);
+  --line-color: oklch(1 0 0 / 10%);
 }
 
 html,
@@ -13,13 +13,20 @@ body {
   min-height: 100%;
 }
 
+/*
+  Four blue radial blobs used to sit here. They were the loudest thing on the
+  page and read as decoration rather than structure — the single clearest
+  "generated portfolio" tell in the old theme. What is left is one near-flat
+  vertical wash: the page is dark because the background is dark, not because
+  something is glowing behind it.
+*/
 .dark-canvas {
-  background:
-    radial-gradient(circle at 24% 18%, rgba(30, 64, 175, 0.14) 0%, transparent 20%),
-    radial-gradient(circle at 52% 14%, rgba(17, 24, 39, 0.22) 0%, transparent 24%),
-    radial-gradient(circle at 80% 20%, rgba(15, 23, 42, 0.18) 0%, transparent 18%),
-    radial-gradient(circle at 50% 42%, rgba(8, 15, 28, 0.16) 0%, transparent 24%),
-    linear-gradient(180deg, #04070b 0%, #050911 52%, #03060a 100%);
+  background: linear-gradient(
+    180deg,
+    oklch(0.155 0.003 80) 0%,
+    oklch(0.145 0.003 80) 55%,
+    oklch(0.135 0.003 80) 100%
+  );
 }
 
 /* Scroll-darkness lives in LenisProvider as a fixed, opacity-driven layer.
@@ -30,64 +37,84 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at center, rgba(59, 130, 246, 0.025) 0%, transparent 44%),
-    linear-gradient(180deg, rgba(59, 130, 246, 0.018), rgba(255, 255, 255, 0) 44%, rgba(0, 0, 0, 0.16));
+  background: linear-gradient(180deg, transparent 60%, oklch(0 0 0 / 18%) 100%);
   pointer-events: none;
 }
 
 :root {
   /* ── Journey / Timeline ── */
-  --journey-card-bg: rgba(9, 17, 26, 0.96);
-  --journey-card-border: rgba(96, 165, 250, 0.1);
-  --journey-card-arrow: rgba(9, 17, 26, 0.96);
-  --journey-line-color: rgba(96, 165, 250, 0.14);
-  --journey-icon-bg: rgba(5, 9, 13, 0.98);
-  --journey-icon-fg: #93c5fd;
-  --journey-icon-ring: rgba(96, 165, 250, 0.16);
-  --line-color: rgba(96, 165, 250, 0.14);
+  --journey-card-bg: oklch(0.185 0.003 80);
+  --journey-card-border: oklch(1 0 0 / 12%);
+  --journey-card-arrow: oklch(0.185 0.003 80);
+  --journey-line-color: oklch(1 0 0 / 10%);
+  --journey-icon-bg: oklch(0.165 0.003 80);
+  --journey-icon-fg: oklch(0.78 0.003 80);
+  --journey-icon-ring: oklch(1 0 0 / 14%);
+  --line-color: oklch(1 0 0 / 10%);
 
-  /* ── Surfaces ── */
-  --surface-glass: color-mix(in oklab, var(--card) 80%, transparent);
-  --surface-glass-strong: color-mix(in oklab, var(--card) 92%, transparent);
-  --surface-muted: color-mix(in oklab, var(--background) 70%, var(--card) 30%);
-  --surface-overlay: color-mix(in oklab, var(--background) 75%, transparent);
-  --surface-accent-soft: color-mix(in oklab, var(--primary) 10%, transparent);
-  --surface-accent-strong: color-mix(in oklab, var(--accent) 40%, transparent);
-  --surface-available-bg: rgba(16, 185, 129, 0.10);
-  --surface-available-border: rgba(16, 185, 129, 0.28);
-  --surface-available-text: #86efac;
-  --surface-available-dot: #34d399;
+  /* ── Surfaces ──
+     Opaque, not translucent. The old surfaces were card colour at 80–92%
+     alpha over a blurred backdrop; at this contrast the blur bought nothing
+     visible and cost a compositing layer on every panel. */
+  --surface-glass: oklch(0.185 0.003 80);
+  --surface-glass-strong: oklch(0.195 0.003 80);
+  --surface-muted: oklch(0.215 0.003 80);
+  --surface-overlay: color-mix(in oklab, var(--background) 88%, transparent);
+  --surface-accent-soft: oklch(1 0 0 / 8%);
+  --surface-accent-strong: oklch(1 0 0 / 14%);
+  --surface-available-bg: oklch(0.72 0.16 152 / 10%);
+  --surface-available-border: oklch(0.72 0.16 152 / 26%);
+  --surface-available-text: oklch(0.82 0.13 152);
+  --surface-available-dot: oklch(0.76 0.17 152);
 
-  /* ── Shadows ── */
-  --shadow-soft: 0 16px 40px color-mix(in oklab, black 32%, transparent);
-  --shadow-card: 0 20px 60px color-mix(in oklab, black 40%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
-  --shadow-card-strong: 0 24px 80px color-mix(in oklab, black 40%, transparent), inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
-  --shadow-card-xl: 0 24px 70px color-mix(in oklab, black 40%, transparent);
-  --shadow-status: 0 0 24px color-mix(in oklab, var(--primary) 18%, transparent);
+  /* ── Shadows ──
+     Halved, and the `inset 0 1px 0 white` highlight is gone. That inset line
+     is what fakes a glass bevel; without it a panel reads as a surface with
+     an edge rather than a pane floating over the page. */
+  --shadow-soft: 0 8px 24px oklch(0 0 0 / 28%);
+  --shadow-card: 0 10px 30px oklch(0 0 0 / 30%);
+  --shadow-card-strong: 0 14px 40px oklch(0 0 0 / 34%);
+  --shadow-card-xl: 0 16px 44px oklch(0 0 0 / 34%);
 
-  /* ── Project / Scene ── */
-  --project-glow-primary: rgba(18, 12, 32, 0.28);
-  --project-glow-secondary: rgba(10, 7, 20, 0.2);
-  --project-grid-line: color-mix(in oklab, var(--foreground) 10%, transparent);
-  --project-loader-track: color-mix(in oklab, var(--primary) 30%, transparent);
-  --project-loader-backdrop: color-mix(in oklab, var(--background) 50%, transparent);
-  --canvas-loader-track: rgba(96, 165, 250, 0.18);
-  --canvas-loader-head: #60a5fa;
-  --canvas-loader-text: #93c5fd;
+  /* ── Project / Scene ──
+     Only the treatment *around* the canvas is neutralised here. The two
+     Lightformer colours the scene reads are left blue on purpose: they light
+     the model itself, and retuning them would be redesigning the 3-D scene. */
+  --project-glow-primary: oklch(0 0 0 / 24%);
+  --project-glow-secondary: oklch(0 0 0 / 18%);
+  --project-grid-line: oklch(1 0 0 / 8%);
+  --project-loader-track: oklch(1 0 0 / 16%);
+  --project-loader-backdrop: color-mix(in oklab, var(--background) 60%, transparent);
+  --canvas-loader-track: oklch(1 0 0 / 14%);
+  --canvas-loader-head: oklch(0.9 0.002 80);
+  --canvas-loader-text: oklch(0.66 0.004 80);
   --project-scene-accent: #2563eb;
   --project-scene-ring: #93c5fd;
-  --project-scene-shadow: #08131d;
-  --project-scene-floor: radial-gradient(circle at 50% 24%, rgba(59, 130, 246, 0.18) 0%, rgba(37, 99, 235, 0.12) 34%, rgba(17, 24, 39, 0.46) 72%, rgba(3, 8, 14, 0.72) 100%);
-  --project-frame-border: rgba(96, 165, 250, 0.24);
-  --project-progress-glow: color-mix(in oklab, var(--primary) 45%, transparent);
+  --project-scene-floor: radial-gradient(
+    circle at 50% 30%,
+    oklch(0.26 0.003 80) 0%,
+    oklch(0.2 0.003 80) 46%,
+    oklch(0.155 0.003 80) 100%
+  );
+  --project-frame-border: oklch(1 0 0 / 12%);
+  --project-progress-glow: oklch(1 0 0 / 30%);
 
   /* ── Text ── */
-  --text-subtle: color-mix(in oklab, var(--muted-foreground) 72%, transparent);
-  --text-faint: color-mix(in oklab, var(--muted-foreground) 50%, transparent);
+  --text-subtle: oklch(0.58 0.004 80);
+  --text-faint: oklch(0.46 0.004 80);
+
+  /* ── Activity ramp ──
+     Five steps for the contribution calendars. Achromatic on purpose: the
+     graph is dense, and any hue at that density turns into a colour field
+     rather than a reading of intensity. */
+  --activity-0: oklch(0.225 0.003 80);
+  --activity-1: oklch(0.36 0.003 80);
+  --activity-2: oklch(0.52 0.003 80);
+  --activity-3: oklch(0.72 0.002 80);
+  --activity-4: oklch(0.95 0.002 80);
 
   /* ── Skill icons ── */
-  --skill-icon-shadow-dark: drop-shadow(0 0 10px color-mix(in oklab, white 4%, transparent));
+  --skill-icon-shadow-dark: none;
 }
 
 @theme inline {
@@ -133,112 +160,70 @@ body {
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* ── Default (bluish dark) theme — matches screenshot ───────────────── */
+/* ── Core palette ────────────────────────────────────────────────────
+   Achromatic, with a trace of warmth (hue 80, chroma 0.003) so the greys
+   read as ink and paper at night rather than as a blue interface. The old
+   palette carried chroma 0.085 at hue 245 in --primary, which put a blue
+   cast on every button, ring, link and chart step on the site.
+
+   There is deliberately no accent hue. --primary is near-white: emphasis is
+   carried by contrast and weight, not by colour. The one chromatic token
+   left is the availability green, and it appears twice on the whole page. */
 :root {
-  --background: #05080c;
-  --foreground: oklch(0.96 0.005 245);
+  --background: oklch(0.145 0.003 80);
+  --foreground: oklch(0.97 0.002 80);
 
-  --card: #09111a;
-  --card-foreground: oklch(0.96 0.005 245);
+  --card: oklch(0.185 0.003 80);
+  --card-foreground: oklch(0.97 0.002 80);
 
-  --popover: #09111a;
-  --popover-foreground: oklch(0.96 0.005 245);
+  --popover: oklch(0.195 0.003 80);
+  --popover-foreground: oklch(0.97 0.002 80);
 
-  --primary: oklch(0.64 0.085 245);
-  --primary-foreground: oklch(0.12 0.018 245);
+  --primary: oklch(0.97 0.002 80);
+  --primary-foreground: oklch(0.16 0.003 80);
 
-  --secondary: #0c141d;
-  --secondary-foreground: oklch(0.82 0.02 240);
+  --secondary: oklch(0.215 0.003 80);
+  --secondary-foreground: oklch(0.97 0.002 80);
 
-  --muted: #0c141d;
-  --muted-foreground: oklch(0.62 0.015 240);
+  --muted: oklch(0.215 0.003 80);
+  /* 0.665 on 0.145 clears 7:1 — comfortably past AA for body text. */
+  --muted-foreground: oklch(0.665 0.004 80);
 
-  --accent: #101a24;
-  --accent-foreground: oklch(0.82 0.02 235);
+  --accent: oklch(0.245 0.003 80);
+  --accent-foreground: oklch(0.97 0.002 80);
 
-  --destructive: oklch(0.704 0.191 22.216);
+  --destructive: oklch(0.62 0.19 25);
 
-  --border: oklch(1 0 0 / 9%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.64 0.085 245);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.97 0.002 80);
 
-  --chart-1: oklch(0.66 0.09 240);
-  --chart-2: oklch(0.6 0.075 235);
-  --chart-3: oklch(0.52 0.055 235);
-  --chart-4: oklch(0.38 0.035 235);
-  --chart-5: oklch(0.24 0.02 235);
+  --chart-1: var(--activity-4);
+  --chart-2: var(--activity-3);
+  --chart-3: var(--activity-2);
+  --chart-4: var(--activity-1);
+  --chart-5: var(--activity-0);
 
-  --radius: 0.625rem;
+  /* 0.625rem read as a soft app card. 0.5rem is a corner, not a pill. */
+  --radius: 0.5rem;
 
-  --sidebar: #09111a;
-  --sidebar-foreground: oklch(0.96 0.005 245);
-  --sidebar-primary: oklch(0.64 0.085 245);
-  --sidebar-primary-foreground: oklch(0.12 0.018 245);
-  --sidebar-accent: #111923;
-  --sidebar-accent-foreground: oklch(0.82 0.015 240);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.64 0.085 245);
-
-  --surface-available-text: #86efac;
+  --sidebar: oklch(0.185 0.003 80);
+  --sidebar-foreground: oklch(0.97 0.002 80);
+  --sidebar-primary: oklch(0.97 0.002 80);
+  --sidebar-primary-foreground: oklch(0.16 0.003 80);
+  --sidebar-accent: oklch(0.245 0.003 80);
+  --sidebar-accent-foreground: oklch(0.97 0.002 80);
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: oklch(0.97 0.002 80);
 }
 
-/* ── Legacy .dark class support ─────────────────────────────────────── */
-.dark {
-  --background: #05080c;
-  --foreground: oklch(0.96 0.005 245);
-
-  --card: #09111a;
-  --card-foreground: oklch(0.96 0.005 245);
-
-  --popover: #09111a;
-  --popover-foreground: oklch(0.96 0.005 245);
-
-  --primary: oklch(0.64 0.085 245);
-  --primary-foreground: oklch(0.12 0.018 245);
-
-  --secondary: #0c141d;
-  --secondary-foreground: oklch(0.82 0.02 240);
-
-  --muted: #0c141d;
-  --muted-foreground: oklch(0.62 0.015 240);
-
-  --accent: #101a24;
-  --accent-foreground: oklch(0.82 0.02 235);
-
-  --destructive: oklch(0.704 0.191 22.216);
-
-  --border: oklch(1 0 0 / 9%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.64 0.085 245);
-
-  --chart-1: oklch(0.66 0.09 240);
-  --chart-2: oklch(0.6 0.075 235);
-  --chart-3: oklch(0.52 0.055 235);
-  --chart-4: oklch(0.38 0.035 235);
-  --chart-5: oklch(0.24 0.02 235);
-
-  --sidebar: #09111a;
-  --sidebar-foreground: oklch(0.96 0.005 245);
-  --sidebar-primary: oklch(0.64 0.085 245);
-  --sidebar-primary-foreground: oklch(0.12 0.018 245);
-  --sidebar-accent: #111923;
-  --sidebar-accent-foreground: oklch(0.82 0.015 240);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.64 0.085 245);
-
-  --journey-card-bg: rgba(9, 17, 26, 0.96);
-  --journey-card-border: rgba(96, 165, 250, 0.1);
-  --journey-card-arrow: rgba(9, 17, 26, 0.96);
-  --journey-line-color: rgba(96, 165, 250, 0.14);
-  --journey-icon-bg: rgba(5, 9, 13, 0.98);
-  --journey-icon-fg: #93c5fd;
-  --journey-icon-ring: rgba(96, 165, 250, 0.16);
-  --line-color: rgba(96, 165, 250, 0.14);
-  --surface-available-bg: rgba(16, 185, 129, 0.1);
-  --surface-available-border: rgba(16, 185, 129, 0.28);
-  --surface-available-text: #86efac;
-  --surface-available-dot: #34d399;
-}
+/*
+  The .dark block that used to sit here restated every token above. Since
+  <html> always carries the class it shadowed :root entirely, so the :root
+  values were dead and any edit had to be made twice or the two drifted.
+  The site is dark-only; :root is now the single source. The `dark` variant
+  itself still resolves, because the class is still on <html>.
+*/
 
 @layer base {
   * {
