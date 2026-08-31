@@ -131,7 +131,10 @@ export default function RootLayout({
               </a>
               <Header />
               {/* CONTENT */}
-              <main id="main-content" className="w-full flex-1 pt-32 pb-24 sm:pb-10">
+              {/* pt was 32 (8rem) to clear a fixed header. The header is
+                  sticky now, so it occupies flow space and this only needs
+                  to be the gap between the bar and the first section. */}
+              <main id="main-content" className="w-full flex-1 pt-14 pb-24 sm:pt-20 sm:pb-10">
                 <div className="w-full">{children}</div>
               </main>
               <Footer />
