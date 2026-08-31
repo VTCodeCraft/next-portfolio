@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Sora } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "lenis/dist/lenis.css";
@@ -26,14 +26,26 @@ const ogImage = {
   type: "image/png",
 };
 
-const manrope = Manrope({
+/*
+  One family and its mono companion, rather than two unrelated sans faces.
+
+  Sora is a geometric display with wide apertures and decorative terminals;
+  at heading sizes it gave the site a startup-deck voice. Geist is a neutral
+  grotesque drawn for developer tooling — it has real tabular figures, which
+  the dates, durations and contribution counts here depend on, and Geist Mono
+  is metrically related, so labels set in mono sit on the same rhythm as the
+  prose instead of looking pasted in from another system.
+*/
+const geistSans = Geist({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap",
 });
 
-const sora = Sora({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-code",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -104,7 +116,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body
-        className={`${manrope.className} ${manrope.variable} ${sora.variable} relative flex min-h-screen min-h-dvh flex-col overflow-x-hidden bg-background text-foreground transition-colors duration-300`}
+        className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} relative flex min-h-screen min-h-dvh flex-col overflow-x-hidden bg-background text-foreground`}
         suppressHydrationWarning
       >
         <div className="dark-canvas absolute inset-0 -z-20 hidden dark:block" />

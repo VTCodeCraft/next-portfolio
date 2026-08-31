@@ -264,7 +264,7 @@ export default function Skills() {
             <dt className="type-eyebrow w-[5.5rem] shrink-0 tracking-[0.14em]">
               {group.label}
             </dt>
-            <dd className="m-0 text-[0.76rem] leading-relaxed text-muted-foreground">
+            <dd className="m-0 type-meta text-muted-foreground">
               {group.items}
             </dd>
           </div>

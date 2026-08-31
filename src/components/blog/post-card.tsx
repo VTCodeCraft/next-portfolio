@@ -53,7 +53,7 @@ export function PostCard({ post }: PostCardProps) {
         </div>
 
         <div className="space-y-2">
-          <h2 className="font-heading text-2xl font-semibold leading-tight tracking-[-0.05em] text-foreground transition group-hover:text-primary sm:text-[2rem]">
+          <h2 className="type-statement text-foreground transition group-hover:text-primary">
             {post.title}
           </h2>
           <p className="line-clamp-3 text-sm leading-7 text-muted-foreground">

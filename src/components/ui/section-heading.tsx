@@ -54,7 +54,7 @@ export default function SectionHeading({
 
         <Heading
           className={clsx(
-            "font-heading text-3xl font-semibold tracking-[-0.04em] text-foreground sm:text-4xl",
+            "type-h2 text-foreground",
             rule ? "shrink-0 text-left" : "text-center lg:text-left",
           )}
         >

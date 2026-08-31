@@ -95,7 +95,7 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
     stay on the screen for the life of the page — hence waiting for the face
     and letting the change of this value trigger a redraw.
 
-    next/font sets --font-display on <body>, not on <html>: reading it off the
+    next/font sets --font-body on <body>, not on <html>: reading it off the
     documentElement returns an empty string.
   */
   const [fontFamily, setFontFamily] = useState(FALLBACK_FONT);
@@ -107,7 +107,7 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
       if (cancelled) return;
 
       const family = getComputedStyle(document.body)
-        .getPropertyValue("--font-display")
+        .getPropertyValue("--font-body")
         .trim();
 
       if (family) setFontFamily(family);

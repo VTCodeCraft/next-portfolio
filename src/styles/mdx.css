@@ -13,9 +13,9 @@
 .mdx-content h3,
 .mdx-content h4 {
   color: var(--foreground);
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: -0.025em;
   line-height: 1.18;
   scroll-margin-top: 7rem;
 }

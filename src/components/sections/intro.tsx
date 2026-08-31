@@ -35,7 +35,7 @@ export default function Intro() {
               is always present in the markup and the animation is decorative.
               Removing this wrapper would ship an empty h1 to crawlers.
             */}
-            <h1 className="mt-7 font-heading text-[2rem] font-semibold leading-[1.04] tracking-[-0.045em] text-foreground sm:text-[2.75rem] lg:text-[3.25rem]">
+            <h1 className="type-display mt-7 text-foreground">
               <span className="sr-only">
                 Vishesh Tripathi — Full-stack engineer
               </span>
@@ -55,11 +55,11 @@ export default function Intro() {
               </span>
             </h1>
 
-            <p className="mt-3 font-heading text-base text-muted-foreground sm:text-lg">
+            <p className="type-lede mt-3 text-muted-foreground">
               Full-stack engineer
             </p>
 
-            <div className="mt-6 space-y-3 text-[0.95rem] text-foreground sm:text-base">
+            <div className="type-body mt-6 space-y-3 text-foreground">
               <p className="type-prose">
                 Hey, I&rsquo;m a Full-Stack AI Developer with experience
                 building web applications, API-driven systems, Chrome
@@ -94,13 +94,13 @@ export default function Intro() {
             <div className="mt-8 flex flex-col items-stretch gap-2.5 sm:flex-row sm:items-center">
               <Link
                 href="/projects"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 text-[0.85rem] font-medium text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
+                className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 type-button text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
               >
                 View my work
               </Link>
               <a
                 href="#contact"
-                className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 text-[0.85rem] font-medium text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
+                className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 type-button text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
               >
                 Get in touch
               </a>

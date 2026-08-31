@@ -55,7 +55,7 @@ function Calendar({
           ))}
         </ul>
       ) : (
-        <p className="rounded-lg border border-dashed border-border px-4 py-5 text-center text-[0.72rem] text-muted-foreground">
+        <p className="rounded-lg border border-dashed border-border px-4 py-5 text-center type-meta text-muted-foreground">
           {label} activity is unavailable right now.
         </p>
       )}

@@ -36,7 +36,7 @@ export default function BuildNotes({ notes }: { notes: Note[] }) {
               href={`/blog/${note.slugAsParams}`}
               className="group flex min-h-11 flex-wrap items-baseline justify-between gap-x-5 gap-y-1 py-3.5"
             >
-              <span className="text-[0.88rem] leading-snug text-foreground transition group-hover:text-primary">
+              <span className="type-body leading-snug text-foreground transition group-hover:text-primary">
                 {note.title}
               </span>
               <span className="type-eyebrow flex shrink-0 items-baseline gap-2.5 tabular-nums tracking-[0.12em]">

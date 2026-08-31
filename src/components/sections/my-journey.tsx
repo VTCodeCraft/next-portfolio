@@ -28,13 +28,13 @@ export default function MyJourney() {
               </p>
 
               <div>
-                <h3 className="text-[0.88rem] font-medium text-foreground">
+                <h3 className="type-body font-medium text-foreground">
                   {item.role}
                 </h3>
                 <p className="type-eyebrow mt-1 tracking-[0.14em]">
                   {item.company}
                 </p>
-                <p className="mt-2.5 text-[0.78rem] leading-relaxed text-muted-foreground">
+                <p className="mt-2.5 type-meta text-muted-foreground">
                   {item.description}
                 </p>
               </div>
@@ -48,13 +48,13 @@ export default function MyJourney() {
               {educationData.date}
             </p>
             <div>
-              <h3 className="text-[0.88rem] font-medium text-foreground">
+              <h3 className="type-body font-medium text-foreground">
                 {educationData.degree}
               </h3>
               <p className="type-eyebrow mt-1 tracking-[0.14em]">
                 {educationData.school}
               </p>
-              <p className="mt-2.5 text-[0.78rem] leading-relaxed text-muted-foreground">
+              <p className="mt-2.5 type-meta text-muted-foreground">
                 {educationData.detail}
               </p>
             </div>

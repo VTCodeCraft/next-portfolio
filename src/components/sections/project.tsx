@@ -159,7 +159,7 @@ export default function Project() {
 
               <ul className="animatedText space-y-1.5">
                 {currentProject.points.map((point) => (
-                  <li key={point} className="flex gap-2 text-[0.72rem] leading-relaxed text-muted-foreground">
+                  <li key={point} className="flex gap-2 type-meta text-muted-foreground">
                     <span className="mt-px shrink-0 text-primary">▸</span>
                     <span>{point}</span>
                   </li>
@@ -200,7 +200,7 @@ export default function Project() {
                   href={currentProject.repoHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-[0.72rem] text-muted-foreground transition hover:text-foreground"
+                  className="inline-flex items-center gap-1.5 type-meta text-muted-foreground transition hover:text-foreground"
                 >
                   <FaGithub />
                   Repo

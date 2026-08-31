@@ -50,7 +50,7 @@ export default function IdentityPanel() {
           <div key={item.label} className="border-t border-border py-2.5 last:border-b">
             <dt className="type-eyebrow tracking-[0.16em]">{item.label}</dt>
             <dd
-              className={`m-0 mt-1 text-[0.78rem] text-muted-foreground ${
+              className={`m-0 mt-1 type-meta text-muted-foreground ${
                 "mono" in item && item.mono ? "font-mono tabular-nums" : ""
               }`}
             >

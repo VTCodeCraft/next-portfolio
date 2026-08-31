@@ -15,13 +15,13 @@ export default function Contact() {
 
       <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,20rem)] lg:gap-12">
         <div>
-          <p className="font-heading text-2xl font-medium leading-[1.3] tracking-[-0.035em] text-foreground sm:text-[1.75rem]">
+          <p className="type-statement text-foreground">
             Have something
             <br />
             worth building?
           </p>
 
-          <p className="type-prose mt-4 text-[0.88rem] text-muted-foreground">
+          <p className="type-prose type-body mt-4 text-muted-foreground">
             Open to internships, full-time roles and collaborations. I usually
             reply within a day.
           </p>
@@ -29,7 +29,7 @@ export default function Contact() {
           <div className="mt-7 flex flex-col items-stretch gap-2.5 sm:flex-row sm:items-center">
             <a
               href="mailto:work.vishesh12.05@gmail.com"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 text-[0.85rem] font-medium text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 type-button text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
             >
               Email me
             </a>
@@ -37,7 +37,7 @@ export default function Contact() {
               href="https://x.com/VTCodeCraft_"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 text-[0.85rem] font-medium text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 type-button text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
             >
               Connect on X
             </a>

@@ -118,8 +118,12 @@ body {
 }
 
 @theme inline {
-  --font-heading: var(--font-display);
+  /* One family throughout. `font-heading` is kept as a distinct utility so
+     call sites still read semantically, but display and body differ by
+     weight and tracking rather than by typeface. */
+  --font-heading: var(--font-body);
   --font-sans: var(--font-body);
+  --font-mono: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -295,15 +299,76 @@ body {
     margin-right: calc(50% - 50vw);
   }
 
-  /* Small uppercase label above a heading. Positive tracking, weight 500 —
-     the weight the scale was missing. */
+  /* ── Type scale ───────────────────────────────────────────────────
+     Seven roles, defined once. Before this, sizes were written inline at
+     every call site — text-[0.95rem], text-[0.88rem], text-[0.78rem],
+     text-[0.72rem] — which meant the site had no scale, just a collection
+     of one-off measurements that happened to look adjacent.
+
+     Steps are ~1.18x apart. Tracking tightens as size grows, which is how
+     optical sizing works: large text needs negative tracking to stop it
+     looking loose, small text needs none.
+
+       type-display   hero name
+       type-statement large pull line (the contact question)
+       type-h2        section headings
+       type-h3        project and card titles
+       type-lede      hero subtitle, section intros
+       type-body      running prose
+       type-meta      dates, counts, stack lists, captions
+       type-button    button and pill labels
+       type-eyebrow   uppercase mono labels and indices          */
+
+  .type-display {
+    font-size: clamp(2.125rem, 1.55rem + 2.6vw, 3rem);
+    @apply font-heading font-semibold leading-[1.05] tracking-[-0.035em];
+  }
+
+  /* Sits clearly below the hero: there is one display-scale element per
+     page, and this is not it. */
+  .type-statement {
+    font-size: clamp(1.5rem, 1.32rem + 0.8vw, 1.875rem);
+    @apply font-heading font-medium leading-[1.25] tracking-[-0.028em];
+  }
+
+  /* Was text-3xl/4xl semibold. A 36px section heading competes with the
+     hero for the top of the hierarchy; at this size the heading labels the
+     section and the content underneath stays the loudest thing in it. */
+  .type-h2 {
+    font-size: clamp(1.3rem, 1.2rem + 0.45vw, 1.5rem);
+    @apply font-heading font-semibold leading-[1.2] tracking-[-0.022em];
+  }
+
+  .type-h3 {
+    @apply font-heading text-[1.0625rem] font-medium leading-[1.35] tracking-[-0.015em];
+  }
+
+  .type-lede {
+    @apply text-[1.0625rem] font-normal leading-[1.6] tracking-[-0.008em];
+  }
+
+  .type-body {
+    @apply text-[0.9375rem] leading-[1.7] tracking-[-0.003em];
+  }
+
+  .type-meta {
+    @apply text-[0.8125rem] leading-[1.5];
+  }
+
+  .type-button {
+    @apply text-[0.8125rem] font-medium leading-none tracking-[-0.005em];
+  }
+
+  /* Tracking pulled from 0.28em to 0.16em. A quarter-em of letter-spacing on
+     a mono face reads as a stylistic effect; this is wide enough to separate
+     uppercase forms and no wider. */
   .type-eyebrow {
-    @apply font-mono text-[0.7rem] font-medium uppercase tracking-[0.28em];
+    @apply font-mono text-[0.6875rem] font-medium uppercase tracking-[0.16em];
   }
 
   /* Long-form reading measure. ~65ch is the readable ceiling. */
   .type-prose {
-    @apply max-w-[65ch] leading-relaxed;
+    @apply max-w-[65ch];
   }
 }
 

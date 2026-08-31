@@ -40,7 +40,7 @@ export default function SelectedWork() {
           <li key={project.shortTitle} className="border-t border-border">
             <article className="group relative py-6 transition-colors">
               <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
-                <h3 className="font-heading text-lg font-medium tracking-[-0.03em] text-foreground transition-colors group-hover:text-primary">
+                <h3 className="type-h3 text-foreground transition-colors group-hover:text-primary">
                   {/*
                     Stretched link: the whole row is the primary target, while
                     the repo link below stays independently clickable.
@@ -60,7 +60,7 @@ export default function SelectedWork() {
                 </span>
               </div>
 
-              <p className="type-prose mt-2.5 text-[0.88rem] text-muted-foreground">
+              <p className="type-prose mt-2.5 type-body text-muted-foreground">
                 {project.summary}
               </p>
 
@@ -69,7 +69,7 @@ export default function SelectedWork() {
               </p>
 
               <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-                <p className="text-[0.78rem] leading-relaxed text-[var(--text-subtle)]">
+                <p className="type-meta text-[var(--text-subtle)]">
                   {project.outcome}
                 </p>
 
