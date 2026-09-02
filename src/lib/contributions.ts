@@ -42,17 +42,32 @@ function toLevels(days: { date: string; count: number }[]): ContributionDay[] {
 }
 
 /**
- * GitHub exposes the contribution calendar through the GraphQL API only, which
- * requires a token. Without GITHUB_TOKEN set the section degrades rather than
- * showing placeholder squares.
+ * GitHub's own contribution calendar is GraphQL-only and needs a token, so
+ * this used to return null whenever GITHUB_TOKEN was unset — which is why the
+ * section has been rendering its unavailable state in production.
+ *
+ * There are two sources now. With a token, GraphQL is preferred: it is
+ * first-party and it can include private contributions. Without one, the
+ * public aggregator is used, which reads the same calendar GitHub renders on
+ * the profile page. Either way the fetch happens on the server and nothing
+ * reaches the browser but the resulting day list.
  */
 export async function getGithubCalendar(
   login: string,
 ): Promise<ContributionCalendar | null> {
   const token = process.env.GITHUB_TOKEN;
 
-  if (!token) return null;
+  const calendar = token
+    ? await getGithubCalendarFromGraphql(login, token)
+    : null;
 
+  return calendar ?? getGithubCalendarFromPublicApi(login);
+}
+
+async function getGithubCalendarFromGraphql(
+  login: string,
+  token: string,
+): Promise<ContributionCalendar | null> {
   const query = `
     query($login: String!) {
       user(login: $login) {
@@ -94,6 +109,52 @@ export async function getGithubCalendar(
     );
 
     return { total: calendar.totalContributions, days: toLevels(days) };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Public aggregator over the same calendar GitHub renders on a profile page.
+ * No credentials, so there is no secret to leak and nothing to configure.
+ *
+ * Its `level` field is GitHub's own bucketing, so it is used as-is rather than
+ * re-derived: the percentile split in toLevels is a reasonable guess, but this
+ * is the real thing.
+ */
+async function getGithubCalendarFromPublicApi(
+  login: string,
+): Promise<ContributionCalendar | null> {
+  type PublicDay = { date: string; count: number; level: number };
+
+  try {
+    const response = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(login)}?y=last`,
+      { next: { revalidate: DAY } },
+    );
+
+    if (!response.ok) return null;
+
+    const json = (await response.json()) as {
+      total?: Record<string, number>;
+      contributions?: PublicDay[];
+    };
+
+    const contributions = json.contributions;
+
+    if (!Array.isArray(contributions) || contributions.length === 0) return null;
+
+    const days = contributions.map((day) => ({
+      date: day.date,
+      count: day.count,
+      level: Math.min(4, Math.max(0, day.level ?? 0)),
+    }));
+
+    const total =
+      json.total?.lastYear ??
+      days.reduce((sum, day) => sum + day.count, 0);
+
+    return { total, days };
   } catch {
     return null;
   }

@@ -1,61 +1,49 @@
 import SectionHeading from "@/components/ui/section-heading";
+import ContributionCalendar from "@/components/ui/contribution-calendar";
 import {
   getGithubCalendar,
   getLeetcodeCalendar,
-  type ContributionCalendar,
+  type ContributionCalendar as Calendar,
 } from "@/lib/contributions";
 
-const LEVEL_CLASS = [
-  "bg-[var(--surface-muted)] ring-1 ring-inset ring-border",
-  "bg-[color-mix(in_oklab,var(--primary)_28%,transparent)]",
-  "bg-[color-mix(in_oklab,var(--primary)_48%,transparent)]",
-  "bg-[color-mix(in_oklab,var(--primary)_72%,transparent)]",
-  "bg-primary",
-];
+const GITHUB_LOGIN = "VTCodeCraft";
 
-function Calendar({
+function Panel({
   label,
+  unit,
   calendar,
   href,
 }: {
   label: string;
-  calendar: ContributionCalendar | null;
+  unit: string;
+  calendar: Calendar | null;
   href: string;
 }) {
   return (
     <div>
-      <div className="mb-2 flex items-baseline gap-3">
+      <div className="mb-3 flex items-baseline gap-3">
         <a
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="type-eyebrow inline-flex min-h-11 items-center tracking-[0.14em] text-muted-foreground transition hover:text-foreground"
+          className="type-eyebrow inline-flex items-center text-muted-foreground transition-colors hover:text-foreground"
         >
           {label}
         </a>
+
         <span aria-hidden className="h-px flex-1 translate-y-[-0.2em] bg-border" />
+
         {calendar ? (
-          <span className="type-eyebrow tabular-nums tracking-[0.12em]">
-            {calendar.total.toLocaleString()}
+          <span className="type-meta tabular-nums text-[var(--text-subtle)]">
+            {calendar.total.toLocaleString()} in the last year
           </span>
         ) : null}
       </div>
 
       {calendar ? (
-        <ul
-          className="flex list-none gap-[3px] overflow-hidden p-0"
-          style={{ flexDirection: "column", flexWrap: "wrap", height: "calc(7 * 11px)" }}
-        >
-          {calendar.days.map((day) => (
-            <li
-              key={day.date}
-              title={`${day.count} on ${day.date}`}
-              className={`h-2 w-2 shrink-0 rounded-[2px] ${LEVEL_CLASS[day.level]}`}
-            />
-          ))}
-        </ul>
+        <ContributionCalendar calendar={calendar} unit={unit} />
       ) : (
-        <p className="rounded-lg border border-dashed border-border px-4 py-5 text-center type-meta text-muted-foreground">
+        <p className="type-meta rounded-md border border-dashed border-border px-4 py-5 text-center text-muted-foreground">
           {label} activity is unavailable right now.
         </p>
       )}
@@ -70,8 +58,8 @@ function Calendar({
  */
 export default async function Contributions() {
   const [github, leetcode] = await Promise.all([
-    getGithubCalendar("VTCodeCraft"),
-    getLeetcodeCalendar("VTCodeCraft"),
+    getGithubCalendar(GITHUB_LOGIN),
+    getLeetcodeCalendar(GITHUB_LOGIN),
   ]);
 
   if (!github && !leetcode) return null;
@@ -82,29 +70,32 @@ export default async function Contributions() {
         Contributions
       </SectionHeading>
 
-      <div className="space-y-6">
-        <Calendar
+      <div className="space-y-9">
+        <Panel
           label="GitHub"
+          unit="contribution"
           calendar={github}
-          href="https://github.com/VTCodeCraft"
+          href={`https://github.com/${GITHUB_LOGIN}`}
         />
-        <Calendar
+        <Panel
           label="LeetCode"
+          unit="submission"
           calendar={leetcode}
-          href="https://leetcode.com/u/VTCodeCraft/"
+          href={`https://leetcode.com/u/${GITHUB_LOGIN}/`}
         />
       </div>
 
-      <div className="mt-5 flex items-center justify-end gap-1.5">
-        <span className="type-eyebrow tracking-[0.12em]">Less</span>
-        {LEVEL_CLASS.map((level, index) => (
+      <div className="mt-6 flex items-center justify-end gap-1.5">
+        <span className="type-eyebrow text-[var(--text-faint)]">Less</span>
+        {[0, 1, 2, 3, 4].map((level) => (
           <span
-            key={index}
+            key={level}
             aria-hidden
-            className={`h-2 w-2 rounded-[2px] ${level}`}
+            className="h-[10px] w-[10px] rounded-[2px]"
+            style={{ backgroundColor: `var(--activity-${level})` }}
           />
         ))}
-        <span className="type-eyebrow tracking-[0.12em]">More</span>
+        <span className="type-eyebrow text-[var(--text-faint)]">More</span>
       </div>
     </section>
   );

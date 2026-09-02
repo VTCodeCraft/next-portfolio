@@ -41,7 +41,7 @@ import { DemoComputer } from "./demo-computer";
   Pitch stays near zero so the screen remains upright; the camera's own
   elevation supplies the downward angle.
 */
-const LAPTOP_YAW = 4.25;
+const LAPTOP_YAW = 4.45;
 
 /* ─── ambient particle ring (decorative mesh) ────────────────────── */
 function LaptopRig() {
