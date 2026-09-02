@@ -94,13 +94,13 @@ export default function Intro() {
             <div className="mt-8 flex flex-col items-stretch gap-2.5 sm:flex-row sm:items-center">
               <Link
                 href="/projects"
-                className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 type-button text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
+                className="inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-6 type-button text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
               >
                 View my work
               </Link>
               <a
                 href="#contact"
-                className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 type-button text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
+                className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-6 type-button text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
               >
                 Get in touch
               </a>

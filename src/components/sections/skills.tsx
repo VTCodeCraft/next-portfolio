@@ -281,7 +281,7 @@ export default function Skills() {
 
             setTiles(shuffleTiles(INITIAL_TILES, cols, TOTAL));
           }}
-          className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 text-[0.78rem] font-medium text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
+          className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-6 type-button text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
         >
           Shuffle
         </button>

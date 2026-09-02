@@ -29,7 +29,7 @@ export default function Contact() {
           <div className="mt-7 flex flex-col items-stretch gap-2.5 sm:flex-row sm:items-center">
             <a
               href="mailto:work.vishesh12.05@gmail.com"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-primary px-6 type-button text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
+              className="inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-6 type-button text-primary-foreground transition hover:opacity-90 active:scale-[0.98]"
             >
               Email me
             </a>
@@ -37,7 +37,7 @@ export default function Contact() {
               href="https://x.com/VTCodeCraft_"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-border px-6 type-button text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
+              className="inline-flex min-h-11 items-center justify-center rounded-md border border-border px-6 type-button text-muted-foreground transition hover:border-primary hover:text-foreground active:scale-[0.98]"
             >
               Connect on X
             </a>
