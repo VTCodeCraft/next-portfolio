@@ -48,11 +48,20 @@ export default function ContributionCalendar({ calendar, unit }: Props) {
   const weekCount = Math.ceil(cells.length / 7);
 
   /*
-    A month is labelled at the first column that begins it. The label is
-    skipped in the final column, where there is no room for the text to sit
-    without running past the end of the grid.
+    A month is labelled at the first column that begins it, with two
+    suppressions.
+
+    The final column is never labelled: the text would run past the end of
+    the grid.
+
+    The opening column is only labelled if the range actually starts near the
+    first of that month. A year window normally opens mid-month, so labelling
+    that stub puts its name one column away from the next month's and the two
+    words collide — and suppressing the *collision* instead costs the second
+    month its label, which is the more useful of the two.
   */
   const monthLabels: { week: number; label: string }[] = [];
+  const opensNearMonthStart = utc(days[0].date).getUTCDate() <= 7;
   let lastMonth = -1;
 
   for (let week = 0; week < weekCount; week += 1) {
@@ -62,11 +71,15 @@ export default function ContributionCalendar({ calendar, unit }: Props) {
 
     const month = utc(day.date).getUTCMonth();
 
-    if (month !== lastMonth) {
-      lastMonth = month;
-      if (week < weekCount - 1) {
-        monthLabels.push({ week, label: monthFormat.format(utc(day.date)) });
-      }
+    if (month === lastMonth) continue;
+
+    lastMonth = month;
+
+    const suppressed =
+      week === weekCount - 1 || (week === 0 && !opensNearMonthStart);
+
+    if (!suppressed) {
+      monthLabels.push({ week, label: monthFormat.format(utc(day.date)) });
     }
   }
 
