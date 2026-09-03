@@ -140,6 +140,29 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
 
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
+    /*
+      White balance for the portrait.
+
+      This surface is both the screen's map and its emissiveMap, so it is the
+      brightest thing in the scene and Bloom spreads it across the machine's
+      body. The source photograph is lit blue — measured over the whole image,
+      its mean is r44 g44 b56 — and that cast was accounting for essentially
+      all of the scene's blue: the rendered frame measured a blue excess of
+      10.9 against the image's own 11.6, while the two tinted lights together
+      contributed only 2.
+
+      A multiply pass is used rather than per-pixel arithmetic: getImageData
+      over 1536x960 would run on the main thread every time the clock ticks.
+      This trims blue and a little green, which neutralises the cast without
+      touching the portrait's skin tones the way a saturation cut would.
+
+      Applied before the clock is drawn, so the clock stays neutral white.
+    */
+    ctx.globalCompositeOperation = "multiply";
+    ctx.fillStyle = "rgb(255, 249, 202)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = "source-over";
+
     if (now) {
       const { time, day } = formatClock(now);
       const cx = canvas.width * 0.26;
@@ -246,9 +269,17 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
         return;
       }
 
-      // Baseline environment response. Was 1.45, which made the HDR read as a
-      // bank of studio lights across every glossy surface.
-      material.envMapIntensity = 0.6;
+      /*
+        Baseline environment response. Was 1.45, which made the HDR read as a
+        bank of studio lights across every glossy surface, then 0.6.
+
+        Now 0.26, because the HDR is a night city and carries a strong blue
+        bias: measured off the framebuffer, the environment was supplying
+        about four fifths of the scene's blue cast, far more than the two
+        tinted lights were. The luminance it gave up is returned by the
+        neutral ambient and directional lights in project-scene.
+      */
+      material.envMapIntensity = 0.26;
       material.roughness ??= 0.7;
       material.metalness ??= 0.15;
 
@@ -297,9 +328,11 @@ export const DemoComputer: React.FC<DemoComputerProps> = (props) => {
           material.metalness = 0.82;
           // Still the most reflective parts of the model, but roughened and
           // pulled down from 1.9 so they read as brushed metal rather than
-          // mirrors picking up the environment.
+          // mirrors picking up the environment. Lowered again with the global
+          // baseline: being the most reflective, these picked up the most of
+          // the HDR's blue.
           material.roughness = 0.38;
-          material.envMapIntensity = 0.85;
+          material.envMapIntensity = 0.36;
           break;
         case "keyLight":
           material.metalness = 0;

@@ -21,11 +21,9 @@ import {
   BrightnessContrast,
   EffectComposer,
   HueSaturation,
-  ChromaticAberration,
   Vignette,
 } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
-import { ACESFilmicToneMapping, PCFSoftShadowMap, Vector2 } from "three";
+import { ACESFilmicToneMapping, PCFSoftShadowMap } from "three";
 import CanvasLoader from "../ui/canvas-loader";
 import { DemoComputer } from "./demo-computer";
 
@@ -280,15 +278,15 @@ export default function ProjectScene() {
   // `shadow` was dropped with ContactShadows: nothing read it, and its token
   // no longer exists, so it was resolving to a hard-coded fallback each sync.
   const [sceneColors, setSceneColors] = useState({
-    accent: "#2563eb",
-    ring: "#93c5fd",
+    accent: "#d7d3cc",
+    ring: "#b9b5ad",
   });
 
   useEffect(() => {
     const syncSceneColors = () => {
       setSceneColors({
-        accent: getThemeColor("--project-scene-accent", "#2563eb"),
-        ring: getThemeColor("--project-scene-ring", "#93c5fd"),
+        accent: getThemeColor("--project-scene-accent", "#d7d3cc"),
+        ring: getThemeColor("--project-scene-ring", "#b9b5ad"),
       });
     };
 
@@ -343,11 +341,14 @@ export default function ProjectScene() {
           Removing it also means no light casts shadow maps any more, so the
           per-frame shadow pass is gone; ContactShadows still grounds the model.
         */}
-        <ambientLight intensity={0.35} />
+        {/* Ambient and directional both raised, and both neutral white. They
+            take over the luminance that envMapIntensity used to supply, so
+            pulling the tinted HDR back does not leave the model dark. */}
+        <ambientLight intensity={0.62} />
 
         {/* Soft directional shaping only — enough to define edges, far too low
             to produce a specular hotspot. */}
-        <directionalLight position={[-5, 3.5, 2.5]} intensity={0.45} />
+        <directionalLight position={[-5, 3.5, 2.5]} intensity={0.72} />
 
         <pointLight
           position={[0, 3, -3]}
@@ -393,13 +394,21 @@ export default function ProjectScene() {
           */}
           {!isMobile && (
             <EffectComposer enableNormalPass={false} multisampling={0}>
-              <Bloom intensity={0.4} luminanceThreshold={0.8} luminanceSmoothing={0.1} mipmapBlur />
-              <ChromaticAberration
-                blendFunction={BlendFunction.NORMAL}
-                offset={new Vector2(0.0006, 0.0006)}
-              />
+              {/* Pulled back from 0.4: bloom is what carries the screen's
+                  colour out onto the body, so a softer halo keeps the
+                  wallpaper's tint on the wallpaper. */}
+              <Bloom intensity={0.28} luminanceThreshold={0.82} luminanceSmoothing={0.1} mipmapBlur />
+              {/*
+                Chromatic aberration splits the red and blue channels apart,
+                so every high-contrast edge in the scene gains a blue fringe
+                on one side. It was contributing most of the strongly-blue
+                pixels while adding nothing the composition needs — this is a
+                lens artefact simulated on an object that is not photographed.
+              */}
               <BrightnessContrast brightness={0.02} contrast={0.12} />
-              <HueSaturation saturation={0.18} />
+              {/* Was +0.18, which amplified whatever hue the HDR left on the
+                  model — including the cast this pass is trying to remove. */}
+              <HueSaturation saturation={0} />
               <Vignette eskil={false} offset={0.28} darkness={0.65} />
             </EffectComposer>
           )}
