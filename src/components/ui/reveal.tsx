@@ -4,6 +4,7 @@ import {
   LazyMotion,
   domAnimation,
   m,
+  useReducedMotion,
   type HTMLMotionProps,
 } from "framer-motion";
 import { forwardRef, type ReactNode } from "react";
@@ -38,13 +39,21 @@ function getTransition(delay = 0, duration = 0.5) {
   };
 }
 
-function getRevealProps({
-  delay = 0,
-  distance = 28,
-  duration = 0.5,
-  amount = 0.2,
-  once = true,
-}: RevealProps) {
+/*
+  Every reveal below collapses to "already there" when the visitor has asked
+  for reduced motion. Travel plus fade is exactly the kind of movement that
+  triggers vestibular symptoms, and none of it carries information — the
+  content is identical either way, so there is nothing to degrade gracefully
+  into. It simply starts visible.
+*/
+function getRevealProps(
+  { delay = 0, distance = 28, duration = 0.5, amount = 0.2, once = true }: RevealProps,
+  reduced: boolean | null,
+) {
+  if (reduced) {
+    return { initial: false as const, viewport: { once, amount } };
+  }
+
   return {
     initial: { opacity: 0, y: distance },
     whileInView: { opacity: 1, y: 0 },
@@ -56,11 +65,14 @@ function getRevealProps({
   };
 }
 
-function getMountRevealProps({
-  delay = 0,
-  distance = 28,
-  duration = 0.5,
-}: RevealProps) {
+function getMountRevealProps(
+  { delay = 0, distance = 28, duration = 0.5 }: RevealProps,
+  reduced: boolean | null,
+) {
+  if (reduced) {
+    return { initial: false as const };
+  }
+
   return {
     initial: { opacity: 0, y: distance },
     animate: { opacity: 1, y: 0 },
@@ -73,10 +85,12 @@ export const MotionSection = forwardRef<HTMLElement, MotionSectionProps>(
     { delay, distance, duration, amount, once, children, ...props },
     ref,
   ) {
+    const reduced = useReducedMotion();
+
     return (
       <m.section
         ref={ref}
-        {...getRevealProps({ delay, distance, duration, amount, once })}
+        {...getRevealProps({ delay, distance, duration, amount, once }, reduced)}
         {...props}
       >
         {children}
@@ -90,10 +104,12 @@ export const MotionDiv = forwardRef<HTMLDivElement, MotionDivProps>(
     { delay, distance, duration, amount, once, children, ...props },
     ref,
   ) {
+    const reduced = useReducedMotion();
+
     return (
       <m.div
         ref={ref}
-        {...getRevealProps({ delay, distance, duration, amount, once })}
+        {...getRevealProps({ delay, distance, duration, amount, once }, reduced)}
         {...props}
       >
         {children}
@@ -107,10 +123,12 @@ export const MotionArticle = forwardRef<HTMLElement, MotionArticleProps>(
     { delay, distance, duration, amount, once, children, ...props },
     ref,
   ) {
+    const reduced = useReducedMotion();
+
     return (
       <m.article
         ref={ref}
-        {...getRevealProps({ delay, distance, duration, amount, once })}
+        {...getRevealProps({ delay, distance, duration, amount, once }, reduced)}
         {...props}
       >
         {children}
@@ -124,10 +142,12 @@ export const MotionMountSection = forwardRef<HTMLElement, MotionSectionProps>(
     { delay, distance, duration, children, ...props },
     ref,
   ) {
+    const reduced = useReducedMotion();
+
     return (
       <m.section
         ref={ref}
-        {...getMountRevealProps({ delay, distance, duration })}
+        {...getMountRevealProps({ delay, distance, duration }, reduced)}
         {...props}
       >
         {children}
@@ -141,10 +161,12 @@ export const MotionMountDiv = forwardRef<HTMLDivElement, MotionDivProps>(
     { delay, distance, duration, children, ...props },
     ref,
   ) {
+    const reduced = useReducedMotion();
+
     return (
       <m.div
         ref={ref}
-        {...getMountRevealProps({ delay, distance, duration })}
+        {...getMountRevealProps({ delay, distance, duration }, reduced)}
         {...props}
       >
         {children}
@@ -158,10 +180,12 @@ export const MotionMountArticle = forwardRef<HTMLElement, MotionArticleProps>(
     { delay, distance, duration, children, ...props },
     ref,
   ) {
+    const reduced = useReducedMotion();
+
     return (
       <m.article
         ref={ref}
-        {...getMountRevealProps({ delay, distance, duration })}
+        {...getMountRevealProps({ delay, distance, duration }, reduced)}
         {...props}
       >
         {children}
