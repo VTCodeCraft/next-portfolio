@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /* If the frame has not reported a load by then, assume it is not coming and
    show the fallback rather than holding a skeleton indefinitely. */
@@ -17,6 +17,7 @@ type Props = {
 
 export default function ProjectLivePreview({ href, title, fallback }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const activateRef = useRef<HTMLButtonElement>(null);
   /*
     "idle" until the panel is near the viewport. The iframe is not in the tree
     before that, so opening /projects does not boot three external
@@ -25,6 +26,16 @@ export default function ProjectLivePreview({ href, title, fallback }: Props) {
   const [phase, setPhase] = useState<"idle" | "loading" | "ready" | "failed">(
     "idle",
   );
+  /*
+    The frame is inert until it is deliberately activated.
+
+    A live embed that takes the pointer on hover hijacks the page: the wheel
+    goes to whichever app the cursor happens to be crossing, so scrolling past
+    a preview scrolls the preview instead of the page, and the visitor has no
+    obvious way to get out. Requiring a click means the reader stays in
+    control of the page and only hands over the pointer on purpose.
+  */
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const node = containerRef.current;
@@ -56,19 +67,70 @@ export default function ProjectLivePreview({ href, title, fallback }: Props) {
     return () => clearTimeout(timer);
   }, [phase]);
 
+  /*
+    The activate button does not exist while the frame is live, so focusing it
+    in the same tick as the state change would find nothing. The flag defers
+    the focus to the effect below, after the button is back in the DOM. Only
+    the keyboard path sets it — someone who clicked away has already chosen
+    where they want to be.
+  */
+  const restoreFocus = useRef(false);
+
+  const release = useCallback(() => {
+    restoreFocus.current = true;
+    setIsActive(false);
+  }, []);
+
+  useEffect(() => {
+    if (isActive || !restoreFocus.current) return;
+
+    restoreFocus.current = false;
+    activateRef.current?.focus();
+  }, [isActive]);
+
+  /*
+    Two ways back out, and they cover different cases.
+
+    Escape only fires while focus is still in this document — a keydown inside
+    a cross-origin frame does not cross the boundary, so once the visitor has
+    genuinely clicked into the embedded app this handler stops hearing them.
+    That is why the caption advertises clicking away rather than Escape: a
+    pointer-down outside the panel always lands in this document, so it is the
+    path that works from any state.
+  */
+  useEffect(() => {
+    if (!isActive) return;
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") release();
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      const node = containerRef.current;
+
+      if (node && event.target instanceof Node && !node.contains(event.target)) {
+        setIsActive(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointerDown, true);
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointerDown, true);
+    };
+  }, [isActive, release]);
+
   if (phase === "failed") return <>{fallback}</>;
 
   return (
     <figure className="m-0">
-      {/*
-        The container is the whole treatment: one hairline, the page's own
-        radius, and clipping. No header bar, no hostname, no mock browser
-        chrome — those made the panel read as a debug tool, and the project
-        title above it already says what the site is.
-      */}
       <div
         ref={containerRef}
-        className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-border bg-[var(--surface-glass)]"
+        className={`relative aspect-[16/10] w-full overflow-hidden rounded-lg border bg-[var(--surface-glass)] transition-colors ${
+          isActive ? "border-[oklch(1_0_0/26%)]" : "border-border"
+        }`}
       >
         {phase === "loading" ? <Skeleton /> : null}
 
@@ -80,17 +142,19 @@ export default function ProjectLivePreview({ href, title, fallback }: Props) {
             referrerPolicy="no-referrer"
             /*
               Rendered at its own size rather than scaled down from a desktop
-              viewport. The scaled version looked like a product shot but was
-              useless to operate: at ~0.42 a 44px button becomes an 18px
-              target and body text lands under 6px. At 1:1 the site serves the
-              breakpoint that fits the panel and every control is real size.
+              viewport: at ~0.42 a 44px control becomes an 18px target and body
+              text lands under 6px, which is not something you can operate.
             */
-            className="absolute inset-0 h-full w-full border-0"
+            className={`absolute inset-0 h-full w-full border-0 ${
+              isActive ? "" : "pointer-events-none"
+            }`}
+            /* Out of the tab order until activated, so keyboard users are not
+               dropped into a third-party app while tabbing down the page. */
+            tabIndex={isActive ? 0 : -1}
             /*
-              Cross-origin, so allow-same-origin grants it nothing against
-              this page. allow-top-navigation stays out deliberately: an
-              embedded site cannot redirect the portfolio out from under the
-              visitor. The rest is what an app needs to actually function.
+              Cross-origin, so allow-same-origin grants it nothing against this
+              page. allow-top-navigation stays out deliberately: an embedded
+              site cannot redirect the portfolio out from under the visitor.
             */
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals"
             onLoad={() => setPhase("ready")}
@@ -100,15 +164,33 @@ export default function ProjectLivePreview({ href, title, fallback }: Props) {
             }}
           />
         ) : null}
+
+        {/*
+          Transparent click-catcher rather than a panel with a label on it.
+          The hint lives in the caption below, so nothing is printed over the
+          product itself — but this is a real button, so it is reachable and
+          operable from the keyboard.
+        */}
+        {!isActive ? (
+          <button
+            ref={activateRef}
+            type="button"
+            onClick={() => setIsActive(true)}
+            className="absolute inset-0 z-10 h-full w-full cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--foreground)]"
+          >
+            <span className="sr-only">
+              Activate the interactive preview of {title}
+            </span>
+          </button>
+        ) : null}
       </div>
 
-      {/*
-        The one concession to discoverability. A live embed is unusual enough
-        that people assume it is an image; this says otherwise without an
-        overlay sitting on top of the thing it describes.
-      */}
-      <figcaption className="type-eyebrow mt-3 text-[var(--text-faint)]">
-        Interactive preview
+      {/* Reads as status, not as an instruction pasted over the artwork. */}
+      <figcaption
+        aria-live="polite"
+        className="type-eyebrow mt-3 text-[var(--text-faint)]"
+      >
+        {isActive ? "Interactive · click away to release" : "Click to interact"}
       </figcaption>
     </figure>
   );
