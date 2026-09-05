@@ -66,29 +66,27 @@ export default function ProjectsPage() {
         </SectionHeading>
 
         {/*
-          The first two entries are two-column splits with the preview on
-          opposite sides; the last stacks. Running all three as alternating
-          splits is the arrangement that makes a project list read as
-          generated, so the pattern breaks before it establishes itself.
+          Two columns throughout, with the preview changing sides each time:
 
-          Clutchly is first and reads text-left, preview-right.
+            Clutchly       text | preview
+            HumanCaptcha   preview | text
+            EzMeet         text | preview
+
+          The alternation is what keeps three consecutive splits from reading
+          as a repeated template — the eye tracks the switch rather than
+          settling into one shape.
         */}
         <div className="space-y-20 lg:space-y-28">
-          {featuredProjects.map((project, index) => {
-            const isLast = index === featuredProjects.length - 1;
-
-            return (
-              <MotionMountDiv key={project.slug} delay={0.04 * index} distance={20}>
-                <FeaturedProject
-                  project={project}
-                  index={index}
-                  total={featuredProjects.length}
-                  variant={isLast ? "lead" : "split"}
-                  side={index % 2 === 0 ? "left" : "right"}
-                />
-              </MotionMountDiv>
-            );
-          })}
+          {featuredProjects.map((project, index) => (
+            <MotionMountDiv key={project.slug} delay={0.04 * index} distance={20}>
+              <FeaturedProject
+                project={project}
+                index={index}
+                total={featuredProjects.length}
+                side={index % 2 === 0 ? "left" : "right"}
+              />
+            </MotionMountDiv>
+          ))}
         </div>
       </section>
 

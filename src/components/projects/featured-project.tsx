@@ -8,13 +8,9 @@ type Props = {
   index: number;
   total: number;
   /**
-   * "split" is the two-column arrangement, "lead" stacks the visual under
-   * full-width text. The last featured entry uses lead so the section does
-   * not run three identical alternating rows, which is the arrangement that
-   * makes a project list read as a template.
+   * Which side the project information sits on at lg and up. The preview
+   * takes the other side, and the two alternate down the section.
    */
-  variant: "lead" | "split";
-  /** Only meaningful for "split": which side the text sits on. */
   side?: "left" | "right";
 };
 
@@ -22,7 +18,6 @@ export default function FeaturedProject({
   project,
   index,
   total,
-  variant,
   side = "left",
 }: Props) {
   const counter = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
@@ -68,26 +63,18 @@ export default function FeaturedProject({
     </div>
   );
 
-  if (variant === "lead") {
-    return (
-      <article className="grid gap-8">
-        <div className="lg:max-w-[46rem]">{text}</div>
-        <ProjectVisual project={project} priority />
-      </article>
-    );
-  }
-
   /*
     45/55 rather than an even split: the preview needs the larger share to
     read as a product rather than a thumbnail, while the text column lands
     near its comfortable measure at this page width. Below lg both columns
-    become full width and the preview follows the text, which is the order
-    the content should be read in anyway.
+    go full width and the preview follows the text, which is the order the
+    content should be read in anyway.
+
+    Columns are sized by role, not by position, so mirroring the layout does
+    not hand the preview the narrow track. Written as two whole class strings
+    because Tailwind resolves classes at build time and cannot see an
+    interpolated fragment.
   */
-  /* Columns are sized by role, not by position: the preview keeps the larger
-     share whichever side it lands on, so mirroring the layout does not shrink
-     it. Written as two whole class strings because Tailwind resolves classes
-     at build time and cannot see an interpolated fragment. */
   const columns =
     side === "right"
       ? "lg:grid-cols-[55fr_45fr]"
