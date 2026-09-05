@@ -11,7 +11,7 @@ const GITHUB_HREF = "https://github.com/VTCodeCraft";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Selected engineering work — an AI voice interview coach, a browser-native gesture CAPTCHA, a finance dashboard, a timezone-aware scheduling platform, and other shipped tools.",
+    "Selected engineering work — an AI voice interview coach, a browser-native gesture CAPTCHA, a timezone-aware scheduling platform, and other shipped tools.",
   alternates: { canonical: "/projects" },
   openGraph: {
     title: "Projects | Vishesh Tripathi",
@@ -66,23 +66,29 @@ export default function ProjectsPage() {
         </SectionHeading>
 
         {/*
-          The first entry uses the lead layout and the next two alternate.
-          Three identical alternating rows is the arrangement that makes a
-          project list read as generated, and it also gives the strongest
-          project the same weight as the third.
+          The first two entries are two-column splits with the preview on
+          opposite sides; the last stacks. Running all three as alternating
+          splits is the arrangement that makes a project list read as
+          generated, so the pattern breaks before it establishes itself.
+
+          Clutchly is first and reads text-left, preview-right.
         */}
         <div className="space-y-20 lg:space-y-28">
-          {featuredProjects.map((project, index) => (
-            <MotionMountDiv key={project.slug} delay={0.04 * index} distance={20}>
-              <FeaturedProject
-                project={project}
-                index={index}
-                total={featuredProjects.length}
-                variant={index === 0 ? "lead" : "split"}
-                side={index % 2 === 0 ? "left" : "right"}
-              />
-            </MotionMountDiv>
-          ))}
+          {featuredProjects.map((project, index) => {
+            const isLast = index === featuredProjects.length - 1;
+
+            return (
+              <MotionMountDiv key={project.slug} delay={0.04 * index} distance={20}>
+                <FeaturedProject
+                  project={project}
+                  index={index}
+                  total={featuredProjects.length}
+                  variant={isLast ? "lead" : "split"}
+                  side={index % 2 === 0 ? "left" : "right"}
+                />
+              </MotionMountDiv>
+            );
+          })}
         </div>
       </section>
 

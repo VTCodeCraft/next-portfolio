@@ -142,26 +142,18 @@ export const myProjects = [
     ],
   },
   {
-    title: "Finora - Finance Dashboard",
-    points: [
-      "Multi-route finance dashboard with analytics, transactions, and real-time currency conversion.",
-      "Built using Next.js 16, React 19, Zustand, and Recharts.",
-      "Responsive layout with role-based UI, dark mode, and persistent state management.",
-    ],
-    href: "https://finora.vtcodecraft.in/",
-    repoHref: "https://github.com/VTCodeCraft/finance-dashboard",
-    featured: true,
-    tags: [
-      { id: 1, name: "Next.js", icon: SiNextdotjs },
-      { id: 2, name: "React 19", icon: SiReact },
-      { id: 3, name: "Node.js", icon: SiNodedotjs },
-      { id: 4, name: "PostgreSQL", icon: SiPostgresql },
-      { id: 5, name: "Tailwind v4", icon: SiTailwindcss },
-      { id: 6, name: "TypeScript", icon: SiTypescript },
-    ],
-  },
-  {
     title: "EzMeet",
+    /*
+      Third featured slot on the projects route. Of what remains it is the
+      only project with both a live deployment and engineering detail beyond
+      a stack list — the other two entries have no deployment at all.
+
+      Deliberately no `flagship` rank: that field marks the homepage's curated
+      pair, which carry authored shortTitle/summary/stack/outcome copy that
+      this entry does not have. Without a rank it simply sorts last among the
+      featured three.
+    */
+    featured: true,
     points: [
       "Full-stack meeting scheduling platform productized from an internship prototype into a production-ready system.",
       "Timezone-aware UTC slot management with conflict-resolution logic for zero scheduling conflicts across time zones.",

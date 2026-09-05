@@ -11,8 +11,18 @@ type Flagship = (typeof myProjects)[number] & {
   flagship: number;
 };
 
+/*
+  Checks every field it claims. The previous version tested only for
+  "flagship" while asserting four more properties, so any entry given a rank
+  without the accompanying copy rendered here as a row with an empty heading
+  and three blank paragraphs — a silent failure that type-checked cleanly.
+*/
 const isFlagship = (project: (typeof myProjects)[number]): project is Flagship =>
-  "flagship" in project;
+  "flagship" in project &&
+  "shortTitle" in project &&
+  "summary" in project &&
+  "stack" in project &&
+  "outcome" in project;
 
 const flagships = myProjects
   .filter(isFlagship)

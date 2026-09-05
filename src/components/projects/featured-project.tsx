@@ -8,10 +8,10 @@ type Props = {
   index: number;
   total: number;
   /**
-   * "lead" stacks the visual under full-width text; "split" is the two-column
-   * arrangement. The first featured project uses lead so the section does not
-   * open with three identical alternating rows, which is the layout that makes
-   * a project list read as a template.
+   * "split" is the two-column arrangement, "lead" stacks the visual under
+   * full-width text. The last featured entry uses lead so the section does
+   * not run three identical alternating rows, which is the arrangement that
+   * makes a project list read as a template.
    */
   variant: "lead" | "split";
   /** Only meaningful for "split": which side the text sits on. */
@@ -77,10 +77,33 @@ export default function FeaturedProject({
     );
   }
 
+  /*
+    45/55 rather than an even split: the preview needs the larger share to
+    read as a product rather than a thumbnail, while the text column lands
+    near its comfortable measure at this page width. Below lg both columns
+    become full width and the preview follows the text, which is the order
+    the content should be read in anyway.
+  */
+  /* Columns are sized by role, not by position: the preview keeps the larger
+     share whichever side it lands on, so mirroring the layout does not shrink
+     it. Written as two whole class strings because Tailwind resolves classes
+     at build time and cannot see an interpolated fragment. */
+  const columns =
+    side === "right"
+      ? "lg:grid-cols-[55fr_45fr]"
+      : "lg:grid-cols-[45fr_55fr]";
+
   return (
-    <article className="grid items-start gap-8 lg:grid-cols-2 lg:gap-14">
-      <div className={side === "right" ? "lg:order-2" : undefined}>{text}</div>
-      <div className={side === "right" ? "lg:order-1" : undefined}>
+    <article
+      className={`grid items-start gap-8 lg:gap-12 xl:gap-16 ${columns}`}
+    >
+      {/* min-w-0 on both tracks: grid items default to an automatic minimum
+          of their content, so a single long unbreakable string anywhere
+          inside would widen the column rather than wrap or truncate. */}
+      <div className={`min-w-0 ${side === "right" ? "lg:order-2" : ""}`}>
+        {text}
+      </div>
+      <div className={`min-w-0 ${side === "right" ? "lg:order-1" : ""}`}>
         <ProjectVisual project={project} />
       </div>
     </article>

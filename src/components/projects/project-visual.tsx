@@ -2,20 +2,42 @@ import Image from "next/image";
 
 import type { ProjectView } from "@/lib/projects";
 
+import ProjectLivePreview from "./project-live-preview";
+
 /**
- * The visual slot for a featured project.
+ * The visual slot for a featured project, in order of preference:
  *
- * No project in the repository ships a screenshot yet, so this currently
- * always renders the fallback. That fallback is deliberately typographic: a
- * mocked-up browser window or an invented dashboard would be a picture of
- * software that does not exist, which is worse than no picture at all. What
- * it shows instead is true — the project's name and the stack it was built
- * with, set in the site's own faces.
+ *   1. a real screenshot, when one is set on the project
+ *   2. the deployed site itself, when the project has a live URL
+ *   3. a typographic nameplate
  *
- * When a real screenshot exists, set `image` on the project in lib/projects.ts
- * and it takes over with no change here.
+ * The live embed is the interesting case: it is the actual product rather
+ * than a picture of it, so it cannot go stale and cannot be flattering in a
+ * way the real thing is not. The nameplate stays as the floor — an invented
+ * dashboard mockup would be a picture of software that does not exist, which
+ * is worse than showing no picture.
  */
 export default function ProjectVisual({
+  project,
+  priority = false,
+}: {
+  project: ProjectView;
+  priority?: boolean;
+}) {
+  if (!project.image && project.liveHref) {
+    return (
+      <ProjectLivePreview
+        href={project.liveHref}
+        title={project.title}
+        fallback={<Plate project={project} />}
+      />
+    );
+  }
+
+  return <Plate project={project} priority={priority} />;
+}
+
+function Plate({
   project,
   priority = false,
 }: {
