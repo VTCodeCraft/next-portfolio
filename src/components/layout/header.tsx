@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import ThemeToggle from "@/components/ui/theme-toggle";
 import { links } from "@/lib/data";
 
 const RESUME_HREF =
@@ -28,7 +30,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background">
       <div className="page-shell">
-        <div className="flex h-16 items-center justify-between gap-4 sm:gap-8">
+        <div className="flex h-16 items-center justify-between gap-2 sm:gap-8">
           {/*
             Wordmark, not a logo chip. The boxed "VT" monogram this replaces
             was a decorative element standing in for a brand that is really
@@ -37,22 +39,65 @@ export default function Header() {
           <Link
             href="/"
             aria-label="Vishesh Tripathi, home"
-            className="group flex shrink-0 flex-col justify-center leading-none transition-opacity hover:opacity-70"
+            className="group flex shrink-0 items-center gap-2.5 transition-opacity hover:opacity-70"
           >
-            {/* Initials below sm: the full name plus three links plus the
-                résumé action does not fit a 375px row without crowding. */}
-            <span className="type-button text-foreground sm:hidden">VT</span>
-            <span className="hidden type-button text-foreground sm:block">
-              Vishesh Tripathi
+            {/*
+              Both marks are always in the DOM and crossfaded by theme rather
+              than swapped, so the change happens under the sweep instead of
+              popping at the frame where the class flips.
+
+              Two real assets, not one filtered: the supplied files are traced
+              artwork, and a CSS invert would not produce the other version of
+              it — it would produce a photographic negative.
+            */}
+            <span className="relative block h-7 w-7 shrink-0">
+              <Image
+                src="/images/logo_dark.svg"
+                alt=""
+                aria-hidden
+                fill
+                sizes="28px"
+                priority
+                /* next/image refuses SVG unless dangerouslyAllowSVG is on
+                   globally. These are our own assets and vectors gain
+                   nothing from the optimiser, so they bypass it here
+                   instead of loosening the setting for every image. */
+                unoptimized
+                className="object-contain opacity-0 transition-opacity duration-300 dark:opacity-100 motion-reduce:transition-none"
+              />
+              <Image
+                src="/images/logo_light.svg"
+                alt=""
+                aria-hidden
+                fill
+                sizes="28px"
+                priority
+                /* next/image refuses SVG unless dangerouslyAllowSVG is on
+                   globally. These are our own assets and vectors gain
+                   nothing from the optimiser, so they bypass it here
+                   instead of loosening the setting for every image. */
+                unoptimized
+                className="object-contain opacity-100 transition-opacity duration-300 dark:opacity-0 motion-reduce:transition-none"
+              />
             </span>
-            <span className="type-eyebrow mt-1.5 hidden text-[var(--text-subtle)] sm:block">
-              Full-stack engineer
+
+            {/* Initials below sm: the full name plus three links plus the
+                résumé action and the theme control does not fit a 375px row
+                without crowding. */}
+            <span className="flex flex-col justify-center leading-none">
+              <span className="type-button text-foreground sm:hidden">VT</span>
+              <span className="hidden type-button text-foreground sm:block">
+                Vishesh Tripathi
+              </span>
+              <span className="type-eyebrow mt-1.5 hidden text-[var(--text-subtle)] sm:block">
+                Full-stack engineer
+              </span>
             </span>
           </Link>
 
-          <div className="flex items-center gap-4 sm:gap-7">
+          <div className="flex items-center gap-2.5 sm:gap-7">
             <nav aria-label="Primary">
-              <ul className="flex list-none items-center gap-4 p-0 sm:gap-6">
+              <ul className="flex list-none items-center gap-3 p-0 sm:gap-6">
                 {links.map((link) => {
                   const isActive = pathname === link.href;
 
@@ -101,6 +146,8 @@ export default function Header() {
             >
               Résumé
             </Link>
+
+            <ThemeToggle />
           </div>
         </div>
       </div>

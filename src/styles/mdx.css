@@ -111,16 +111,40 @@
   padding: 0.12rem 0.4rem;
 }
 
+/*
+  Code blocks stay dark in both themes.
+
+  rehype-pretty-code bakes a single theme's colours into inline styles on
+  every token — `color:#E1E4E8` and friends — so they cannot follow a CSS
+  variable. On a light page those near-white tokens landed on near-white
+  paper and the code was invisible. Giving the block its own dark surface
+  keeps the highlighting legible without regenerating the content or
+  touching the dark theme, and a dark code block on light paper is a normal
+  editorial convention rather than a compromise.
+
+  The alternative is dual themes in the velite pipeline, which emits
+  variables per token. Worth doing if these ever need to match the page.
+*/
 .mdx-content pre {
   margin: 0;
   overflow-x: auto;
   padding: 1.25rem;
+  background: oklch(0.185 0.003 80);
+  color: oklch(0.97 0.002 80);
+}
+
+/* The wrapper rehype-pretty-code puts around a block, so the rounding and
+   border sit on the same box as the fill. */
+.mdx-content figure[data-rehype-pretty-code-figure] pre {
+  border-radius: var(--radius);
 }
 
 .mdx-content pre code {
   display: grid;
   min-width: 100%;
-  color: var(--foreground);
+  /* Not var(--foreground): the block has a fixed dark surface, so unhighlighted
+     lines have to stay light in both themes rather than follow the page. */
+  color: oklch(0.97 0.002 80);
   font-size: 0.9rem;
   line-height: 1.7;
 }

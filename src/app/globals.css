@@ -4,9 +4,17 @@
 
 @custom-variant dark (&:is(.dark *));
 
-html {
-  --line-color: oklch(1 0 0 / 10%);
-}
+/*
+  Two themes, one identity.
+
+  Every token that differs between them is declared twice and only twice:
+  the light value in :root and the dark override in .dark. Components read
+  the semantic name and never test the theme, so adding light mode required
+  no per-component branching.
+
+  The dark values below are the existing production palette, moved verbatim.
+  Dark is the baseline and must not drift; light is the new counterpart.
+*/
 
 html,
 body {
@@ -41,7 +49,95 @@ body {
   pointer-events: none;
 }
 
+/* ── Light theme ─────────────────────────────────────────────────────
+   Warm neutral rather than white. A pure #ffffff page under the same type
+   reads as a dashboard; holding a little warmth at hue 85 keeps the paper
+   feeling like paper, which is the light counterpart to the ink-at-night
+   dark theme rather than an inversion of it. */
 :root {
+  /* ── Journey / Timeline ── */
+  --journey-card-bg: oklch(0.995 0.002 85);
+  --journey-card-border: oklch(0.22 0.01 80 / 13%);
+  --journey-card-arrow: oklch(0.995 0.002 85);
+  --journey-line-color: oklch(0.22 0.01 80 / 11%);
+  --journey-icon-bg: oklch(0.97 0.004 85);
+  --journey-icon-fg: oklch(0.42 0.007 80);
+  --journey-icon-ring: oklch(0.22 0.01 80 / 14%);
+  --line-color: oklch(0.22 0.01 80 / 11%);
+
+  /* ── Surfaces ── */
+  --surface-glass: oklch(0.995 0.002 85);
+  --surface-glass-strong: oklch(1 0 0);
+  --surface-muted: oklch(0.945 0.005 85);
+  --surface-overlay: color-mix(in oklab, var(--background) 88%, transparent);
+  --surface-accent-soft: oklch(0.22 0.01 80 / 6%);
+  --surface-accent-strong: oklch(0.22 0.01 80 / 12%);
+  /* Darkened from the dark theme's green: the same hue at 0.82 lightness
+     would sit near 1.8:1 on paper and simply disappear. */
+  --surface-available-bg: oklch(0.55 0.14 152 / 10%);
+  --surface-available-border: oklch(0.55 0.14 152 / 30%);
+  --surface-available-text: oklch(0.48 0.13 152);
+  --surface-available-dot: oklch(0.58 0.16 152);
+
+  /* ── Shadows ──
+     Tinted with the page's own hue and far weaker than the dark theme's:
+     on a light surface a 30% black shadow reads as dirt, not elevation. */
+  --shadow-soft: 0 6px 20px oklch(0.22 0.01 80 / 7%);
+  --shadow-card: 0 8px 26px oklch(0.22 0.01 80 / 8%);
+  --shadow-card-strong: 0 12px 34px oklch(0.22 0.01 80 / 10%);
+  --shadow-card-xl: 0 14px 38px oklch(0.22 0.01 80 / 10%);
+
+  /* ── Project / Scene ──
+     Only the treatment *around* the canvas follows the theme. The two
+     Lightformer colours the scene reads are shared by both themes, because
+     they light the model itself and the laptop should not change material
+     when the page does. */
+  --project-glow-primary: oklch(0.22 0.01 80 / 6%);
+  --project-glow-secondary: oklch(0.22 0.01 80 / 4%);
+  --project-grid-line: oklch(0.22 0.01 80 / 7%);
+  --project-loader-track: oklch(0.22 0.01 80 / 14%);
+  --project-loader-backdrop: color-mix(in oklab, var(--background) 60%, transparent);
+  --canvas-loader-track: oklch(0.22 0.01 80 / 12%);
+  --canvas-loader-head: oklch(0.35 0.006 80);
+  --canvas-loader-text: oklch(0.5 0.006 80);
+  /* Hex, not oklch: these two are read by getComputedStyle and handed to
+     three.js, whose colour parser understands hex/rgb/hsl but not oklch or
+     lab — an oklch value here silently fails to parse. Shared by both
+     themes, so they sit outside the .dark override below. */
+  --project-scene-accent: #d7d3cc;
+  --project-scene-ring: #b9b5ad;
+  /* Held a shade below the page so the laptop still sits in a pocket of
+     depth rather than floating on flat paper. */
+  --project-scene-floor: radial-gradient(
+    circle at 50% 30%,
+    oklch(0.985 0.003 85) 0%,
+    oklch(0.955 0.004 85) 46%,
+    oklch(0.925 0.005 85) 100%
+  );
+  --project-frame-border: oklch(0.22 0.01 80 / 12%);
+  --project-progress-glow: oklch(0.22 0.01 80 / 24%);
+
+  /* ── Text ── */
+  --text-subtle: oklch(0.55 0.006 80);
+  --text-faint: oklch(0.66 0.005 82);
+
+  /* ── Activity ramp ──
+     Runs the other way from the dark theme: on paper more activity means
+     more ink, so step 0 is the faintest and step 4 the darkest. */
+  --activity-0: oklch(0.93 0.004 85);
+  --activity-1: oklch(0.8 0.006 82);
+  --activity-2: oklch(0.63 0.007 82);
+  --activity-3: oklch(0.45 0.008 82);
+  --activity-4: oklch(0.28 0.007 80);
+
+  /* ── Skill icons ── */
+  --skill-icon-shadow-dark: none;
+}
+
+/* ── Dark theme ──────────────────────────────────────────────────────
+   The existing production palette, moved here verbatim. Dark is the
+   baseline: these values are what shipped and must not drift. */
+.dark {
   /* ── Journey / Timeline ── */
   --journey-card-bg: oklch(0.185 0.003 80);
   --journey-card-border: oklch(1 0 0 / 12%);
@@ -53,13 +149,12 @@ body {
   --line-color: oklch(1 0 0 / 10%);
 
   /* ── Surfaces ──
-     Opaque, not translucent. The old surfaces were card colour at 80–92%
+     Opaque, not translucent. The old surfaces were card colour at 80-92%
      alpha over a blurred backdrop; at this contrast the blur bought nothing
      visible and cost a compositing layer on every panel. */
   --surface-glass: oklch(0.185 0.003 80);
   --surface-glass-strong: oklch(0.195 0.003 80);
   --surface-muted: oklch(0.215 0.003 80);
-  --surface-overlay: color-mix(in oklab, var(--background) 88%, transparent);
   --surface-accent-soft: oklch(1 0 0 / 8%);
   --surface-accent-strong: oklch(1 0 0 / 14%);
   --surface-available-bg: oklch(0.72 0.16 152 / 10%);
@@ -76,23 +171,14 @@ body {
   --shadow-card-strong: 0 14px 40px oklch(0 0 0 / 34%);
   --shadow-card-xl: 0 16px 44px oklch(0 0 0 / 34%);
 
-  /* ── Project / Scene ──
-     Only the treatment *around* the canvas is neutralised here. The two
-     Lightformer colours the scene reads are left blue on purpose: they light
-     the model itself, and retuning them would be redesigning the 3-D scene. */
+  /* ── Project / Scene ── */
   --project-glow-primary: oklch(0 0 0 / 24%);
   --project-glow-secondary: oklch(0 0 0 / 18%);
   --project-grid-line: oklch(1 0 0 / 8%);
   --project-loader-track: oklch(1 0 0 / 16%);
-  --project-loader-backdrop: color-mix(in oklab, var(--background) 60%, transparent);
   --canvas-loader-track: oklch(1 0 0 / 14%);
   --canvas-loader-head: oklch(0.9 0.002 80);
   --canvas-loader-text: oklch(0.66 0.004 80);
-  /* Hex, not oklch: these two are read by getComputedStyle and handed to
-     three.js, whose colour parser understands hex/rgb/hsl but not oklch or
-     lab — an oklch value here silently fails to parse. */
-  --project-scene-accent: #d7d3cc;
-  --project-scene-ring: #b9b5ad;
   --project-scene-floor: radial-gradient(
     circle at 50% 30%,
     oklch(0.26 0.003 80) 0%,
@@ -106,19 +192,14 @@ body {
   --text-subtle: oklch(0.58 0.004 80);
   --text-faint: oklch(0.46 0.004 80);
 
-  /* ── Activity ramp ──
-     Five steps for the contribution calendars. Achromatic on purpose: the
-     graph is dense, and any hue at that density turns into a colour field
-     rather than a reading of intensity. */
+  /* ── Activity ramp ── */
   --activity-0: oklch(0.225 0.003 80);
   --activity-1: oklch(0.36 0.003 80);
   --activity-2: oklch(0.52 0.003 80);
   --activity-3: oklch(0.72 0.002 80);
   --activity-4: oklch(0.95 0.002 80);
-
-  /* ── Skill icons ── */
-  --skill-icon-shadow-dark: none;
 }
+
 
 @theme inline {
   /* One family throughout. `font-heading` is kept as a distinct utility so
@@ -177,6 +258,63 @@ body {
    carried by contrast and weight, not by colour. The one chromatic token
    left is the availability green, and it appears twice on the whole page. */
 :root {
+  /* Warm off-white, not #ffffff. Under this type a pure white page reads as
+     a dashboard; a trace of warmth at hue 85 keeps it feeling like paper. */
+  --background: oklch(0.975 0.004 85);
+  /* 0.22 on 0.975 lands around 13:1 — well past AAA for body text. */
+  --foreground: oklch(0.22 0.006 80);
+
+  --card: oklch(0.995 0.002 85);
+  --card-foreground: oklch(0.22 0.006 80);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.006 80);
+
+  /* Ink, mirroring the dark theme's near-white. Emphasis is still carried by
+     contrast and weight rather than by an accent hue, so the two themes read
+     as the same site under different lighting. */
+  --primary: oklch(0.28 0.007 80);
+  --primary-foreground: oklch(0.98 0.003 85);
+
+  --secondary: oklch(0.945 0.005 85);
+  --secondary-foreground: oklch(0.22 0.006 80);
+
+  --muted: oklch(0.945 0.005 85);
+  /* 0.48 on 0.975 clears 5.5:1 — comfortably past AA for secondary text. */
+  --muted-foreground: oklch(0.48 0.007 80);
+
+  --accent: oklch(0.925 0.006 85);
+  --accent-foreground: oklch(0.22 0.006 80);
+
+  --destructive: oklch(0.52 0.19 25);
+
+  /* Alpha over the page rather than a flat grey, so borders stay consistent
+     against both the background and the raised card surfaces. */
+  --border: oklch(0.22 0.01 80 / 14%);
+  --input: oklch(0.22 0.01 80 / 20%);
+  --ring: oklch(0.28 0.007 80);
+
+  --chart-1: var(--activity-4);
+  --chart-2: var(--activity-3);
+  --chart-3: var(--activity-2);
+  --chart-4: var(--activity-1);
+  --chart-5: var(--activity-0);
+
+  /* 0.625rem read as a soft app card. 0.5rem is a corner, not a pill. */
+  --radius: 0.5rem;
+
+  --sidebar: oklch(0.995 0.002 85);
+  --sidebar-foreground: oklch(0.22 0.006 80);
+  --sidebar-primary: oklch(0.28 0.007 80);
+  --sidebar-primary-foreground: oklch(0.98 0.003 85);
+  --sidebar-accent: oklch(0.925 0.006 85);
+  --sidebar-accent-foreground: oklch(0.22 0.006 80);
+  --sidebar-border: oklch(0.22 0.01 80 / 14%);
+  --sidebar-ring: oklch(0.28 0.007 80);
+}
+
+/* Dark: the shipped values, unchanged. */
+.dark {
   --background: oklch(0.145 0.003 80);
   --foreground: oklch(0.97 0.002 80);
 
@@ -204,15 +342,6 @@ body {
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 16%);
   --ring: oklch(0.97 0.002 80);
-
-  --chart-1: var(--activity-4);
-  --chart-2: var(--activity-3);
-  --chart-3: var(--activity-2);
-  --chart-4: var(--activity-1);
-  --chart-5: var(--activity-0);
-
-  /* 0.625rem read as a soft app card. 0.5rem is a corner, not a pill. */
-  --radius: 0.5rem;
 
   --sidebar: oklch(0.185 0.003 80);
   --sidebar-foreground: oklch(0.97 0.002 80);
@@ -479,4 +608,56 @@ body,
 
 html {
   scrollbar-gutter: stable;
+}
+
+/* ── Theme transition ─────────────────────────────────────────────────
+   The swap is driven by the View Transitions API. The browser snapshots the
+   old frame, we flip the class, and the new frame is revealed underneath it
+   through a circle grown from the toggle button.
+
+   Only the OLD snapshot animates: it sits on top and is clipped away, so the
+   new theme appears through the hole. Animating the new layer instead would
+   composite two full-page images and show a seam where they disagree.
+
+   --theme-x / --theme-y / --theme-r are written by the toggle at click time.
+*/
+::view-transition-old(root),
+::view-transition-new(root) {
+  /* The default cross-fade would run underneath the clip and grey the page
+     out mid-sweep. */
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 0;
+}
+
+html[data-theme-transition] ::view-transition-old(root) {
+  animation: theme-sweep 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes theme-sweep {
+  from {
+    clip-path: circle(var(--theme-r, 150vmax) at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+  to {
+    clip-path: circle(0px at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+}
+
+/*
+  Reduced motion: no sweep at all. The transition is decorative, and a
+  full-viewport wipe is exactly the kind of large-area movement that causes
+  problems, so the themes simply swap.
+*/
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-transition] ::view-transition-old(root),
+  html[data-theme-transition] ::view-transition-new(root) {
+    animation: none;
+  }
 }

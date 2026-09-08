@@ -9,6 +9,10 @@ import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { Toaster } from "react-hot-toast";
 import LenisProvider from "@/components/providers/lenis-provider";
+import {
+  ThemeProvider,
+  themeInitScript,
+} from "@/components/providers/theme-provider";
 import { MotionProvider } from "@/components/ui/reveal";
 
 const siteUrl = "https://www.vtcodecraft.in";
@@ -108,6 +112,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  /*
+    className and colorScheme stay dark here so the server-rendered document
+    is the dark theme, which is the default. The head script corrects it to
+    light before first paint when that is what the visitor chose or their
+    system asks for.
+  */
   return (
     <html
       lang="en"
@@ -115,12 +125,26 @@ export default function RootLayout({
       style={{ colorScheme: "dark" }}
       suppressHydrationWarning
     >
+      <head>
+        {/*
+          Blocking on purpose, and ahead of everything else. Any later
+          mechanism — an effect, a provider, a cookie round trip — paints the
+          dark document first and flashes it at light-theme visitors.
+        */}
+        <script
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+          suppressHydrationWarning
+        />
+      </head>
       <body
         className={`${geistSans.className} ${geistSans.variable} ${geistMono.variable} relative flex min-h-screen min-h-dvh flex-col overflow-x-hidden bg-background text-foreground`}
         suppressHydrationWarning
       >
+        {/* Dark-only: the wash exists to keep the dark page from reading as
+            flat black. Light mode wants plain paper, so this stays hidden. */}
         <div className="dark-canvas absolute inset-0 -z-20 hidden dark:block" />
 
+        <ThemeProvider>
         <MotionProvider>
           <LenisProvider>
               <a
@@ -143,6 +167,7 @@ export default function RootLayout({
               <SpeedInsights />
           </LenisProvider>
         </MotionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
