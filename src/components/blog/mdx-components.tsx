@@ -25,7 +25,7 @@ function CustomImage(props: React.ComponentProps<"img">) {
   if (!src) return null;
 
   return (
-    <span className="relative my-8 block overflow-hidden rounded-2xl border border-border bg-card">
+    <span className="relative my-8 block overflow-hidden rounded-[var(--radius)] border border-border bg-card">
       <Image
         src={src}
         alt={props.alt ?? ""}
@@ -63,11 +63,20 @@ function CodeBlock({ children, className }: ComponentProps) {
   };
 
   return (
-    <div className="group relative my-6 overflow-hidden rounded-2xl border border-border bg-card">
+    <div className="group relative my-6 overflow-hidden rounded-[var(--radius)] border border-border">
+      {/*
+        The block keeps a fixed dark surface in both themes (see mdx.css), so
+        the control is styled against that rather than against the page — a
+        light pill on a light page vanished the moment the theme flipped.
+
+        `focus-visible:opacity-100` because the opacity is the only thing
+        hiding it: without that, tabbing to the button moves focus to
+        something invisible.
+      */}
       <button
         type="button"
         onClick={copyCode}
-        className="absolute right-3 top-3 z-10 rounded-full border border-border bg-secondary px-3 py-1 text-xs text-muted-foreground opacity-0 transition hover:text-foreground group-hover:opacity-100"
+        className="absolute right-2.5 top-2.5 z-10 rounded-sm border border-white/15 bg-white/5 px-2.5 py-1 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-white/60 opacity-0 transition hover:text-white focus-visible:opacity-100 group-hover:opacity-100 motion-reduce:transition-none"
       >
         {copied ? "Copied" : "Copy"}
       </button>
@@ -89,19 +98,19 @@ function Callout({
     success: "Nice",
   }[type];
 
+  // A margin note, not a filled panel — same hairline treatment as a
+  // blockquote, so the two asides in the system match.
   return (
-    <aside className="my-6 rounded-2xl border border-border bg-secondary/60 px-5 py-4">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-        {label}
-      </p>
-      <div className="text-sm leading-7 text-foreground">{children}</div>
+    <aside className="my-7 border-l border-border py-1 pl-5">
+      <p className="type-eyebrow mb-2 text-[var(--text-subtle)]">{label}</p>
+      <div className="type-body text-foreground">{children}</div>
     </aside>
   );
 }
 
 function YouTube({ id, title = "YouTube video" }: { id: string; title?: string }) {
   return (
-    <div className="my-8 overflow-hidden rounded-2xl border border-border bg-card">
+    <div className="my-8 overflow-hidden rounded-[var(--radius)] border border-border bg-card">
       <iframe
         src={`https://www.youtube-nocookie.com/embed/${id}`}
         title={title}

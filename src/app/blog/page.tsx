@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-import { posts } from "#site/content";
-
 import BlogClient from "@/app/blog/blog-client";
-import { BlogPageShell } from "@/components/blog/blog-page-shell";
-import type { PostCardData } from "@/components/blog/post-card";
-import SectionHeading from "@/components/ui/section-heading";
+import BlogHeader from "@/components/blog/blog-header";
+import BlogList from "@/components/blog/blog-list";
+import { publishedPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
   // Just "Blog": the root layout's title template appends the name, so
@@ -23,36 +21,33 @@ export const metadata: Metadata = {
   },
 };
 
-const publishedPosts = posts
-  .filter((post) => post.published)
-  .sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  ) satisfies PostCardData[];
-
 export default function BlogPage() {
   return (
-    <BlogPageShell
-      intro={
-        <>
-          <SectionHeading as="h1" className="mb-4 items-start lg:items-start">
-            My Blog
-          </SectionHeading>
+    /*
+      One centred column, wider than the site's reading measure.
 
-          <div className="w-full rounded-[28px] border border-border bg-[var(--surface-glass)] px-6 py-7 shadow-[var(--shadow-card-strong)] sm:px-8">
-            <p className="max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
-              Thoughts on interface design, frontend systems, performance, and
-              the small decisions that shape how a product feels in everyday
-              use.
-            </p>
-          </div>
-        </>
-      }
-      content={
-        <Suspense>
-          <BlogClient posts={publishedPosts} />
-        </Suspense>
-      }
-    />
+      `page-column` is 46rem, which would put the two covers at 352px each —
+      narrow enough that a 16:9 photograph stops reading as a picture. 56rem
+      gives 432px tiles, and the grid still sits well inside the 1240px shell
+      rather than spreading across it.
+    */
+    <div className="page-shell pb-24">
+      <div className="mx-auto w-full max-w-[56rem]">
+        <BlogHeader />
+
+        <div className="mt-10">
+          {/*
+            `useSearchParams` inside BlogClient forces a Suspense boundary,
+            and on a static route the fallback is what lands in the HTML —
+            so the fallback is the full archive. Crawlers and a visitor
+            without JavaScript get every note and every link; hydration adds
+            the search field on top of the same list.
+          */}
+          <Suspense fallback={<BlogList posts={publishedPosts} />}>
+            <BlogClient posts={publishedPosts} />
+          </Suspense>
+        </div>
+      </div>
+    </div>
   );
 }
-

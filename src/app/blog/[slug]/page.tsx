@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { posts } from "#site/content";
-
-import { BlogPostShell } from "@/components/blog/blog-post-shell";
+import BlogArticleHeader from "@/components/blog/blog-article-header";
 import { MdxContent } from "@/components/blog/mdx-content";
-import { PostHeader } from "@/components/blog/post-header";
+import RelatedPosts from "@/components/blog/related-posts";
+import { getPost, getRelatedPosts, publishedPosts } from "@/lib/blog";
 
 type BlogPostPageProps = {
   params: Promise<{ slug: string }>;
@@ -14,15 +13,10 @@ type BlogPostPageProps = {
 // www is canonical; the bare host 301s to it, so JSON-LD must not point there.
 const siteUrl = "https://www.vtcodecraft.in";
 
-const getPost = (slug: string) =>
-  posts.find((post) => post.slugAsParams === slug && post.published);
-
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return posts
-    .filter((post) => post.published)
-    .map((post) => ({ slug: post.slugAsParams }));
+  return publishedPosts.map((post) => ({ slug: post.slugAsParams }));
 }
 
 export async function generateMetadata({
@@ -94,24 +88,34 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         }}
       />
 
-      <BlogPostShell
-        header={
-          <PostHeader
-            title={post.title}
-            description={post.description}
-            date={post.date}
-            readingTime={post.readingTime}
-            cover={post.cover}
-            tags={post.tags}
-          />
-        }
-        body={
-          <div className="mdx-content">
-            <MdxContent code={post.body} />
-          </div>
-        }
-      />
+      {/*
+        One column for the whole page — masthead, body and the next-notes
+        list share a left edge. It is the measure rather than a container:
+        no panel, no radius, no shadow around the text.
+
+        36rem, measured rather than guessed. The body face averages 7.73px
+        per character at 16px, so 576px is about 75 characters a line, the
+        top of the readable band. Worth noting `max-width: 70ch` would not
+        have given that: `ch` is the advance of a zero, 10.61px here, so 70ch
+        is 743px and closer to 96 characters.
+
+        The body used to sit in a 30px-radius glass card with an extra-large
+        shadow inside a wider wrapper, so the reading column had a visible
+        frame and started 90px right of the header above it.
+      */}
+      <div className="page-shell pb-24">
+        <div className="mx-auto w-full max-w-[36rem]">
+          <article>
+            <BlogArticleHeader post={post} />
+
+            <div className="mdx-content mt-12 border-t border-border pt-10">
+              <MdxContent code={post.body} />
+            </div>
+          </article>
+
+          <RelatedPosts posts={getRelatedPosts(post)} />
+        </div>
+      </div>
     </>
   );
 }
-

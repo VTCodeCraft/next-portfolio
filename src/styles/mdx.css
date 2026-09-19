@@ -1,5 +1,16 @@
+/*
+  Long-form article body.
+
+  Every rule is scoped under `.mdx-content`, which only exists on
+  /blog/[slug], so this file is imported globally but applies to one route.
+
+  Sizes come from the site's own type scale rather than a second one invented
+  here. The headings used to run to 36px — larger than any section heading
+  anywhere else on the site — so an <h2> inside a note was louder than the
+  <h1> of the page it sat on.
+*/
 .mdx-content {
-  color: var(--card-foreground);
+  color: var(--foreground);
   font-size: 1rem;
   line-height: 1.8;
 }
@@ -8,6 +19,17 @@
   margin-top: 1.25rem;
 }
 
+/*
+  `--font-body` and `--font-code`, not `--font-heading` and `--font-mono`.
+
+  The latter two are declared inside `@theme inline`, which folds their
+  values into the generated utilities and never emits them as custom
+  properties — `getPropertyValue('--font-mono')` comes back empty on both
+  <html> and <body>. A `var()` referencing one silently falls through to the
+  inherited family, which is how inline code ended up set in Geist rather
+  than Geist Mono. The two used here are real properties, set on <body> by
+  the font loader.
+*/
 .mdx-content h1,
 .mdx-content h2,
 .mdx-content h3,
@@ -15,33 +37,63 @@
   color: var(--foreground);
   font-family: var(--font-body);
   font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.18;
+  line-height: 1.25;
+  /* Clears the fixed header when a heading anchor is followed. */
   scroll-margin-top: 7rem;
 }
 
+/* An <h1> in body content would be a second page title. Sized to sit under
+   the real one rather than to compete with it. */
 .mdx-content h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: 1.5rem;
+  letter-spacing: -0.022em;
 }
 
 .mdx-content h2 {
-  margin-top: 2.75rem;
-  font-size: clamp(1.65rem, 4vw, 2.25rem);
+  margin-top: 3rem;
+  font-size: 1.375rem;
+  letter-spacing: -0.022em;
+}
+
+/*
+  A hairline above each section, not an <hr> in the content.
+
+  The notes are written as a run of ## sections, and at this size the only
+  thing separating them was vertical space. The rule does the same work
+  without asking the author to type one, and it is suppressed on the first
+  heading, which already sits under the rule below the masthead.
+*/
+.mdx-content h2::before {
+  content: "";
+  display: block;
+  margin-bottom: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.mdx-content h2:first-child {
+  margin-top: 0;
+}
+
+.mdx-content h2:first-child::before {
+  content: none;
 }
 
 .mdx-content h3 {
   margin-top: 2.25rem;
-  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.015em;
 }
 
 .mdx-content h4 {
   margin-top: 2rem;
-  font-size: 1.1rem;
+  font-size: 0.9375rem;
+  letter-spacing: -0.005em;
 }
 
 .mdx-content .heading-anchor {
   margin-left: 0.45rem;
-  color: var(--muted-foreground);
+  color: var(--text-subtle);
   font-size: 0.72em;
   opacity: 0;
   text-decoration: none;
@@ -51,7 +103,8 @@
 .mdx-content h1:hover .heading-anchor,
 .mdx-content h2:hover .heading-anchor,
 .mdx-content h3:hover .heading-anchor,
-.mdx-content h4:hover .heading-anchor {
+.mdx-content h4:hover .heading-anchor,
+.mdx-content .heading-anchor:focus-visible {
   opacity: 1;
 }
 
@@ -62,21 +115,22 @@
 
 .mdx-content a {
   color: var(--foreground);
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, var(--foreground) 35%, transparent);
+  text-decoration-color: var(--border);
   text-underline-offset: 0.25em;
   transition: color 180ms ease, text-decoration-color 180ms ease;
 }
 
-.mdx-content a:hover {
+.mdx-content a:hover,
+.mdx-content a:focus-visible {
   color: var(--primary);
   text-decoration-color: var(--primary);
 }
 
 .mdx-content ul,
 .mdx-content ol {
-  padding-left: 1.25rem;
+  padding-left: 1.15rem;
 }
 
 .mdx-content ul {
@@ -87,15 +141,24 @@
   list-style: decimal;
 }
 
-.mdx-content li + li {
-  margin-top: 0.45rem;
+.mdx-content li::marker {
+  color: var(--text-faint);
 }
 
+.mdx-content li + li {
+  margin-top: 0.4rem;
+}
+
+/*
+  A marginal note, not a panel.
+
+  Was a filled, rounded box with a 3px bar — three separate signals for one
+  aside. A single hairline in the margin says the same thing and leaves the
+  text on the page's own surface.
+*/
 .mdx-content blockquote {
-  border-left: 3px solid var(--border);
-  border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--secondary) 60%, transparent);
-  padding: 1rem 1.25rem;
+  border-left: 1px solid var(--border);
+  padding-left: 1.25rem;
 }
 
 .mdx-content blockquote p {
@@ -103,12 +166,12 @@
 }
 
 .mdx-content code:not(pre code) {
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  background: var(--secondary);
+  border-radius: var(--radius-sm);
+  background: var(--surface-muted);
   color: var(--foreground);
-  font-size: 0.88em;
-  padding: 0.12rem 0.4rem;
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.85em;
+  padding: 0.1rem 0.35rem;
 }
 
 /*
@@ -128,7 +191,7 @@
 .mdx-content pre {
   margin: 0;
   overflow-x: auto;
-  padding: 1.25rem;
+  padding: 1.15rem 1.25rem;
   background: oklch(0.185 0.003 80);
   color: oklch(0.97 0.002 80);
 }
@@ -145,8 +208,9 @@
   /* Not var(--foreground): the block has a fixed dark surface, so unhighlighted
      lines have to stay light in both themes rather than follow the page. */
   color: oklch(0.97 0.002 80);
-  font-size: 0.9rem;
-  line-height: 1.7;
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.75;
 }
 
 .mdx-content figure {
@@ -158,22 +222,36 @@
   width: 100%;
   overflow-x: auto;
   border-collapse: collapse;
+  font-size: 0.875rem;
 }
 
 .mdx-content th,
 .mdx-content td {
-  border: 1px solid var(--border);
-  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  padding: 0.7rem 1rem 0.7rem 0;
   text-align: left;
+  vertical-align: top;
 }
 
+/* Label row, not a filled header band. */
 .mdx-content th {
-  background: var(--secondary);
-  color: var(--foreground);
+  color: var(--text-subtle);
+  font-family: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .mdx-content hr {
   border: 0;
   border-top: 1px solid var(--border);
   margin: 2.5rem 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mdx-content .heading-anchor,
+  .mdx-content a {
+    transition: none;
+  }
 }

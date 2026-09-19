@@ -20,6 +20,7 @@ type RevealProps = {
 type MotionSectionProps = HTMLMotionProps<"section"> & RevealProps;
 type MotionDivProps = HTMLMotionProps<"div"> & RevealProps;
 type MotionArticleProps = HTMLMotionProps<"article"> & RevealProps;
+type MotionListItemProps = HTMLMotionProps<"li"> & RevealProps;
 
 const loadFeatures = () => Promise.resolve(domAnimation);
 
@@ -174,6 +175,33 @@ export const MotionMountDiv = forwardRef<HTMLDivElement, MotionDivProps>(
     );
   },
 );
+
+/*
+  A list row that reveals on mount.
+
+  Added so a staggered archive can stay a real <ol>/<li>: wrapping each row
+  in a motion <div> would either break the list semantics or push a
+  redundant element between the list and its items.
+*/
+export const MotionMountListItem = forwardRef<
+  HTMLLIElement,
+  MotionListItemProps
+>(function MotionMountListItem(
+  { delay, distance, duration, children, ...props },
+  ref,
+) {
+  const reduced = useReducedMotion();
+
+  return (
+    <m.li
+      ref={ref}
+      {...getMountRevealProps({ delay, distance, duration }, reduced)}
+      {...props}
+    >
+      {children}
+    </m.li>
+  );
+});
 
 export const MotionMountArticle = forwardRef<HTMLElement, MotionArticleProps>(
   function MotionMountArticle(
