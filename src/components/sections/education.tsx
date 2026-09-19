@@ -48,14 +48,27 @@ export default function Education() {
                 </p>
               </div>
 
-              <p className="type-meta tabular-nums text-foreground lg:text-right">
-                <span className="type-eyebrow mr-2 text-[var(--text-faint)]">
-                  {item.resultLabel}
-                </span>
-                {item.result}
-              </p>
+              {/* Omitted rather than left blank when an entry carries no
+                  result — the date column then sits where the result would
+                  have been, which keeps the row from ending in dead space. */}
+              {item.result ? (
+                <p className="type-meta tabular-nums text-foreground lg:text-right">
+                  {item.resultLabel ? (
+                    <span className="type-eyebrow mr-2 text-[var(--text-faint)]">
+                      {item.resultLabel}
+                    </span>
+                  ) : null}
+                  {item.result}
+                </p>
+              ) : null}
 
-              <p className="type-eyebrow tabular-nums text-muted-foreground lg:text-right">
+              {/*
+                Pinned to the last column. Each row is its own grid, so an
+                entry with no result would otherwise let its dates fall into
+                the vacated result slot — measured 32px left of the row above,
+                which reads as a broken column rather than as a gap.
+              */}
+              <p className="type-eyebrow tabular-nums text-muted-foreground lg:col-start-4 lg:text-right">
                 {item.start} — {item.end}
               </p>
             </article>

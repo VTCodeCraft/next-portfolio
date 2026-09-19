@@ -343,9 +343,13 @@ export type Education = {
   degree: string;
   start: string;
   end: string;
-  /** Label and value kept apart so the figure can be set in tabular figures. */
-  resultLabel: string;
-  result: string;
+  /**
+   * Label and value kept apart so the figure can be set in tabular figures.
+   * Optional as a pair — an entry without one renders no result cell rather
+   * than an empty column.
+   */
+  resultLabel?: string;
+  result?: string;
   location: string;
 };
 
@@ -365,8 +369,7 @@ export const education: Education[] = [
     degree: "Minor in CSE & Advanced Technologies",
     start: "Apr 2025",
     end: "May 2026",
-    resultLabel: "Average",
-    result: "94.38 / 100",
+    /* No result shown for the minor. */
     location: "Online",
   },
 ];
