@@ -21,10 +21,10 @@ import {
  */
 export default function Skills() {
   /*
-    One shared readout instead of a tooltip per item. Fifty floating popups
-    would need a library, a portal and collision handling to say one short
-    line; a single line that updates on hover costs nothing and never covers
-    the thing it describes.
+    Tracks the hovered entry so its icon can come up in brand colour and its
+    label to full foreground. There is no readout panel any more — the colour
+    change is the whole feedback, and the `kind` stays in the accessible tree
+    on each item, so nothing was only reachable through that panel.
   */
   const [active, setActive] = useState<Skill | null>(null);
 
@@ -40,17 +40,6 @@ export default function Skills() {
             What I use to design, build, deploy and operate production
             software.
           </p>
-
-          {/* Reserves its height so the column does not shift as the readout
-              fills and empties. */}
-          <div className="mt-6 min-h-[3.25rem] border-t border-border pt-4">
-            <p className="type-eyebrow text-foreground">
-              {active ? active.name : "Hover to inspect"}
-            </p>
-            <p className="type-meta mt-1 text-[var(--text-faint)]">
-              {active ? active.kind : " "}
-            </p>
-          </div>
         </div>
 
         <div>
@@ -128,13 +117,11 @@ function SkillItem({
       onMouseEnter={() => onEnter(skill)}
       onMouseLeave={onLeave}
       /*
-        `cursor-help` rather than a custom cursor element. It is the pointer
-        the platform already uses for "there is more information here", it
-        costs nothing, it does not follow the mouse around the page, and it
-        does nothing at all on touch — which is correct, since there is no
-        hover to indicate there.
+        A plain pointer, not a custom cursor element: nothing follows the
+        mouse around the page, and it does nothing at all on touch, which is
+        correct since there is no hover to indicate there.
       */
-      className="group flex cursor-help items-center gap-2"
+      className="group flex cursor-pointer items-center gap-2"
     >
       {/*
         No colour transition on these two, deliberately.
@@ -152,11 +139,9 @@ function SkillItem({
       */}
       {Icon ? (
         /*
-          Colour is driven from the same state that feeds the readout rather
-          than from a group-hover class. The brand value is per-skill data, so
-          a utility class cannot carry it, and keeping one source for "which
-          skill is being inspected" means the icon, the label and the readout
-          cannot disagree.
+          Colour is driven from React state rather than a group-hover class,
+          because the brand value is per-skill data and a utility class cannot
+          carry a colour Tailwind never saw at build time.
 
           Falls back to the foreground colour where no brand colour is set —
           Next.js, Express, Vercel and the rest whose marks are black.
