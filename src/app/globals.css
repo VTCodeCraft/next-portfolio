@@ -611,13 +611,18 @@ html {
 }
 
 /* ── Theme transition ─────────────────────────────────────────────────
-   The swap is driven by the View Transitions API. The browser snapshots the
-   old frame, we flip the class, and the new frame is revealed underneath it
-   through a circle grown from the toggle button.
+   The swap is driven by the View Transitions API. The browser snapshots both
+   frames, we flip the class, and the incoming theme is revealed by a circle
+   growing from the toggle button out to the furthest viewport corner.
 
-   Only the OLD snapshot animates: it sits on top and is clipped away, so the
-   new theme appears through the hole. Animating the new layer instead would
-   composite two full-page images and show a seam where they disagree.
+   The NEW snapshot is the one that animates, and it sits on top. The old
+   frame stays put underneath, static and unclipped, so the page never shows
+   a gap: the new theme simply grows over it.
+
+   Both layers are full-viewport snapshots of identical content — only
+   colours differ between them — so there is no element to mismatch at the
+   circle's edge. What the visitor sees is one hard, clean boundary sweeping
+   outward, which is the whole effect.
 
    --theme-x / --theme-y / --theme-r are written by the toggle at click time.
 */
@@ -629,16 +634,29 @@ html {
   mix-blend-mode: normal;
 }
 
+/* Outgoing frame beneath, incoming frame on top and clipped. */
 ::view-transition-old(root) {
-  z-index: 1;
-}
-
-::view-transition-new(root) {
   z-index: 0;
 }
 
-html[data-theme-transition] ::view-transition-old(root) {
-  animation: theme-sweep 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+/*
+  A true ease-out, not Material's ease-in-out: the circle leaves the toggle
+  fast and settles into the corners, so the motion reads as something being
+  revealed rather than something being animated. Same curve the rest of the
+  site uses for entrances.
+
+  Deliberately not gated on [data-theme-transition]. These pseudo-elements
+  only exist while a view transition is running, so the rule cannot leak; and
+  gating it made the sweep fragile — the attribute is cleared the instant a
+  transition aborts, which silently dropped the animation. The theme swap is
+  the only thing in the app that starts a view transition.
+*/
+::view-transition-new(root) {
+  animation: theme-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /*
@@ -661,12 +679,12 @@ html[data-theme-transition] *::after {
   transition: none !important;
 }
 
-@keyframes theme-sweep {
+@keyframes theme-reveal {
   from {
-    clip-path: circle(var(--theme-r, 150vmax) at var(--theme-x, 50%) var(--theme-y, 50%));
+    clip-path: circle(0px at var(--theme-x, 50%) var(--theme-y, 50%));
   }
   to {
-    clip-path: circle(0px at var(--theme-x, 50%) var(--theme-y, 50%));
+    clip-path: circle(var(--theme-r, 150vmax) at var(--theme-x, 50%) var(--theme-y, 50%));
   }
 }
 
@@ -676,8 +694,8 @@ html[data-theme-transition] *::after {
   problems, so the themes simply swap.
 */
 @media (prefers-reduced-motion: reduce) {
-  html[data-theme-transition] ::view-transition-old(root),
-  html[data-theme-transition] ::view-transition-new(root) {
-    animation: none;
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
 }
