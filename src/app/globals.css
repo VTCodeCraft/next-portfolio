@@ -641,6 +641,26 @@ html[data-theme-transition] ::view-transition-old(root) {
   animation: theme-sweep 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/*
+  Suspend element-level transitions while the theme swaps.
+
+  Without this, anything carrying `transition-colors` whose colour comes from
+  a custom property gets stuck. The class flips inside the view transition, a
+  colour transition is already running from the old resolved value, and the
+  var substitution never re-resolves — so the element keeps the previous
+  theme's colour until the next reload. Measured on the skill labels: 6.11:1
+  on a fresh load, 2.86:1 after a toggle, from the same declaration.
+
+  Suppressing them is also the right behaviour on its own terms. The sweep is
+  the transition; a hundred elements each running their own 200ms colour fade
+  underneath it is redundant work that nobody can see.
+*/
+html[data-theme-transition] *,
+html[data-theme-transition] *::before,
+html[data-theme-transition] *::after {
+  transition: none !important;
+}
+
 @keyframes theme-sweep {
   from {
     clip-path: circle(var(--theme-r, 150vmax) at var(--theme-x, 50%) var(--theme-y, 50%));

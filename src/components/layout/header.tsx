@@ -137,12 +137,18 @@ export default function Header() {
               Squared rather than pill-shaped, on the shared --radius. It is
               the one action in the bar, so it keeps an outline; the outline
               is the same hairline as every other border on the site.
+
+              Hidden below sm. With four nav items the row needs ~422px and a
+              375px phone has 335px of content width, so something has to go;
+              this is the only item in the bar that is not navigation, and it
+              is reachable from /experience and from the résumé link in the
+              page itself. Losing a nav destination would cost more.
             */}
             <Link
               href={RESUME_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex min-h-9 shrink-0 items-center rounded-md border border-border px-3 type-button text-foreground transition-colors hover:bg-accent"
+              className="hidden min-h-9 shrink-0 items-center rounded-md border border-border px-3 type-button text-foreground transition-colors hover:bg-accent sm:flex"
             >
               Résumé
             </Link>

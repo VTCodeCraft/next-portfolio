@@ -20,6 +20,7 @@ import {
 
 export const links = [
   { name: "Home", href: "/" },
+  { name: "Work", href: "/experience" },
   { name: "Projects", href: "/projects" },
   { name: "Blog", href: "/blog" },
 ] as const;
@@ -27,7 +28,8 @@ export const links = [
 export const sections = [
   { name: "Introduction", hash: "#introduction" },
   { name: "Skills", hash: "#skills" },
-  { name: "My Journey", hash: "#my-journey" },
+  { name: "Experience", hash: "#experience" },
+  { name: "Education", hash: "#education" },
   { name: "Contact", hash: "#contact" },
 ] as const;
 
@@ -46,32 +48,6 @@ export const socialLinks = [
   { label: "LeetCode", href: "https://leetcode.com/u/VTCodeCraft/" },
   { label: "Email", href: "mailto:work.vishesh12.05@gmail.com" },
 ] as const;
-
-export const experiencesData = [
-  {
-    role: "Software Engineer Intern",
-    company: "Hyperion Future Tech",
-    date: "2026 — Now",
-    current: true,
-    description:
-      "Real-time object detection running on smart glasses — ONNX Runtime and YOLO11 on React Native with native Android, plus custom model training for domain-specific detection.",
-  },
-  {
-    role: "Software Developer Intern",
-    company: "FoundersCart",
-    date: "2025",
-    current: false,
-    description:
-      "Two monday.com CRM extensions and a WebRTC softphone published to the Chrome Web Store, letting sales teams call straight from a lead. Qualified leads rose 20%.",
-  },
-] as const;
-
-export const educationData = {
-  degree: "B.Tech, Information Technology",
-  school: "Bharati Vidyapeeth's College of Engineering, GGSIPU",
-  date: "2023 — 2027",
-  detail: "CGPA 8.95 · Minor in CSE and Advanced Technologies, IIT Mandi",
-} as const;
 
 export const myProjects = [
   {

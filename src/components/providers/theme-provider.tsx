@@ -67,10 +67,39 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const apply = useCallback((next: Theme) => {
     const root = document.documentElement;
 
+    /*
+      Element transitions are suppressed for the duration of the swap (see the
+      rule on this attribute in globals.css). An element carrying
+      `transition-colors` whose colour comes from a custom property otherwise
+      pins the old resolved value when the class flips and never re-resolves
+      the changed var — it keeps the previous theme's colour until a reload.
+
+      Set here rather than only on the view-transition path, because the
+      fallbacks — no View Transitions support, reduced motion — flip the class
+      too and hit the same problem.
+    */
+    root.dataset.themeTransition = "";
+
     root.classList.toggle("dark", next === "dark");
     /* Keeps form controls, scrollbars and the browser's own surfaces in step
        with the page; without it a light page keeps dark scrollbars. */
     root.style.colorScheme = next;
+
+    /*
+      Held past the longest element transition on the page (200ms) rather
+      than for a frame or two, and deliberately not tied to the view
+      transition's lifetime.
+
+      Both shorter windows failed. Hanging cleanup off `finished` collapsed it
+      to nothing whenever the transition could not run — a backgrounded tab is
+      the usual reason — and two frames was still short enough that the style
+      recalc never observed the attribute. Measured with the attribute absent,
+      a skill label kept the previous theme's colour indefinitely: 2.86:1 on
+      a light background instead of 6.11:1.
+    */
+    window.setTimeout(() => {
+      delete root.dataset.themeTransition;
+    }, 260);
 
     try {
       window.localStorage.setItem(STORAGE_KEY, next);

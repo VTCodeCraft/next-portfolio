@@ -6,7 +6,7 @@ import SectionHeading from "@/components/ui/section-heading";
 import { MotionMountDiv, MotionMountSection } from "@/components/ui/reveal";
 import {
   skillCategories,
-  specializedSkills,
+  specialization,
   totalSkillCount,
   type Skill,
 } from "@/lib/skills";
@@ -14,28 +14,22 @@ import {
 /**
  * The stack, as an editorial matrix.
  *
- * What this replaces was a sliding-tile puzzle over 24 coloured logo cards.
- * It was the loudest thing on the page and said nothing: a recruiter could
- * not scan it, the categories were invisible, and the colour made every
- * technology shout equally. This reads top to bottom, groups by what things
- * are for, and lets the names carry the weight.
+ * Ordered for a software-engineering read rather than by novelty: languages,
+ * what is built with them, what stores and runs it, then the fundamentals.
+ * Names are real DOM text — the icons are decoration, so anything reading the
+ * page for content finds "TypeScript" and "PostgreSQL", not an SVG.
  */
 export default function Skills() {
   /*
-    One shared readout instead of a tooltip per item.
-
-    Fifty-odd floating popups would need a library, a portal and collision
-    handling to say one short line. A single line that updates on hover costs
-    nothing, never covers what it describes, and reads as instrumentation
-    rather than as decoration.
+    One shared readout instead of a tooltip per item. Fifty floating popups
+    would need a library, a portal and collision handling to say one short
+    line; a single line that updates on hover costs nothing and never covers
+    the thing it describes.
   */
   const [active, setActive] = useState<Skill | null>(null);
 
   return (
     <MotionMountSection id="skills" delay={0.1} className="scroll-mt-32">
-      {/* "N total" rather than "N technologies": the meta sits on one
-          shrink-0 row with the title and rule, and the longer string pushed
-          that row past the viewport at 375px. Matches the archive heading. */}
       <SectionHeading index="03" rule meta={`${totalSkillCount} total`}>
         Technical stack
       </SectionHeading>
@@ -47,16 +41,14 @@ export default function Skills() {
             software.
           </p>
 
-          {/*
-            Reserves its own height so the column does not shift as the
-            readout fills and empties.
-          */}
+          {/* Reserves its height so the column does not shift as the readout
+              fills and empties. */}
           <div className="mt-6 min-h-[3.25rem] border-t border-border pt-4">
             <p className="type-eyebrow text-foreground">
               {active ? active.name : "Hover to inspect"}
             </p>
             <p className="type-meta mt-1 text-[var(--text-faint)]">
-              {active ? active.kind : " "}
+              {active ? active.kind : " "}
             </p>
           </div>
         </div>
@@ -84,8 +76,9 @@ export default function Skills() {
               <ul className="m-0 mt-3.5 flex list-none flex-wrap gap-x-5 gap-y-2.5 p-0">
                 {category.skills.map((skill) => (
                   <SkillItem
-                    key={skill.name}
+                    key={`${category.id}-${skill.name}`}
                     skill={skill}
+                    isActive={active?.name === skill.name}
                     onEnter={setActive}
                     onLeave={() => setActive(null)}
                   />
@@ -97,33 +90,21 @@ export default function Skills() {
       </div>
 
       {/*
-        Held apart from the matrix rather than appended as another row: this
-        is current work, not general stack, and the distinction is the point.
+        Domains, not tools. Held to one line under the matrix so the work
+        reads as "an engineer who also builds these systems" rather than as a
+        second stack competing with the first.
       */}
       <MotionMountDiv
-        delay={0.3}
+        delay={0.28}
         distance={12}
-        className="mt-10 rounded-lg border border-border bg-[var(--surface-glass)] p-5 sm:p-6"
+        className="mt-8 flex flex-col gap-x-6 gap-y-2 border-t border-border pt-5 sm:flex-row sm:items-baseline"
       >
-        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-          <h3 className="type-eyebrow text-foreground">
-            Current / specialized
-          </h3>
-          <p className="type-meta text-[var(--text-faint)]">
-            Real-time edge AI at Hyperion Future Tech
-          </p>
-        </div>
-
-        <ul className="m-0 mt-4 flex list-none flex-wrap gap-x-5 gap-y-2.5 p-0">
-          {specializedSkills.map((skill) => (
-            <SkillItem
-              key={skill.name}
-              skill={skill}
-              onEnter={setActive}
-              onLeave={() => setActive(null)}
-            />
-          ))}
-        </ul>
+        <h3 className="type-eyebrow shrink-0 text-foreground">
+          Current specialization
+        </h3>
+        <p className="type-meta text-muted-foreground">
+          {specialization.join("  ·  ")}
+        </p>
       </MotionMountDiv>
     </MotionMountSection>
   );
@@ -131,10 +112,12 @@ export default function Skills() {
 
 function SkillItem({
   skill,
+  isActive,
   onEnter,
   onLeave,
 }: {
   skill: Skill;
+  isActive: boolean;
   onEnter: (skill: Skill) => void;
   onLeave: () => void;
 }) {
@@ -144,26 +127,69 @@ function SkillItem({
     <li
       onMouseEnter={() => onEnter(skill)}
       onMouseLeave={onLeave}
-      className="group flex items-center gap-2"
+      /*
+        `cursor-help` rather than a custom cursor element. It is the pointer
+        the platform already uses for "there is more information here", it
+        costs nothing, it does not follow the mouse around the page, and it
+        does nothing at all on touch — which is correct, since there is no
+        hover to indicate there.
+      */
+      className="group flex cursor-help items-center gap-2"
     >
+      {/*
+        No colour transition on these two, deliberately.
+
+        A CSS transition on `color` whose value comes from a theme-switched
+        custom property pins the old resolved colour when the theme class
+        flips and never re-resolves the changed var — the label keeps the
+        previous theme's colour until a reload. Measured: 6.11:1 on light
+        with the transition removed, 2.86:1 with it present, from the same
+        declaration. Forcing `transition: none` on the element fixed it
+        outright, which is what identified the cause.
+
+        The hover colour therefore changes instantly. That is the trade:
+        a correct colour in both themes over a 200ms fade.
+      */}
       {Icon ? (
-        /* Monochrome, and sized below the label. Brand colour on fifty marks
-           at once is what turned the old version into a logo wall. */
+        /*
+          Colour is driven from the same state that feeds the readout rather
+          than from a group-hover class. The brand value is per-skill data, so
+          a utility class cannot carry it, and keeping one source for "which
+          skill is being inspected" means the icon, the label and the readout
+          cannot disagree.
+
+          Falls back to the foreground colour where no brand colour is set —
+          Next.js, Express, Vercel and the rest whose marks are black.
+        */
         <Icon
           aria-hidden
-          className="h-3.5 w-3.5 shrink-0 text-[var(--text-faint)] transition-colors duration-200 group-hover:text-foreground motion-reduce:transition-none"
+          style={{
+            color: isActive
+              ? (skill.color ?? "var(--foreground)")
+              : "var(--text-faint)",
+          }}
+          className="h-3.5 w-3.5 shrink-0"
         />
       ) : null}
 
-      <span className="type-meta text-muted-foreground transition-colors duration-200 group-hover:text-foreground motion-reduce:transition-none">
+      {/*
+        The label goes to full foreground rather than to the brand colour.
+        Several of these brands are yellow or near-black — JavaScript, Linux,
+        Next.js — and colouring the word would drop it below readable contrast
+        on one theme or the other. The icon carries the brand; the word stays
+        legible.
+      */}
+      <span
+        style={{
+          color: isActive ? "var(--foreground)" : "var(--muted-foreground)",
+        }}
+        className="type-meta"
+      >
         {skill.name}
       </span>
 
-      {/*
-        The kind is in the accessible tree for everyone, not only in the
-        hover readout — otherwise this detail would exist for mouse users
-        alone. The readout is the sighted-mouse convenience on top of it.
-      */}
+      {/* In the accessible tree for everyone, so the detail is not
+          mouse-only. */}
       <span className="sr-only">, {skill.kind}</span>
     </li>
   );

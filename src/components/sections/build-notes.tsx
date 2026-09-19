@@ -25,7 +25,7 @@ export default function BuildNotes({ notes }: { notes: Note[] }) {
 
   return (
     <section id="writing" className="scroll-mt-32">
-      <SectionHeading index="05" rule>
+      <SectionHeading index="06" rule>
         Build notes
       </SectionHeading>
 

@@ -6,7 +6,8 @@ import Contact from "@/components/sections/contact";
 import Contributions from "@/components/sections/contributions";
 import SelectedWork from "@/components/sections/selected-work";
 import Intro from "@/components/sections/intro";
-import MyJourney from "@/components/sections/my-journey";
+import Education from "@/components/sections/education";
+import Experience from "@/components/sections/experience";
 import Skills from "@/components/sections/skills";
 
 const siteUrl = "https://www.vtcodecraft.in";
@@ -68,7 +69,8 @@ export default function Home() {
         <Contributions />
         <SelectedWork />
         <Skills />
-        <MyJourney />
+        <Experience />
+        <Education />
         <BuildNotes notes={notes} />
         <Contact />
       </div>

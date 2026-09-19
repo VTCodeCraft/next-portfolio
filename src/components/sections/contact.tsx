@@ -9,7 +9,7 @@ import SubmitBtn from "@/components/ui/submit-btn";
 export default function Contact() {
   return (
     <section id="contact" className="scroll-mt-32">
-      <SectionHeading index="06" rule>
+      <SectionHeading index="07" rule>
         Contact
       </SectionHeading>
 

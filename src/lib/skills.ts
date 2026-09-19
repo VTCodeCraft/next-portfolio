@@ -1,64 +1,61 @@
 import type { IconType } from "react-icons";
 import { FaAws } from "react-icons/fa";
 import {
-  SiAndroid,
-  SiAnthropic,
+  SiC,
   SiCplusplus,
   SiDocker,
+  SiExpo,
   SiExpress,
-  SiFigma,
-  SiFramer,
+  SiFastapi,
   SiGit,
-  SiGithub,
   SiGithubactions,
-  SiGithubcopilot,
-  SiGooglechrome,
-  SiGooglegemini,
   SiGraphql,
   SiJavascript,
   SiLinux,
   SiMongodb,
-  SiMongoose,
-  SiMysql,
   SiNextdotjs,
   SiNodedotjs,
-  SiOnnx,
-  SiOpenai,
   SiOpenjdk,
+  SiPnpm,
   SiPostgresql,
-  SiPostman,
+  SiPrisma,
   SiPython,
   SiReact,
   SiRedis,
-  SiShadcnui,
-  SiSupabase,
+  SiSocketdotio,
   SiTailwindcss,
+  SiThreedotjs,
+  SiTurborepo,
   SiTypescript,
   SiVercel,
   SiWebrtc,
-  SiYolo,
 } from "react-icons/si";
 
 /**
  * The stack, as data.
  *
- * Every entry here is taken from the résumé or from current work. Nothing is
- * added because it is popular, and there are no proficiency levels, years or
- * ratings — those are unverifiable and are what make a skills section read as
- * a junior template.
+ * Ordered for a software-engineering read: languages, then what is built with
+ * them, then what stores and runs it, then the fundamentals underneath. Model
+ * APIs are not a category here — they are tools used inside the work, and
+ * listing them beside PostgreSQL implied they carried equal weight in the
+ * stack. They live in `specialization` below instead.
  *
- * `kind` is the only per-item claim, and it states what the thing *is* rather
- * than how well it is known.
- *
- * Icons are optional on purpose. Some entries are concepts with no brand mark
- * and some vendors have none in the icon set, so the name always leads and the
- * icon is decoration when it happens to exist.
+ * `kind` states what a thing *is*, never how well it is known. There are no
+ * levels, percentages or years, because none of that is verifiable.
  */
 export type Skill = {
   name: string;
-  /** What the technology is. Never a proficiency. */
   kind: string;
   icon?: IconType;
+  /**
+   * Official Simple Icons brand hex, used only on hover.
+   *
+   * Absent where the brand mark is black or near-black — Next.js, Express,
+   * Vercel, Three.js, Expo, Prisma, Socket.IO, Java. Those would vanish
+   * against the dark theme, so they resolve to the foreground colour instead
+   * and simply brighten.
+   */
+  color?: string;
 };
 
 export type SkillCategory = {
@@ -72,114 +69,121 @@ export const skillCategories: SkillCategory[] = [
     id: "languages",
     label: "Languages",
     skills: [
-      { name: "TypeScript", kind: "Language", icon: SiTypescript },
-      { name: "JavaScript", kind: "Language", icon: SiJavascript },
-      { name: "Python", kind: "Language", icon: SiPython },
+      { name: "TypeScript", kind: "Language", icon: SiTypescript, color: "#3178C6" },
+      { name: "JavaScript", kind: "Language", icon: SiJavascript, color: "#F7DF1E" },
+      { name: "Python", kind: "Language", icon: SiPython, color: "#3776AB" },
       { name: "Java", kind: "Language", icon: SiOpenjdk },
-      { name: "C/C++", kind: "Language", icon: SiCplusplus },
+      { name: "C++", kind: "Language", icon: SiCplusplus, color: "#00599C" },
+      { name: "C", kind: "Language", icon: SiC, color: "#A8B9CC" },
       { name: "SQL", kind: "Query language" },
     ],
   },
   {
-    id: "web",
-    label: "Web & runtime",
+    id: "frontend",
+    label: "Frontend",
     skills: [
-      { name: "React", kind: "UI library", icon: SiReact },
+      { name: "React", kind: "UI library", icon: SiReact, color: "#61DAFB" },
       { name: "Next.js", kind: "Framework", icon: SiNextdotjs },
-      { name: "Node.js", kind: "Runtime", icon: SiNodedotjs },
+      { name: "React Native", kind: "Mobile", icon: SiReact, color: "#61DAFB" },
+      { name: "Expo", kind: "Mobile toolchain", icon: SiExpo },
+      { name: "Tailwind CSS", kind: "Styling", icon: SiTailwindcss, color: "#06B6D4" },
+      { name: "Three.js", kind: "3D rendering", icon: SiThreedotjs },
+    ],
+  },
+  {
+    id: "backend",
+    label: "Backend & APIs",
+    skills: [
+      { name: "Node.js", kind: "Runtime", icon: SiNodedotjs, color: "#5FA04E" },
       { name: "Express", kind: "Server framework", icon: SiExpress },
-      { name: "GraphQL", kind: "Query layer", icon: SiGraphql },
-      { name: "Tailwind CSS", kind: "Styling", icon: SiTailwindcss },
-      { name: "shadcn/ui", kind: "Components", icon: SiShadcnui },
-      { name: "Zustand", kind: "State" },
-      { name: "Framer Motion", kind: "Animation", icon: SiFramer },
+      { name: "FastAPI", kind: "Server framework", icon: SiFastapi, color: "#009688" },
+      { name: "REST APIs", kind: "Interface design" },
+      { name: "GraphQL", kind: "Query layer", icon: SiGraphql, color: "#E10098" },
+      { name: "Socket.IO", kind: "Realtime transport", icon: SiSocketdotio },
+      { name: "WebRTC", kind: "Realtime media", icon: SiWebrtc },
+      { name: "Concurrency", kind: "Systems" },
     ],
   },
   {
     id: "data",
     label: "Data",
     skills: [
-      { name: "PostgreSQL", kind: "Database", icon: SiPostgresql },
-      { name: "MongoDB", kind: "Database", icon: SiMongodb },
-      { name: "Mongoose", kind: "ODM", icon: SiMongoose },
-      { name: "MySQL", kind: "Database", icon: SiMysql },
-      { name: "Redis", kind: "Cache", icon: SiRedis },
-      { name: "Supabase", kind: "Platform", icon: SiSupabase },
-      { name: "Neon", kind: "Serverless Postgres" },
+      { name: "PostgreSQL", kind: "Database", icon: SiPostgresql, color: "#4169E1" },
+      { name: "MongoDB", kind: "Database", icon: SiMongodb, color: "#47A248" },
+      { name: "Redis", kind: "Cache", icon: SiRedis, color: "#FF4438" },
+      { name: "Prisma", kind: "ORM", icon: SiPrisma },
     ],
   },
   {
-    id: "infrastructure",
-    label: "Infrastructure",
+    id: "cloud",
+    label: "Cloud & DevOps",
     skills: [
-      { name: "AWS / EC2", kind: "Cloud", icon: FaAws },
-      { name: "Docker", kind: "Containers", icon: SiDocker },
-      { name: "Coolify", kind: "Self-hosted PaaS" },
-      { name: "Linux", kind: "Operating system", icon: SiLinux },
-      { name: "GitHub Actions", kind: "CI/CD", icon: SiGithubactions },
+      { name: "AWS", kind: "Cloud", icon: FaAws, color: "#FF9900" },
+      { name: "EC2", kind: "Compute", icon: FaAws, color: "#FF9900" },
+      { name: "S3", kind: "Object storage", icon: FaAws, color: "#569A31" },
+      { name: "Docker", kind: "Containers", icon: SiDocker, color: "#2496ED" },
       { name: "Vercel", kind: "Hosting", icon: SiVercel },
-    ],
-  },
-  {
-    id: "ai",
-    label: "AI & LLM",
-    skills: [
-      { name: "Google Gemini API", kind: "Model API", icon: SiGooglegemini },
-      { name: "Claude / Anthropic", kind: "Model API", icon: SiAnthropic },
-      { name: "OpenAI API", kind: "Model API", icon: SiOpenai },
-      { name: "GitHub Copilot", kind: "Tooling", icon: SiGithubcopilot },
-      { name: "LLM-assisted development", kind: "Practice" },
-    ],
-  },
-  {
-    id: "tools",
-    label: "Tools",
-    skills: [
-      { name: "Git", kind: "Version control", icon: SiGit },
-      { name: "GitHub", kind: "Platform", icon: SiGithub },
-      { name: "Postman", kind: "API client", icon: SiPostman },
-      { name: "Figma", kind: "Design", icon: SiFigma },
-      { name: "Chrome Extensions", kind: "Platform", icon: SiGooglechrome },
+      { name: "Coolify", kind: "Self-hosted PaaS" },
+      { name: "Linux", kind: "Operating system", icon: SiLinux, color: "#FCC624" },
+      { name: "Git", kind: "Version control", icon: SiGit, color: "#F05032" },
+      { name: "CI/CD", kind: "Delivery" },
+      { name: "GitHub Actions", kind: "Delivery", icon: SiGithubactions, color: "#2088FF" },
+      { name: "Turborepo", kind: "Monorepo", icon: SiTurborepo, color: "#EF4444" },
+      { name: "pnpm", kind: "Package manager", icon: SiPnpm, color: "#F69220" },
     ],
   },
   {
     id: "engineering",
     label: "Engineering",
-    /* Deliberately separate. Treating System Design or DSA as though they were
-       libraries is the tell that a skills list was assembled rather than
-       thought about. */
+    /* Fundamentals, kept apart from libraries. Listing System Design beside a
+       package is the tell that a stack was assembled rather than thought
+       about. */
     skills: [
       { name: "Data Structures & Algorithms", kind: "Foundation" },
-      { name: "System Design", kind: "Foundation" },
-      { name: "Scalable Architecture", kind: "Foundation" },
       { name: "Object-Oriented Programming", kind: "Foundation" },
-      { name: "REST APIs", kind: "Foundation" },
-      { name: "API Integration", kind: "Foundation" },
+      { name: "Operating Systems", kind: "Foundation" },
+      { name: "Database Management Systems", kind: "Foundation" },
+      { name: "Computer Networks", kind: "Foundation" },
+      { name: "System Design", kind: "Foundation" },
     ],
   },
 ];
 
 /**
- * Current work rather than general stack.
+ * Domains rather than tools.
  *
- * These come from the Hyperion smart-glasses platform — real-time edge AI on
- * device — and are kept apart from the categories above on purpose. Folding
- * them in would present work in progress as settled general expertise, which
- * is the kind of overstatement a technical reader notices immediately.
+ * These read as "an engineer who also works on these systems", which is the
+ * accurate framing. The model APIs and ML libraries that sit underneath them
+ * are listed here rather than as a top-level stack category.
  */
-export const specializedSkills: Skill[] = [
-  { name: "WebRTC", kind: "Real-time transport", icon: SiWebrtc },
-  { name: "Real-time systems", kind: "Domain" },
-  { name: "Computer Vision", kind: "Domain" },
-  { name: "YOLO11", kind: "Object detection", icon: SiYolo },
-  { name: "ONNX Runtime", kind: "Edge inference", icon: SiOnnx },
-  { name: "React Native", kind: "Mobile", icon: SiReact },
-  { name: "Native Android", kind: "Platform integration", icon: SiAndroid },
-  { name: "Vision-language models", kind: "Model class" },
-  { name: "AI inference pipelines", kind: "Domain" },
+export const specialization = [
+  "AI-powered products",
+  "Real-time systems",
+  "WebRTC",
+  "Edge inference",
+  "Computer vision",
+  "3D reconstruction",
 ];
 
-/** Counted rather than written down, so the heading cannot drift from the data. */
-export const totalSkillCount =
-  skillCategories.reduce((sum, category) => sum + category.skills.length, 0) +
-  specializedSkills.length;
+/**
+ * Kept out of the primary stack on purpose — these are things used inside the
+ * work above, not the shape of the stack itself. Retained as data so the
+ * future /experience route can surface them.
+ */
+export const aiToolchain = [
+  "Vercel AI SDK",
+  "LLM tool calling",
+  "MCP",
+  "OpenAI API",
+  "Claude API",
+  "DeepSeek API",
+  "PyTorch",
+  "CUDA",
+  "YOLO",
+];
+
+/** Counted, so the heading cannot drift from the list. */
+export const totalSkillCount = skillCategories.reduce(
+  (sum, category) => sum + category.skills.length,
+  0,
+);
