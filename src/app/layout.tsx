@@ -36,12 +36,29 @@ const siteName = SITE_NAME;
 */
 const siteTitle = `${siteName} | ${ROLE_PRIMARY}`;
 const siteDescription = `${ROLE_PRIMARY} and ${ROLE_SECONDARY} building scalable web applications, API-driven systems, Chrome extensions, and modern digital experiences using Next.js, React, TypeScript, and backend technologies.`;
-const ogImageUrl = `${siteUrl}/OG_image.png?v=2`;
+/*
+  Points at public/images/OG_Image.png.
+
+  It used to be /OG_image.png at the public root, and that file has since been
+  removed — so the URL every crawler had on file was answering 404 and the
+  platforms were falling back to whatever they had cached, which is why the
+  preview kept showing the old card after the artwork was replaced.
+
+  The capital I in OG_Image matters: this resolves case-sensitively once
+  deployed, whatever the local filesystem tolerates.
+
+  No cache-busting query any more. The path itself changed, so every cache
+  keyed on the old URL misses regardless; a version parameter on top of that
+  is one more thing to remember to bump.
+*/
+const ogImageUrl = `${siteUrl}/images/OG_Image.png`;
 const ogImage = {
   url: ogImageUrl,
   secureUrl: ogImageUrl,
-  width: 1731,
-  height: 909,
+  /* Read off the file rather than carried over: the previous values said
+     1731x909 and described the artwork before this one. */
+  width: 1734,
+  height: 907,
   alt: `Dark premium developer branding for Vishesh Tripathi, ${ROLE_FULL} at VTCodeCraft.`,
   type: "image/png",
 };
