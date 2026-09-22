@@ -32,14 +32,18 @@ export default function Header() {
       <div className="page-shell">
         <div className="flex h-16 items-center justify-between gap-2 sm:gap-8">
           {/*
-            Wordmark, not a logo chip. The boxed "VT" monogram this replaces
-            was a decorative element standing in for a brand that is really
-            just a name — the name itself is the stronger mark.
+            The mark alone.
+
+            It used to sit next to the name and the role, which meant three
+            brand elements competing in a 64px row — and the mark was the
+            smallest of them, so it read as an icon decorating a wordmark
+            rather than as the logo. The name is still the link's accessible
+            name, so nothing was lost for anyone not looking at it.
           */}
           <Link
             href="/"
             aria-label="Vishesh Tripathi, home"
-            className="group flex shrink-0 items-center gap-2.5 transition-opacity hover:opacity-70"
+            className="group flex shrink-0 items-center transition-opacity hover:opacity-70"
           >
             {/*
               Both marks are always in the DOM and crossfaded by theme rather
@@ -50,13 +54,23 @@ export default function Header() {
               artwork, and a CSS invert would not produce the other version of
               it — it would produce a photographic negative.
             */}
-            <span className="relative block h-7 w-7 shrink-0">
+            {/*
+              Sized by the artwork's own 1.78 aspect rather than forced into
+              a square. In a square box `object-contain` scaled the mark to
+              fit the height it did not have, so a 28px slot rendered a 14px
+              glyph — most of the space went to the letterbox.
+
+              36x64 on a phone, 40x71 from sm. Against a 64px bar that puts
+              the glyph at roughly 37px tall, which is about four times what
+              was on screen before.
+            */}
+            <span className="relative block h-9 w-16 shrink-0 sm:h-10 sm:w-[71px]">
               <Image
                 src="/images/logo_dark.svg"
                 alt=""
                 aria-hidden
                 fill
-                sizes="28px"
+                sizes="(max-width: 640px) 64px, 71px"
                 priority
                 /* next/image refuses SVG unless dangerouslyAllowSVG is on
                    globally. These are our own assets and vectors gain
@@ -70,7 +84,7 @@ export default function Header() {
                 alt=""
                 aria-hidden
                 fill
-                sizes="28px"
+                sizes="(max-width: 640px) 64px, 71px"
                 priority
                 /* next/image refuses SVG unless dangerouslyAllowSVG is on
                    globally. These are our own assets and vectors gain
@@ -79,19 +93,6 @@ export default function Header() {
                 unoptimized
                 className="object-contain opacity-100 transition-opacity duration-300 dark:opacity-0 motion-reduce:transition-none"
               />
-            </span>
-
-            {/* Initials below sm: the full name plus three links plus the
-                résumé action and the theme control does not fit a 375px row
-                without crowding. */}
-            <span className="flex flex-col justify-center leading-none">
-              <span className="type-button text-foreground sm:hidden">VT</span>
-              <span className="hidden type-button text-foreground sm:block">
-                Vishesh Tripathi
-              </span>
-              <span className="type-eyebrow mt-1.5 hidden text-[var(--text-subtle)] sm:block">
-                Full-stack engineer
-              </span>
             </span>
           </Link>
 

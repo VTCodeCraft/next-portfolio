@@ -6,6 +6,7 @@ import IdentityPanel from "@/components/sections/identity-panel";
 import TextType from "@/components/TextType";
 import SocialLinks from "@/components/ui/social-links";
 import { MotionMountDiv, MotionMountSection } from "@/components/ui/reveal";
+import { ROLE_FULL, ROLE_PRIMARY, ROLE_SECONDARY } from "@/lib/site";
 
 export default function Intro() {
   return (
@@ -37,7 +38,7 @@ export default function Intro() {
             */}
             <h1 className="type-display mt-7 text-foreground">
               <span className="sr-only">
-                Vishesh Tripathi — Full-stack engineer
+                Vishesh Tripathi — {ROLE_FULL}
               </span>
               <span aria-hidden="true">
                 <TextType
@@ -55,13 +56,25 @@ export default function Intro() {
               </span>
             </h1>
 
+            {/*
+              The slash is dimmed but stays real text, spaces and all.
+
+              Hiding it and spacing the two roles with a margin looked
+              identical and read as "Full Stack AI EngineerSoftware
+              Engineer" — adjacent inline elements with no whitespace between
+              them concatenate in the accessible name. Same reason the
+              experience header sets its own slash as plain text rather than
+              swapping in hidden punctuation.
+            */}
             <p className="type-lede mt-3 text-muted-foreground">
-              Full-stack engineer
+              {ROLE_PRIMARY}{" "}
+              <span className="text-[var(--text-faint)]">/</span>{" "}
+              {ROLE_SECONDARY}
             </p>
 
             <div className="type-body mt-6 space-y-3 text-foreground">
               <p className="type-prose">
-                Hey, I&rsquo;m a Full-Stack AI Developer with experience
+                Hey, I&rsquo;m a Full Stack AI Engineer with experience
                 building web applications, API-driven systems, Chrome
                 extensions, and scalable backend features.
               </p>

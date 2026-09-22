@@ -14,19 +14,35 @@ import {
   themeInitScript,
 } from "@/components/providers/theme-provider";
 import { MotionProvider } from "@/components/ui/reveal";
+import {
+  ROLE_FULL,
+  ROLE_PRIMARY,
+  ROLE_SECONDARY,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 
-const siteUrl = "https://www.vtcodecraft.in";
-const siteName = "Vishesh Tripathi";
-const siteTitle = "Vishesh Tripathi | Full-Stack Developer";
-const siteDescription =
-  "Building scalable web applications, API-driven systems, Chrome extensions, and modern digital experiences using Next.js, React, TypeScript, and backend technologies.";
+const siteUrl = SITE_URL;
+const siteName = SITE_NAME;
+
+/*
+  The <title> carries the primary role only.
+
+  Both roles is 61 characters, and Google cuts the title around 580px —
+  roughly 57 — so the full version renders as "… / Software Engi…", which
+  loses the second role anyway and looks broken doing it. The pairing is
+  carried in full by the description, the JSON-LD `jobTitle` and every
+  visible label on the page.
+*/
+const siteTitle = `${siteName} | ${ROLE_PRIMARY}`;
+const siteDescription = `${ROLE_PRIMARY} and ${ROLE_SECONDARY} building scalable web applications, API-driven systems, Chrome extensions, and modern digital experiences using Next.js, React, TypeScript, and backend technologies.`;
 const ogImageUrl = `${siteUrl}/OG_image.png?v=2`;
 const ogImage = {
   url: ogImageUrl,
   secureUrl: ogImageUrl,
   width: 1731,
   height: 909,
-  alt: "Dark premium developer branding for Vishesh Tripathi, Full-Stack Developer at VTCodeCraft.",
+  alt: `Dark premium developer branding for Vishesh Tripathi, ${ROLE_FULL} at VTCodeCraft.`,
   type: "image/png",
 };
 
@@ -61,6 +77,9 @@ export const metadata: Metadata = {
   description: siteDescription,
   applicationName: "VTCodeCraft",
   keywords: [
+    ROLE_PRIMARY,
+    ROLE_SECONDARY,
+    "AI Engineer",
     "Full-Stack Developer",
     "Vishesh Tripathi",
     "VTCodeCraft",

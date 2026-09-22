@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { posts } from "#site/content";
 
+import { ROLE_PRIMARY, ROLE_SECONDARY } from "@/lib/site";
 import BuildNotes from "@/components/sections/build-notes";
 import Contact from "@/components/sections/contact";
 import Contributions from "@/components/sections/contributions";
@@ -22,7 +23,10 @@ const personJsonLd = {
   name: "Vishesh Tripathi",
   url: siteUrl,
   image: `${siteUrl}/images/profile.png`,
-  jobTitle: "Full-Stack Engineer",
+  /* schema.org allows repeated values for jobTitle, so the two roles go in
+     as separate strings rather than one slash-joined label a parser would
+     have to split. */
+  jobTitle: [ROLE_PRIMARY, ROLE_SECONDARY],
   email: "mailto:work.vishesh12.05@gmail.com",
   sameAs: [
     "https://github.com/VTCodeCraft",
