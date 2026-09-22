@@ -513,16 +513,22 @@ body {
    A year is 53 columns, so the grid's width is fixed by the cell size and
    the only question is which cell size fits the shell at each breakpoint:
 
-     base   10px + 3px gutter  =  689px   scrolls below ~730px of shell
-     lg     13px + 3px         =  848px   fits the 937px shell at 1024
-     xl     16px + 4px         = 1060px   fits the 1168px shell at 1280+
+     base    8px + 2px gutter  =  530px   fits from ~570px of shell
+     lg     10px + 2px         =  636px   inside the 937px shell at 1024
+     xl     11px + 3px         =  742px   inside the 1168px shell at 1280+
+
+   Stepped down from 10/13/16px. At 16px the grid ran 1060px — it filled
+   the shell edge to edge and made two calendars the largest thing on the
+   homepage by a wide margin, louder than the hero. The section is evidence
+   that the work is continuous, not the subject of the page, and at 11px a
+   year still reads as a year.
 
    Squares are stepped rather than fluid because a year of activity has a
    floor below which it stops reading: scaling 53 columns into a 375px
    viewport gives roughly 4px cells. Scrolling keeps the density honest. */
 .contribution-calendar {
-  --contrib-cell: 10px;
-  --contrib-gap: 3px;
+  --contrib-cell: 8px;
+  --contrib-gap: 2px;
   --contrib-labels: 1.6rem;
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
@@ -530,17 +536,17 @@ body {
 
 @media (min-width: 1024px) {
   .contribution-calendar {
-    --contrib-cell: 13px;
-    --contrib-gap: 3px;
-    --contrib-labels: 1.9rem;
+    --contrib-cell: 10px;
+    --contrib-gap: 2px;
+    --contrib-labels: 1.75rem;
   }
 }
 
 @media (min-width: 1280px) {
   .contribution-calendar {
-    --contrib-cell: 16px;
-    --contrib-gap: 4px;
-    --contrib-labels: 2.1rem;
+    --contrib-cell: 11px;
+    --contrib-gap: 3px;
+    --contrib-labels: 1.85rem;
   }
 }
 
