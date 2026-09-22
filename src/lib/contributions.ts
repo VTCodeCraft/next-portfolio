@@ -160,6 +160,97 @@ async function getGithubCalendarFromPublicApi(
   }
 }
 
+export type ContributionMonth = {
+  /** "2025-07" */
+  month: string;
+  count: number;
+};
+
+export type ContributionHistory = {
+  months: ContributionMonth[];
+  total: number;
+  /** Highest single month, so a chart can scale without a second pass. */
+  peak: ContributionMonth;
+  /** First and last month carrying activity. */
+  from: string;
+  to: string;
+};
+
+/**
+ * Every month of recorded activity, not just the trailing year.
+ *
+ * The aggregator's `y=all` returns each year's daily rows in one response, so
+ * the whole history costs the same single request the calendar already makes.
+ *
+ * "Contributions", not "commits", everywhere this surfaces: GitHub's number
+ * folds in pull requests, issues and reviews alongside commits, and labelling
+ * it commits would overstate it. Counting real commits needs the search API,
+ * which is authenticated, rate-limited to 30 requests a minute, and blind to
+ * private repositories — it would report a smaller and less honest number than
+ * the calendar immediately above it.
+ */
+export async function getGithubHistory(
+  login: string,
+): Promise<ContributionHistory | null> {
+  try {
+    const response = await fetch(
+      `https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(login)}?y=all`,
+      { next: { revalidate: DAY } },
+    );
+
+    if (!response.ok) return null;
+
+    const json = (await response.json()) as {
+      contributions?: { date: string; count: number }[];
+    };
+
+    if (!Array.isArray(json.contributions)) return null;
+
+    /*
+      The response runs to the end of the current calendar year, so the months
+      after today come back as zeros. Charting them would draw empty columns
+      for months that have not happened yet.
+    */
+    const today = new Date().toISOString().slice(0, 10);
+
+    const byMonth = new Map<string, number>();
+
+    for (const day of json.contributions) {
+      if (day.date > today) continue;
+      const month = day.date.slice(0, 7);
+      byMonth.set(month, (byMonth.get(month) ?? 0) + day.count);
+    }
+
+    const ordered = [...byMonth.entries()]
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([month, count]) => ({ month, count }));
+
+    /*
+      Leading empty months are dropped — the account exists before the first
+      commit, and a chart that opens with a run of blank columns is showing
+      the age of the account rather than the shape of the work. Gaps after
+      that first month are kept: a quiet month is a real data point.
+    */
+    const firstActive = ordered.findIndex((m) => m.count > 0);
+
+    if (firstActive === -1) return null;
+
+    const months = ordered.slice(firstActive);
+    const total = months.reduce((sum, m) => sum + m.count, 0);
+    const peak = months.reduce((a, b) => (b.count > a.count ? b : a));
+
+    return {
+      months,
+      total,
+      peak,
+      from: months[0].month,
+      to: months[months.length - 1].month,
+    };
+  } catch {
+    return null;
+  }
+}
+
 /**
  * LeetCode has no official API. This uses the same public GraphQL endpoint the
  * profile page calls, so it can change without notice — hence the same

@@ -6,6 +6,20 @@ import {
   type ContributionCalendar as Calendar,
 } from "@/lib/contributions";
 
+/*
+  All-time history chart, parked.
+
+  The component and its fetch are still here — ui/contribution-history.tsx
+  and getGithubHistory() in lib/contributions.ts — and both work: 19 months
+  from Mar 2025, 1,396 contributions, peak 370 in Jul 2025. Switching it back
+  on means uncommenting the import, the fetch and the render below.
+
+  The fetch is commented out with the render rather than left running, so a
+  parked chart does not keep making a request on every revalidation.
+*/
+// import ContributionHistoryChart from "@/components/ui/contribution-history";
+// import { getGithubHistory } from "@/lib/contributions";
+
 const GITHUB_LOGIN = "VTCodeCraft";
 
 function Panel({
@@ -60,12 +74,15 @@ export default async function Contributions() {
   const [github, leetcode] = await Promise.all([
     getGithubCalendar(GITHUB_LOGIN),
     getLeetcodeCalendar(GITHUB_LOGIN),
+    // getGithubHistory(GITHUB_LOGIN),
   ]);
 
   if (!github && !leetcode) return null;
 
   return (
     <section id="contributions" className="scroll-mt-32">
+      {/* The meta covers the calendars, which are a rolling year; the history
+          chart below carries its own "All time" label. */}
       <SectionHeading index="01" rule meta="Last 12 months">
         Contributions
       </SectionHeading>
@@ -83,6 +100,8 @@ export default async function Contributions() {
           calendar={leetcode}
           href={`https://leetcode.com/u/${GITHUB_LOGIN}/`}
         />
+
+        {/* {history ? <ContributionHistoryChart history={history} /> : null} */}
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-1.5">
