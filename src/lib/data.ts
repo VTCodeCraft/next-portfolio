@@ -37,7 +37,7 @@ export const sections = [
 export const identityMeta = [
   { label: "Based in", value: "New Delhi, India" },
   { label: "Timezone", value: "IST · UTC+5:30", mono: true },
-  { label: "Now", value: "Hyperion Future Tech" },
+  { label: "Now", value: "Hyperion Future Tech Ventures Pvt. Ltd. (Gudz)" },
 ] as const;
 
 export const socialLinks = [

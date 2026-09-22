@@ -125,7 +125,7 @@ export type Experience = {
 export const experiences: Experience[] = [
   {
     slug: "hyperion",
-    company: "Hyperion Future Tech Ventures",
+    company: "Hyperion Future Tech Ventures Pvt. Ltd. (Gudz)",
     role: "Software Engineer Intern",
     location: "Gurugram, India",
     start: "Jul 2026",
