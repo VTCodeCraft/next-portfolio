@@ -3,7 +3,6 @@ import {
   SiExpress,
   SiFramer,
   SiGooglecalendar,
-  SiGooglegemini,
   SiMediapipe,
   SiMongodb,
   SiNextdotjs,
@@ -15,6 +14,7 @@ import {
   SiSupabase,
   SiTailwindcss,
   SiTypescript,
+  SiVercel,
   SiZoom,
 } from "react-icons/si";
 
@@ -55,22 +55,22 @@ export const myProjects = [
     shortTitle: "Clutchly",
     summary:
       "An AI interview coach you talk to out loud. It listens, adapts its next question, and remembers what you struggled with last time.",
-    stack: "Deepgram Voice Agent · Gemini 2.5 · Cognee · Prisma",
+    stack: "Deepgram Voice Agent · Vercel AI SDK · Cognee · Prisma",
     outcome:
       "Full-duplex speech pipeline with per-stage token and cost tracking.",
     flagship: 1,
     points: [
       "AI voice interview coach with a full-duplex speech pipeline — Deepgram Voice Agent, Nova-3 STT, and Aura-2 TTS.",
-      "Real-time adaptive question generation via Gemini 2.5 with structured multi-dimensional answer evaluation.",
+      "Real-time adaptive question generation via the Vercel AI SDK with structured multi-dimensional answer evaluation.",
       "Long-term semantic graph memory (Cognee Cloud) recalls past weaknesses to personalize sessions, plus per-stage token and cost observability.",
     ],
-    href: "https://interview-memory-agent.vercel.app/",
+    href: "https://www.clutchly.pro/",
     repoHref: "https://github.com/VTCodeCraft/interview-memory-agent",
     featured: true,
     tags: [
       { id: 1, name: "Next.js", icon: SiNextdotjs },
       { id: 2, name: "TypeScript", icon: SiTypescript },
-      { id: 3, name: "Gemini 2.5", icon: SiGooglegemini },
+      { id: 3, name: "Vercel AI SDK", icon: SiVercel },
       { id: 4, name: "Prisma", icon: SiPrisma },
       { id: 5, name: "PostgreSQL", icon: SiPostgresql },
       { id: 6, name: "Clerk", icon: SiClerk },
