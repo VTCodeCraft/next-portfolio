@@ -40,60 +40,53 @@ export default function Header() {
             rather than as the logo. The name is still the link's accessible
             name, so nothing was lost for anyone not looking at it.
           */}
+          {/*
+            The link is the positioning context now — the wrapper span it used
+            to need is gone. It spans the full 64px row so the mark centres
+            against the nav items rather than against a box of its own.
+
+            Both marks stay in the DOM and crossfade by theme rather than
+            being swapped, so the change happens under the sweep instead of
+            popping at the frame where the class flips. Two real assets, not
+            one filtered: a CSS invert would produce a photographic negative
+            of the traced artwork, not the other version of it.
+          */}
           <Link
             href="/"
             aria-label="Vishesh Tripathi, home"
-            className="group flex shrink-0 items-center transition-opacity hover:opacity-70"
+            className="relative flex h-16 w-[50px] shrink-0 items-center sm:w-[57px]"
           >
-            {/*
-              Both marks are always in the DOM and crossfaded by theme rather
-              than swapped, so the change happens under the sweep instead of
-              popping at the frame where the class flips.
-
-              Two real assets, not one filtered: the supplied files are traced
-              artwork, and a CSS invert would not produce the other version of
-              it — it would produce a photographic negative.
-            */}
-            {/*
-              Sized by the artwork's own 1.78 aspect rather than forced into
-              a square. In a square box `object-contain` scaled the mark to
-              fit the height it did not have, so a 28px slot rendered a 14px
-              glyph — most of the space went to the letterbox.
-
-              36x64 on a phone, 40x71 from sm. Against a 64px bar that puts
-              the glyph at roughly 37px tall, which is about four times what
-              was on screen before.
-            */}
-            <span className="relative block h-9 w-16 shrink-0 sm:h-10 sm:w-[71px]">
-              <Image
-                src="/images/logo_dark.svg"
-                alt=""
-                aria-hidden
-                fill
-                sizes="(max-width: 640px) 64px, 71px"
-                priority
-                /* next/image refuses SVG unless dangerouslyAllowSVG is on
-                   globally. These are our own assets and vectors gain
-                   nothing from the optimiser, so they bypass it here
-                   instead of loosening the setting for every image. */
-                unoptimized
-                className="object-contain opacity-0 transition-opacity duration-300 dark:opacity-100 motion-reduce:transition-none"
-              />
-              <Image
-                src="/images/logo_light.svg"
-                alt=""
-                aria-hidden
-                fill
-                sizes="(max-width: 640px) 64px, 71px"
-                priority
-                /* next/image refuses SVG unless dangerouslyAllowSVG is on
-                   globally. These are our own assets and vectors gain
-                   nothing from the optimiser, so they bypass it here
-                   instead of loosening the setting for every image. */
-                unoptimized
-                className="object-contain opacity-100 transition-opacity duration-300 dark:opacity-0 motion-reduce:transition-none"
-              />
-            </span>
+            {/* 75% of the row height, full width, centred by the auto margins
+                against inset-0. `object-contain` keeps the artwork's own 1.78
+                aspect inside that box instead of stretching it. */}
+            <Image
+              src="/images/logo_dark.svg"
+              alt=""
+              aria-hidden
+              width={728}
+              height={409}
+              priority
+              /* next/image refuses SVG unless dangerouslyAllowSVG is on
+                 globally. These are our own assets and vectors gain
+                 nothing from the optimiser, so they bypass it here
+                 instead of loosening the setting for every image. */
+              unoptimized
+              className="absolute inset-0 m-auto h-[75%] w-full object-contain opacity-0 transition-opacity duration-300 dark:opacity-100 motion-reduce:transition-none"
+            />
+            <Image
+              src="/images/logo_light.svg"
+              alt=""
+              aria-hidden
+              width={981}
+              height={551}
+              priority
+              /* next/image refuses SVG unless dangerouslyAllowSVG is on
+                 globally. These are our own assets and vectors gain
+                 nothing from the optimiser, so they bypass it here
+                 instead of loosening the setting for every image. */
+              unoptimized
+              className="absolute inset-0 m-auto h-[75%] w-full object-contain opacity-100 transition-opacity duration-300 dark:opacity-0 motion-reduce:transition-none"
+            />
           </Link>
 
           <div className="flex items-center gap-2.5 sm:gap-7">
