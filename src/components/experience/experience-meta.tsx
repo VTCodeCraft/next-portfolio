@@ -18,9 +18,32 @@ export default function ExperienceMeta({
 }) {
   return (
     <header>
-      <h2 id={headingId} className="type-statement text-foreground">
-        {item.company}
-      </h2>
+      {/*
+        Status sits beside the company rather than as a floating pill in a
+        corner. It reuses the availability tokens the hero's "Open to work"
+        dot already uses, so the one green thing on the site means one thing.
+
+        Only the current role gets a marker. A "Previous" tag on everything
+        else would be four words restating a date range that is already two
+        lines below, in every entry.
+      */}
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+        <h2 id={headingId} className="type-statement text-foreground">
+          {item.company}
+        </h2>
+
+        {item.current ? (
+          <span className="inline-flex shrink-0 items-center gap-1.5">
+            <span
+              aria-hidden
+              className="h-1.5 w-1.5 rounded-full bg-[var(--surface-available-dot)]"
+            />
+            <span className="type-eyebrow text-[var(--surface-available-text)]">
+              Current
+            </span>
+          </span>
+        ) : null}
+      </div>
 
       {/*
         Stacks on small screens and only sits on one row once there is room
