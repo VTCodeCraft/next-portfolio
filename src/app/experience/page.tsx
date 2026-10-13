@@ -18,6 +18,16 @@ export const metadata: Metadata = {
   },
 };
 
+/*
+  Earliest role start, derived rather than written down. The header prints the
+  year from it, so adding an older role updates the page by itself and there
+  is no second place to forget.
+*/
+const sinceISO = experiences.reduce(
+  (earliest, item) => (item.startISO < earliest ? item.startISO : earliest),
+  experiences[0].startISO,
+);
+
 export default function ExperiencePage() {
   return (
     /*
@@ -30,7 +40,7 @@ export default function ExperiencePage() {
       roles is not enough navigation to justify introducing one.
     */
     <div className="page-shell section-rhythm [&>*]:mx-auto [&>*]:w-full [&>*]:max-w-[52rem]">
-      <ExperienceHeader roleCount={experiences.length} />
+      <ExperienceHeader roleCount={experiences.length} sinceISO={sinceISO} />
 
       <div className="space-y-20 lg:space-y-24">
         {experiences.map((item, index) => (

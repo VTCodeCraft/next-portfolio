@@ -10,31 +10,44 @@ const RESUME_HREF =
  * page, so the introduction says what the work is and gets out of the way
  * rather than taking a viewport of its own.
  *
- * The role count is read off the data so it cannot drift out of date.
+ * Both figures are read off the data so they cannot drift out of date, and
+ * neither is a claim that needs supporting: a count of roles and the year the
+ * first one started are facts the entries below restate in full.
  */
-export default function ExperienceHeader({ roleCount }: { roleCount: number }) {
+export default function ExperienceHeader({
+  roleCount,
+  sinceISO,
+}: {
+  roleCount: number;
+  /** Earliest role start, as YYYY-MM. Derived by the caller from the data. */
+  sinceISO: string;
+}) {
+  const sinceYear = sinceISO.slice(0, 4);
+
   return (
     <MotionMountSection delay={0.05} aria-labelledby="experience-title">
       {/* Plain text, no hidden punctuation. An earlier version hid the slash
           and substituted a comma for screen readers, which put a stray comma
           into the accessible name for no gain. */}
-      <p className="type-eyebrow text-[var(--text-subtle)]">
-        Work experience / 01
-      </p>
+      <p className="type-eyebrow text-[var(--text-subtle)]">Work / Experience</p>
 
       <div className="mt-5 flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
         <div>
           <h1 id="experience-title" className="type-display text-foreground">
-            Software I&rsquo;ve built in production
+            Where I&rsquo;ve built.
           </h1>
           <p className="type-prose type-body mt-5 text-muted-foreground">
-            I&rsquo;m a software engineer working across full-stack systems,
-            real-time infrastructure and AI-powered products — mostly backend
-            architecture, media pipelines and the tool harnesses that let a
-            model do useful work without being trusted with the database.
+            A closer look at the products, systems and engineering problems
+            I&rsquo;ve worked on.
           </p>
         </div>
 
+        {/*
+          Both figures are derived, not written: the count comes from the
+          array, and the year is read off the earliest startISO in it. A
+          hand-typed "1+ years" would be stale within a month and is the kind
+          of number that cannot be checked — these can.
+        */}
         <dl className="flex shrink-0 gap-8 sm:gap-10">
           <div>
             <dt className="type-eyebrow text-[var(--text-subtle)]">Roles</dt>
@@ -45,7 +58,7 @@ export default function ExperienceHeader({ roleCount }: { roleCount: number }) {
           <div>
             <dt className="type-eyebrow text-[var(--text-subtle)]">Since</dt>
             <dd className="type-h3 m-0 mt-1.5 tabular-nums text-foreground">
-              <time dateTime="2025-06">2025</time>
+              <time dateTime={sinceISO}>{sinceYear}</time>
             </dd>
           </div>
         </dl>
