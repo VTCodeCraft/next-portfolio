@@ -7,13 +7,16 @@ import { experiences } from "@/lib/experience";
 
 export const metadata: Metadata = {
   title: "Experience",
+  /* Was "real-time media and inference infrastructure for warehouse
+     monitoring" — that work ships as the Vision Intelligence Engine now, and
+     the description made no mention of the ERP delivery or the SEO layer. */
   description:
-    "Software engineering in production — an agentic storefront builder with a proposal-and-approval safety model, and real-time media and inference infrastructure for warehouse monitoring.",
+    "Software engineering in production — an agentic storefront builder with a proposal-and-approval safety model, a multi-tenant SEO intelligence layer, real-time media and GPU inference, and 15+ merged pull requests on a live ERP.",
   alternates: { canonical: "/experience" },
   openGraph: {
     title: "Experience | Vishesh Tripathi",
     description:
-      "Software engineering in production — AI systems architecture, typed tool calling, multi-tenant backends and real-time media pipelines.",
+      "Software engineering in production — AI systems architecture, typed tool calling, multi-tenant backends, real-time media pipelines and shipped ERP work.",
     url: "/experience",
   },
 };
