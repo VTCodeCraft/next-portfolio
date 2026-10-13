@@ -402,7 +402,8 @@ export const education: Education[] = [
     start: "Sep 2023",
     end: "Jun 2027",
     resultLabel: "CGPA",
-    result: "8.93",
+    /* 8.95 on the current résumé — this said 8.93, from an earlier semester. */
+    result: "8.95",
     location: "New Delhi, India",
   },
   {
