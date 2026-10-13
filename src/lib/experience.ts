@@ -149,7 +149,7 @@ export const experiences: Experience[] = [
     descriptor:
       "Agentic storefront platform — typed tool calling, validation and approval-driven database mutations. Real-time backend infrastructure in TypeScript, Next.js and Node.js.",
     intro:
-      "Software engineering on production AI-powered product systems: an agentic storefront builder on top of a live ERP, and the real-time media and inference services behind a warehouse monitoring platform. Most of my time goes to backend architecture, the AI tool harness and the reliability work that keeps both honest.",
+      "Software engineering on production AI product systems: an agentic storefront builder on top of a live ERP, a multi-tenant SEO intelligence layer behind it, and the real-time media and inference services of the vision engine. Most of my time goes to backend architecture, the AI tool harness and the reliability work that keeps both honest — and the work goes the whole way, from specification through review and QA to merged and deployed.",
     alsoWorkingWith: [
       "YOLO",
       "GPU inference",
@@ -169,11 +169,12 @@ export const experiences: Experience[] = [
       "MCP",
     ],
     highlights: [
-      "Built an AI-powered no-code ecommerce website builder using the Vercel AI SDK, Next.js, TypeScript and Puck, generating and editing storefronts through typed tool calling.",
-      "Architected a proposal, validation, approval and verification flow so the agent never writes directly to the database, with automated SEO generation and read-only MCP access.",
-      "Engineered a real-time multi-camera streaming service in Node.js and Socket.IO, routing WebRTC and RTSP feeds to Python backend services.",
-      "Built GPU 3D reconstruction using FastAPI, a RunPod RTX 4090 and the LingBot-Map streaming transformer.",
-      "Reduced time to first result from 6.6s to 0.3s through streaming inference, bounded queues with backpressure, and async workers.",
+      "Developed the LLM agent layer for an AI-powered ecommerce builder, enabling natural-language storefront generation through 25 typed tools and helping onboard 3 new B2B clients.",
+      "Architected a propose-validate-approve pipeline so every agent change is schema-validated and merchant-approved before it applies, with optimistic concurrency and a 30-scenario eval harness.",
+      "Architected a multi-tenant SEO intelligence layer integrating Google Search Console and DataForSEO via a self-hosted MCP server, with caching and spend caps, backed by 1,000+ tests.",
+      "Designed a real-time Vision Intelligence Engine streaming multi-camera WebRTC/RTSP feeds for YOLO detection, VLM analysis and GPU-accelerated 3D reconstruction on a RunPod RTX 4090.",
+      "Optimized the vision inference pipeline to cut time-to-first-result from 6.6s to 0.3s and lift throughput from 4.09 to 17.7 FPS using streaming inference and asynchronous workers.",
+      "Shipped 15 production PRs across ERP inventory, reporting and operations, including costing improvements, authenticated REST APIs and automated stock alerts.",
     ],
     featured: {
       name: "Hyperion — AI Storefront Builder",
@@ -238,8 +239,22 @@ export const experiences: Experience[] = [
         body: "First-class light, dark and system theming delivered additively, driven by one attribute on the storefront root and resolved entirely through CSS custom properties — no per-component branching, and existing shops render unchanged. The system preference is handled in CSS rather than JavaScript so it stays valid under server rendering.",
       },
       {
-        title: "SEO & structured data",
+        title: "SEO intelligence layer",
+        body: "A multi-tenant service that hands the agent real search data instead of guesses — Google Search Console for what a shop already ranks for, DataForSEO for what it could. Both reached through a self-hosted MCP server with caching and per-tenant spend caps, so a chatty agent cannot run up someone else's API bill. Backed by 1,000+ tests.",
+      },
+      {
+        title: "Structured data & content gates",
         body: "Sitemap coverage, canonical handling for paginated and sorted views, and Organization, WebSite, BreadcrumbList and ItemList JSON-LD emitted only from stored values. A content-quality gate rejects keyword stuffing, unverifiable claims and thin copy, so the generator cannot invent product facts to fill a field.",
+      },
+      {
+        /*
+          The row that answers "has he shipped against something he did not
+          build?" — the storefronts read from this ERP, other teams were
+          writing to it at the same time, and the work went through the same
+          review and deploy path as theirs.
+        */
+        title: "Shipped into the production ERP",
+        body: "15 merged pull requests across inventory, reporting and operations on the live ERP the storefronts read from — costing corrections, authenticated REST APIs feeding external dashboards, and automated stock alerts. Specification through review, QA and deploy, against a database other teams were working in at the same time.",
       },
       {
         title: "Validation & regression testing",
@@ -262,6 +277,7 @@ export const experiences: Experience[] = [
         note: "Streaming inference in place of whole-clip reconstruction, with async workers keeping network I/O off the inference path.",
       },
       points: [
+        "Throughput lifted from 4.09 to 17.7 FPS on the same RunPod RTX 4090, by removing the synchronous network I/O that was blocking the inference loop.",
         "Batch to streaming reconstruction — frame-by-frame inference with incremental fusion, validated as identical to the batch path before it replaced it.",
         "Bounded work queues with backpressure, so capture that outruns inference degrades predictably instead of collapsing throughput.",
         "Point-cloud results streamed to the browser as deltas while the walk is still happening, rather than after it finishes.",
@@ -271,6 +287,7 @@ export const experiences: Experience[] = [
       technologies: [
         "WebRTC",
         "WHIP / WHEP",
+        "RTSP",
         "MediaMTX",
         "Socket.IO",
         "Node.js",
@@ -284,6 +301,17 @@ export const experiences: Experience[] = [
       ],
       links: [{ label: "Watch demo", href: "https://youtu.be/Hon3lwqOFPg" }],
     },
+    /*
+      Delivery figures, kept separate from the featured project's engineering
+      proof. These are the ones that answer whether the work reached anyone:
+      merged into a shared codebase, used by named customers, running faster
+      than it did.
+    */
+    metrics: [
+      { value: "15", label: "Production PRs merged" },
+      { value: "3", label: "B2B clients onboarded" },
+      { value: "4.09 → 17.7", label: "Inference FPS" },
+    ],
     links: [],
   },
   {
