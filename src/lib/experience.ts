@@ -271,7 +271,10 @@ export const experiences: Experience[] = [
          "Real-time warehouse monitoring" said what it watches; this says what
          it is, and it is the name the demo recording is filed under. */
       name: "Vision Intelligence Engine",
-      kicker: "Also",
+      /* "Also" read as an afterthought for a system that is a third of the
+         role. It comes after the storefront work because that is the
+         positioning, not because it is minor. */
+      kicker: "Second system",
       summary: [
         "A real-time monitoring platform where mobile video is streamed to backend services and consumed three ways at once: object detection, vision-language analysis of on-screen text and unfamiliar objects, and live 3D reconstruction of the space being walked.",
         "I moved the media layer off a peer-to-peer mesh onto an SFU over WHIP and WHEP, so the phone uploads one copy regardless of how many viewers are watching, and rewrote reconstruction from a batch job into a streaming one.",
