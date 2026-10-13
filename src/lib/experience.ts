@@ -73,6 +73,14 @@ export type SpotlightWork = {
   headline?: ExperienceMetric & { note: string };
   points: string[];
   technologies: string[];
+  /**
+   * Links belonging to this work rather than to the role's featured project.
+   *
+   * Added because the demo recording is of the vision engine, and it had been
+   * sitting under the storefront builder — so the one video on the page was
+   * filed against the wrong system.
+   */
+  links?: ExperienceLink[];
 };
 
 export type Experience = {
@@ -214,9 +222,10 @@ export const experiences: Experience[] = [
       ],
       proofNote:
         "Engineering figures, not business ones. Two bugs that every automated check passed were found by testing in the browser — a CSS specificity failure that left the theme attribute inert, and a hydration mismatch caused by correcting the theme before React hydrated. Both fixes were verified by removing them again and confirming the original failure returned.",
+      /* The storefront only. The demo recording is of the vision engine and
+         now sits with it, below. */
       links: [
         { label: "Storefront", href: "https://delivery.gudz.in/storefront" },
-        { label: "Watch demo", href: "https://youtu.be/Hon3lwqOFPg" },
       ],
     },
     selectedWork: [
@@ -238,7 +247,10 @@ export const experiences: Experience[] = [
       },
     ],
     spotlight: {
-      name: "Real-time warehouse monitoring",
+      /* The name it ships under internally, rather than a description of it.
+         "Real-time warehouse monitoring" said what it watches; this says what
+         it is, and it is the name the demo recording is filed under. */
+      name: "Vision Intelligence Engine",
       kicker: "Also",
       summary: [
         "A real-time monitoring platform where mobile video is streamed to backend services and consumed three ways at once: object detection, vision-language analysis of on-screen text and unfamiliar objects, and live 3D reconstruction of the space being walked.",
@@ -270,6 +282,7 @@ export const experiences: Experience[] = [
         "GPU inference",
         "RunPod",
       ],
+      links: [{ label: "Watch demo", href: "https://youtu.be/Hon3lwqOFPg" }],
     },
     links: [],
   },

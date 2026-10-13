@@ -1,5 +1,6 @@
 import type { SpotlightWork } from "@/lib/experience";
 
+import { ExperienceLinks } from "./experience-link";
 import TechnologyList from "./technology-list";
 
 /**
@@ -71,6 +72,10 @@ export default function ExperienceHighlights({
       <div className="mt-6">
         <TechnologyList label="Stack" items={work.technologies} />
       </div>
+
+      {/* Beside the work it belongs to, same as the featured project's own
+          links — a demo filed under the wrong system is worse than no demo. */}
+      {work.links ? <ExperienceLinks links={work.links} /> : null}
     </section>
   );
 }
