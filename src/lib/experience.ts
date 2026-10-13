@@ -174,7 +174,7 @@ export const experiences: Experience[] = [
       "Architected a multi-tenant SEO intelligence layer integrating Google Search Console and DataForSEO via a self-hosted MCP server, with caching and spend caps, backed by 1,000+ tests.",
       "Designed a real-time Vision Intelligence Engine streaming multi-camera WebRTC/RTSP feeds for YOLO detection, VLM analysis and GPU-accelerated 3D reconstruction on a RunPod RTX 4090.",
       "Optimized the vision inference pipeline to cut time-to-first-result from 6.6s to 0.3s and lift throughput from 4.09 to 17.7 FPS using streaming inference and asynchronous workers.",
-      "Shipped 15 production PRs across ERP inventory, reporting and operations, including costing improvements, authenticated REST APIs and automated stock alerts.",
+      "Shipped 15+ production PRs across ERP product types, inventory, reporting and operations — client-reported fixes and mid-sprint feature requests alongside costing improvements, authenticated REST APIs and automated stock alerts.",
     ],
     featured: {
       name: "Hyperion — AI Storefront Builder",
@@ -252,9 +252,14 @@ export const experiences: Experience[] = [
           build?" — the storefronts read from this ERP, other teams were
           writing to it at the same time, and the work went through the same
           review and deploy path as theirs.
+
+          It names the unglamorous half on purpose. Client-reported bugs and
+          requests that arrive mid-sprint are the part of a production system
+          nobody puts on a portfolio, and they are the part that separates
+          someone who has shipped a project from someone who has held one up.
         */
-        title: "Shipped into the production ERP",
-        body: "15 merged pull requests across inventory, reporting and operations on the live ERP the storefronts read from — costing corrections, authenticated REST APIs feeding external dashboards, and automated stock alerts. Specification through review, QA and deploy, against a database other teams were working in at the same time.",
+        title: "Production ERP — features and live support",
+        body: "15+ merged pull requests on the live ERP the storefronts read from, across product types, inventory, reporting and operations. Feature work alongside the day-to-day a system with customers on it generates: client-reported bugs, requests that arrive mid-sprint, costing corrections, authenticated REST APIs feeding external dashboards, automated stock alerts. Specification through review and QA to deploy, against a database other teams were working in at the same time.",
       },
       {
         title: "Validation & regression testing",
@@ -308,7 +313,7 @@ export const experiences: Experience[] = [
       than it did.
     */
     metrics: [
-      { value: "15", label: "Production PRs merged" },
+      { value: "15+", label: "Production PRs merged" },
       { value: "3", label: "B2B clients onboarded" },
       { value: "4.09 → 17.7", label: "Inference FPS" },
     ],
