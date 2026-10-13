@@ -155,14 +155,23 @@ export const skillCategories: SkillCategory[] = [
  * These read as "an engineer who also works on these systems", which is the
  * accurate framing. The model APIs and ML libraries that sit underneath them
  * are listed here rather than as a top-level stack category.
+ *
+ * Reordered toward software engineering. The previous list ran Computer
+ * vision, Edge inference and 3D reconstruction, which read as a research
+ * specialism — accurate for one half of one role, and misleading about the
+ * other four. What is actually shared across every role is the agent layer,
+ * the backends under it and the reliability work that keeps both honest.
+ *
+ * The vision work is not hidden by this: it stays on /experience under the
+ * role that produced it, as `alsoWorkingWith` and as its own spotlight.
  */
 export const specialization = [
-  "AI-powered products",
+  "AI agents & tool calling",
+  "LLM evals & guardrails",
+  "MCP servers",
+  "Multi-tenant backends",
   "Real-time systems",
-  "WebRTC",
-  "Edge inference",
-  "Computer vision",
-  "3D reconstruction",
+  "API design",
 ];
 
 /**
