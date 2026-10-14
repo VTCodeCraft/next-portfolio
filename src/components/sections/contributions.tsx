@@ -2,9 +2,13 @@ import SectionHeading from "@/components/ui/section-heading";
 import ContributionCalendar from "@/components/ui/contribution-calendar";
 import {
   getGithubCalendar,
-  getLeetcodeCalendar,
   type ContributionCalendar as Calendar,
 } from "@/lib/contributions";
+import {
+  leetcodeHistory,
+  leetcodeRange,
+  leetcodeRangeLabel,
+} from "@/lib/leetcode-history";
 
 /*
   All-time history chart, parked.
@@ -27,11 +31,31 @@ function Panel({
   unit,
   calendar,
   href,
+  /*
+    Two phrasings, because the two places read differently.
+
+    `meta` follows the count on the rule — "663 submissions, historical".
+    `period` follows "{n} {unit}s" in the grid's accessible name, which
+    already supplies the noun — "663 submissions between Oct 09, 2025 and
+    Oct 09, 2026". Reusing one string for both produced "663 submissions
+    submissions, historical".
+  */
+  meta = "in the last year",
+  period = "in the last year",
+  /**
+   * Optional line under the grid, for a calendar that is not a live feed.
+   * Carries the exact window so the dates are stated rather than implied by
+   * the month labels.
+   */
+  note,
 }: {
   label: string;
   unit: string;
   calendar: Calendar | null;
   href: string;
+  meta?: string;
+  period?: string;
+  note?: string;
 }) {
   return (
     <div>
@@ -49,41 +73,49 @@ function Panel({
 
         {calendar ? (
           <span className="type-meta tabular-nums text-[var(--text-subtle)]">
-            {calendar.total.toLocaleString()} in the last year
+            {calendar.total.toLocaleString()} {meta}
           </span>
         ) : null}
       </div>
 
       {calendar ? (
-        <ContributionCalendar calendar={calendar} unit={unit} />
+        <ContributionCalendar
+          calendar={calendar}
+          unit={unit}
+          period={period}
+        />
       ) : (
         <p className="type-meta rounded-md border border-dashed border-border px-4 py-5 text-center text-muted-foreground">
           {label} activity is unavailable right now.
         </p>
       )}
+
+      {calendar && note ? (
+        <p className="type-eyebrow mt-2 text-[var(--text-faint)]">{note}</p>
+      ) : null}
     </div>
   );
 }
 
 /**
- * Credibility through activity rather than claims. Both calendars are fetched
- * server-side and cached daily; if either source is unreachable that calendar
- * says so instead of rendering invented squares.
+ * Credibility through activity rather than claims.
+ *
+ * The two calendars are no longer the same kind of thing. GitHub is fetched
+ * server-side and cached daily — a rolling twelve months that moves. LeetCode
+ * is a committed snapshot of a closed period, so it makes no request, does
+ * not advance with the clock, and is labelled as history rather than left to
+ * look like a live feed that went quiet.
  */
 export default async function Contributions() {
-  const [github, leetcode] = await Promise.all([
-    getGithubCalendar(GITHUB_LOGIN),
-    getLeetcodeCalendar(GITHUB_LOGIN),
-    // getGithubHistory(GITHUB_LOGIN),
-  ]);
+  const github = await getGithubCalendar(GITHUB_LOGIN);
 
-  if (!github && !leetcode) return null;
+  if (!github && !leetcodeHistory) return null;
 
   return (
     <section id="contributions" className="scroll-mt-32">
-      {/* The meta covers the calendars, which are a rolling year; the history
-          chart below carries its own "All time" label. */}
-      <SectionHeading index="01" rule meta="Last 12 months">
+      {/* No section-level period any more: the two panels now cover different
+          windows and each states its own. */}
+      <SectionHeading index="01" rule>
         Contributions
       </SectionHeading>
 
@@ -97,8 +129,11 @@ export default async function Contributions() {
         <Panel
           label="LeetCode"
           unit="submission"
-          calendar={leetcode}
+          calendar={leetcodeHistory}
           href={`https://leetcode.com/u/${GITHUB_LOGIN}/`}
+          meta="submissions, historical"
+          period={`between ${leetcodeRange.start} and ${leetcodeRange.end}`}
+          note={`Historical activity · ${leetcodeRangeLabel}`}
         />
 
         {/* {history ? <ContributionHistoryChart history={history} /> : null} */}

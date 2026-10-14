@@ -20,8 +20,16 @@ export type ContributionCalendar = {
 
 const DAY = 60 * 60 * 24;
 
-/** Buckets raw counts into the four legend steps used by both calendars. */
-function toLevels(days: { date: string; count: number }[]): ContributionDay[] {
+/**
+ * Buckets raw counts into the four legend steps used by every calendar.
+ *
+ * Exported so the LeetCode snapshot can be bucketed by the same rule as the
+ * live GitHub data — two calendars sitting one above the other must mean the
+ * same thing by the same shade.
+ */
+export function toLevels(
+  days: { date: string; count: number }[],
+): ContributionDay[] {
   const active = days.filter((d) => d.count > 0).map((d) => d.count);
 
   if (active.length === 0) {
