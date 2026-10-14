@@ -30,9 +30,21 @@ type Props = {
   calendar: ContributionCalendar;
   /** Singular noun for the tooltip: "contribution", "submission". */
   unit: string;
+  /**
+   * What period the grid covers, for the grid's accessible name.
+   *
+   * Defaults to the rolling window the live calendars show. A fixed snapshot
+   * passes its own range — "in the last year" would be wrong for a grid that
+   * ends on a date in the past.
+   */
+  period?: string;
 };
 
-export default function ContributionCalendar({ calendar, unit }: Props) {
+export default function ContributionCalendar({
+  calendar,
+  unit,
+  period = "in the last year",
+}: Props) {
   const { days } = calendar;
 
   /*
@@ -137,7 +149,7 @@ export default function ContributionCalendar({ calendar, unit }: Props) {
             */}
             <div
               role="grid"
-              aria-label={`${calendar.total.toLocaleString()} ${unit}s in the last year`}
+              aria-label={`${calendar.total.toLocaleString()} ${unit}s ${period}`}
               className="grid grid-flow-col gap-[var(--contrib-gap)]"
               style={{
                 gridTemplateRows: "repeat(7, var(--contrib-cell))",
